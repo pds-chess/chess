@@ -1,4 +1,4 @@
-name: modern-nutrition
+name: myapp-name
 
 on: [push, pull_request]
 
