@@ -63,7 +63,7 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
   * **Critérios de aceitação**:
     - Cada tipo de peça possui movimentos específicos que pode realizar de acordo com as regras.
     - Caso seja um movimento válido, a nova posição da peça é a coordenada que foi movimentada.
-    - Caso seja um movimento válido, a posição antifa da peça deve ficar vazia.
+    - Caso seja um movimento válido, a posição antiga da peça deve ficar vazia.
     - Um jogador pode movimentar apenas suas próprias peças.
     - Um jogador só pode movimentar suas peças em seu turno.
     - Peças que movem várias casas não podem se movimentar para campos nas suas linhas de movimento que estão inacessíveis por estarem atrás de outras peças.
