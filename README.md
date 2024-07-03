@@ -94,7 +94,7 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
     - Um roque só pode ocorrer se não houver peças entre o rei e a torre alvo.
     - Um roque não pode ser feito se o rei estiver em cheque.
     - O rei deve se movimentar 2 casas em direção da torre alvo, e a torre alvo deve se desolcar para a casa que o rei pulou.
-  * **Responsável**: []
+  * **Responsável**: [Breno]
   <br>
   
 * **História 6**: Como jogador, gostaria de fazer um cheque-mate para ganhar o jogo.
@@ -118,7 +118,7 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
     - Um peão só pode promover caso esteja na última linha do lado oposto que iniciou.
     - A promoção deve ocorrer assim que o peão alcançar as casas com o gatilho.
     - Um peão pode promover para qualquer outra peça que não seja o rei, e se comporta como a peça escolhida.
-  * **Responsável**: []
+  * **Responsável**: [Breno]
   <br>
   
 * **História 9**: Como jogador, gostaria de desistir para finalizar a partida antes de um cheque-mate.
@@ -141,7 +141,7 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
     - Apenas peões podem executar esse tipo de captura.
     - Essa captura só ocorre caso um peão adversário tenha avançado 2 casas como primeiro movimento e está ao lado do peão que irá realizar a captura.
     - A captura é feita ao mover o peão que irá capturar para a casa que foi pulada, e o peão capturado deve ser removido.
-  * **Responsável**: []
+  * **Responsável**: [Breno]
   <br>
   
 * **História 12**: Como jogo, devo identificar os jogadores.
