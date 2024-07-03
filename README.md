@@ -46,6 +46,7 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
 11. Como jogador, gostaria de fazer um “en passant”.
 12. Como jogo, devo identificar os jogadores.
 13. Como usuário, gostaria de visualizar as partidas passadas através de um histórico.
+14. Como jogador, gostaria de ver quais peças do jogo foram capturadas.
 
 # Requisitos Funcionais
 * **História #1**: Como usuário, gostaria de escolher criar um novo jogo em um menu para jogar xadrez com 2 jogadores localmente.
