@@ -77,6 +77,7 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
     - Uma captura de peça deve ser precedida de uma movimentação.
     - Um peão não captura como se movimenta, mas captura as peças em suas diagonais frontais.
     - Um jogador não pode capturar suas prórias peças.
+    - Ao capturar uma peça, mostrar no início do turno adversário qual peça foi capturada e qual peça a capturou.
   * **Responsável**: []
   <br>
   
@@ -157,3 +158,10 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
     - Os jogadores da partida devem ser identificados.
     - o resultado da partida deve estar disponível no fim do histórico da partida.
   * **Responsável**: []
+  <br>
+
+  * **História 14**: Como jogador, gostaria de ver quais peças do jogo foram capturadas.
+    * **Critérios de aceitação**:
+      - As peças capturadas ao longo da partida devem ser apresentadas ao jogador caso ele queria saber.
+      - As peças capturadas ao longo da partida devem ser mostradas no histórico da mesma.
+    * **Responsável**: []
