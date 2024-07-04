@@ -38,15 +38,15 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
 3. Como jogador, gostaria de capturar as peças do meu adversário.
 4. Como jogador, eu tenho que sair de posições de cheque para continuar o jogo.
 5. Como jogador, gostaria de fazer um roque.
-6. Como jogador, gostaria de fazer um cheque-mate para ganhar o jogo.
-7. Como jogo, devo declarar empate caso um jogador não tenha mais jogadas válidas e o rei não esteja em cheque.
+6. Como jogo, devo declarar empate caso um jogador não tenha mais jogadas válidas e o rei não esteja em cheque.
+7. Como jogador, gostaria de fazer um cheque-mate para ganhar o jogo.
 8. Como jogador, gostaria de promover um peão ao alcançar o fim do tabuleiro do meu lado.
 9. Como jogador, gostaria de desistir para finalizar a partida antes de um cheque-mate.
 10. Como jogador, gostaria de propor um empate ao meu oponente para finalizar a partida antes de um cheque-mate.
 11. Como jogador, gostaria de fazer um “en passant”.
-12. Como jogo, devo identificar os jogadores.
-13. Como usuário, gostaria de visualizar as partidas passadas através de um histórico.
-14. Como jogador, gostaria de ver quais peças do jogo foram capturadas.
+12. Como jogador, gostaria de ver quais peças do jogo foram capturadas.
+13. Como jogo, devo identificar os jogadores.
+14. Como usuário, gostaria de visualizar as partidas passadas através de um histórico.
 
 # Requisitos Funcionais
 * **História #1**: Como usuário, gostaria de escolher criar um novo jogo em um menu para jogar xadrez com 2 jogadores localmente.
@@ -68,7 +68,7 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
     - Um jogador só pode movimentar suas peças em seu turno.
     - Peças que movem várias casas não podem se movimentar para campos nas suas linhas de movimento que estão inacessíveis por estarem atrás de outras peças.
     - O cavalo pode se mover para qualquer uma das casas que tem acesso de acordo com as regras.
-  * **Responsável**: []
+  * **Responsável**: [Davi]
   <br>
   
 * **História #3**: Como jogador, gostaria de capturar as peças do meu adversário.
@@ -78,14 +78,14 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
     - Um peão não captura como se movimenta, mas captura as peças em suas diagonais frontais.
     - Um jogador não pode capturar suas prórias peças.
     - Ao capturar uma peça, mostrar no início do turno adversário qual peça foi capturada e qual peça a capturou.
-  * **Responsável**: []
+  * **Responsável**: [Davi]
   <br>
   
 * **História #4**: Como jogador, eu tenho que sair de posições de cheque para continuar o jogo.
   * **Critérios de aceitação**:
     - Os únicos movimentos que podem ser realizados são aqueles que tiram o rei de uma possível coordenada de captura de peças adversárias.
     - Movimentos que deixam o rei em risco não são válidos.
-  * **Responsável**: []
+  * **Responsável**: [Daniel]
   <br>
   
 * **História 5**: Como jogador, gostaria de fazer um roque.
@@ -96,23 +96,23 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
     - O rei deve se movimentar 2 casas em direção da torre alvo, e a torre alvo deve se desolcar para a casa que o rei pulou.
   * **Responsável**: [Breno]
   <br>
-  
-* **História 6**: Como jogador, gostaria de fazer um cheque-mate para ganhar o jogo.
-  * **Critérios de aceitação**:
-    - O cheque-mate deve ser declarado ao iniciar o turno de um jogador.
-    - Um cheque-mate deve ser declarado caso o jogador atual não tenha movimentos válidos e o rei esteja em cheque.
-    - O jogo deve finalizar após o cheque-mate.
-  * **Responsável**: []
-  <br>
-  
-* **História 7**: Como jogo, devo declarar empate caso um jogador não tenha mais jogadas válidas e o rei não esteja em cheque.
+
+* **História 6**: Como jogo, devo declarar empate caso um jogador não tenha mais jogadas válidas e o rei não esteja em cheque.
   * **Critérios de aceitação**:
     - O empate deve ser declarado no início do turno de um jogador.
     - Um empate por afogamento deve ser declarado caso o jogador atual não tenha movimentos válidos e o rei não esteja em cheque.
     - O jogo deve finalizar após o empate
-  * **Responsável**: []
+  * **Responsável**: [Leônidas]
  <br>
  
+* **História 7**: Como jogador, gostaria de fazer um cheque-mate para ganhar o jogo.
+  * **Critérios de aceitação**:
+    - O cheque-mate deve ser declarado ao iniciar o turno de um jogador.
+    - Um cheque-mate deve ser declarado caso o jogador atual não tenha movimentos válidos e o rei esteja em cheque.
+    - O jogo deve finalizar após o cheque-mate.
+  * **Responsável**: [Daniel]
+  <br>
+  
 * **História 8**: Como jogador, gostaria de promover um peão ao alcançar o fim do tabuleiro do meu lado.
   * **Critérios de aceitação**:
     - Um peão só pode promover caso esteja na última linha do lado oposto que iniciou.
@@ -125,7 +125,7 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
   * **Critérios de aceitação**:
     - Um jogador só pode desistir durante seu turno.
     - O jogo acaba com vitória para o adversário após confirmar a desistência.
-  * **Responsável**: []
+  * **Responsável**: [Enzo]
   <br>
   
 * **História 10**: Como jogador, gostaria de propor um empate ao meu oponente para finalizar a partida antes de um cheque-mate.
@@ -133,7 +133,7 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
     - Uma proposta de empate pode ser inicializada durante o turno do jogador.
     - Uma proposta de empate não interrompe o turno do jogador.
     - Uma proposta de empate aceita finaliza o jogo como empate.
-  * **Responsável**: []
+  * **Responsável**: [Enzo]
   <br>
   
 * **História 11**: Como jogador, gostaria de fazer um “en passant”.
@@ -143,25 +143,25 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
     - A captura é feita ao mover o peão que irá capturar para a casa que foi pulada, e o peão capturado deve ser removido.
   * **Responsável**: [Breno]
   <br>
+
+* **História 12**: Como jogador, gostaria de ver quais peças do jogo foram capturadas.
+  * **Critérios de aceitação**:
+    - A lista deve mostrar todas as peças do adversário que foram capturadas.
+    - A lista não deve conter peças do próprio jogador.
+  * **Responsável**: [Daniel]
+  <br>
   
-* **História 12**: Como jogo, devo identificar os jogadores.
+* **História 13**: Como jogo, devo identificar os jogadores.
   * **Critérios de aceitação**:
     - Os jogadores devem inserir nomes ao criar um novo jogo.
     - Os jogadores são identificados nos comandos do jogo com os nomes que inseriram.
-  * **Responsável**: []
+  * **Responsável**: [Davi]
   <br>
   
-* **História 13**: Como usuário, gostaria de visualizar as partidas passadas através de um histórico.
+* **História 14**: Como usuário, gostaria de visualizar as partidas passadas através de um histórico.
   * **Critérios de aceitação**:
     - O histórico de partidas deve enumerar todos os jogos que já ocorreram localmente.
     - Cada jogo deve ter uma sequência de jogadas que foram executadas na partida.
     - Os jogadores da partida devem ser identificados.
     - o resultado da partida deve estar disponível no fim do histórico da partida.
-  * **Responsável**: []
-  <br>
-
-  * **História 14**: Como jogador, gostaria de ver quais peças do jogo foram capturadas.
-    * **Critérios de aceitação**:
-      - As peças capturadas ao longo da partida devem ser apresentadas ao jogador caso ele queria saber.
-      - As peças capturadas ao longo da partida devem ser mostradas no histórico da mesma.
-    * **Responsável**: []
+  * **Responsável**: [Enzo]
