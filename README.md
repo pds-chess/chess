@@ -113,7 +113,7 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
   * **Responsável**: [Daniel]
   <br>
   
-* **História 8**: Como jogador, gostaria de promover um peão ao alcançar o fim do tabuleiro do meu lado.
+* **História 8**: Como jogador, gostaria de promover um peão ao alcançar o fim do tabuleiro adversário.
   * **Critérios de aceitação**:
     - Um peão só pode promover caso esteja na última linha do lado oposto que iniciou.
     - A promoção deve ocorrer assim que o peão alcançar as casas com o gatilho.
@@ -163,5 +163,5 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
     - O histórico de partidas deve enumerar todos os jogos que já ocorreram localmente.
     - Cada jogo deve ter uma sequência de jogadas que foram executadas na partida.
     - Os jogadores da partida devem ser identificados.
-    - o resultado da partida deve estar disponível no fim do histórico da partida.
+    - O resultado da partida deve estar disponível no fim do histórico da partida.
   * **Responsável**: [Enzo]
