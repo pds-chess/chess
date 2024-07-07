@@ -40,7 +40,7 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
 5. Como jogador, gostaria de fazer um roque.
 6. Como jogo, devo declarar empate caso um jogador não tenha mais jogadas válidas e o rei não esteja em cheque.
 7. Como jogador, gostaria de fazer um cheque-mate para ganhar o jogo.
-8. Como jogador, gostaria de promover um peão ao alcançar o fim do tabuleiro do meu lado.
+8. Como jogador, gostaria de promover um peão ao alcançar o fim do tabuleiro adversário.
 9. Como jogador, gostaria de desistir para finalizar a partida antes de um cheque-mate.
 10. Como jogador, gostaria de propor um empate ao meu oponente para finalizar a partida antes de um cheque-mate.
 11. Como jogador, gostaria de fazer um “en passant”.
@@ -113,7 +113,7 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
   * **Responsável**: [Daniel]
   <br>
   
-* **História 8**: Como jogador, gostaria de promover um peão ao alcançar o fim do tabuleiro do meu lado.
+* **História 8**: Como jogador, gostaria de promover um peão ao alcançar o fim do tabuleiro adversário.
   * **Critérios de aceitação**:
     - Um peão só pode promover caso esteja na última linha do lado oposto que iniciou.
     - A promoção deve ocorrer assim que o peão alcançar as casas com o gatilho.
@@ -163,5 +163,5 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
     - O histórico de partidas deve enumerar todos os jogos que já ocorreram localmente.
     - Cada jogo deve ter uma sequência de jogadas que foram executadas na partida.
     - Os jogadores da partida devem ser identificados.
-    - o resultado da partida deve estar disponível no fim do histórico da partida.
+    - O resultado da partida deve estar disponível no fim do histórico da partida.
   * **Responsável**: [Enzo]
