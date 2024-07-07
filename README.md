@@ -40,7 +40,7 @@ Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma m
 5. Como jogador, gostaria de fazer um roque.
 6. Como jogo, devo declarar empate caso um jogador não tenha mais jogadas válidas e o rei não esteja em cheque.
 7. Como jogador, gostaria de fazer um cheque-mate para ganhar o jogo.
-8. Como jogador, gostaria de promover um peão ao alcançar o fim do tabuleiro do meu lado.
+8. Como jogador, gostaria de promover um peão ao alcançar o fim do tabuleiro adversário.
 9. Como jogador, gostaria de desistir para finalizar a partida antes de um cheque-mate.
 10. Como jogador, gostaria de propor um empate ao meu oponente para finalizar a partida antes de um cheque-mate.
 11. Como jogador, gostaria de fazer um “en passant”.
