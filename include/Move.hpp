@@ -9,7 +9,7 @@ class Move{
   private:
     std::string origin_coordinates_;
     std::string final_coordinates_; 
-    Color color;
+    Color color_;
     std::string player_name_;
     int game_id_;
 
