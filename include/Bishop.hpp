@@ -1,4 +1,4 @@
-#pragma once#include "Piece.hpp"
+#pragma once
 
 #include "Piece.hpp"
 

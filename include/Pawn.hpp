@@ -8,4 +8,5 @@ class Pawn: Piece{
     public:
         Pawn(Coordinates initial_coords, Color color);
         bool validateMove(Coordinates final_coordinates) const;
+        void en_passant();
 };
