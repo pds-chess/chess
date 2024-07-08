@@ -3,7 +3,9 @@
 class Coordinates{
     private:
     int row_;
-    char column_;
+    int column_;
     public:
         Coordinates(int row, char column);
+        int getRow() const;
+        int getCol() const;
 };
