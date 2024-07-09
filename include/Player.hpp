@@ -12,6 +12,7 @@ class Player{
     std::list<Piece*> pieces_;
     std::list<Piece*> captured_pieces_;
     public:
+    Player(std::string name, Color color);
     void addPiece(Piece* piece);
     std::list<Piece*> getPieces() const;
     void removePiece(Piece* piece);

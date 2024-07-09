@@ -2,8 +2,6 @@
 
 #include "GameController.hpp"
 
-#include <string>
-
 class Console
 {
 private:
@@ -11,7 +9,6 @@ private:
     void printMenu();
 
     void printNewGame();
-    void savePlayersName();
 
     void printBoard();
     void printGameActions();
