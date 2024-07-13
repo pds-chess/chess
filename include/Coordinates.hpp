@@ -5,7 +5,7 @@ class Coordinates{
     int row_;
     int column_;
     public:
-        Coordinates(int row, char column);
+        Coordinates(int row, int column);
         int getRow() const;
         int getCol() const;
 };
