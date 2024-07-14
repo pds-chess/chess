@@ -4,19 +4,24 @@
 #include "History.hpp"
 #include "Player.hpp"
 #include "GameState.hpp"
+#include "Color.hpp"
 
 #include <string>
 
 class Match{
     private:
-        Board board;
-        Player playerW;
-        Player playerB;
-
+        Board board_;
+        Player player_W_;
+        Player player_B_;
+        Player current_turn_;
+        Gamestate game_state_;
+        void endTurn();
+        bool isCheck() const;
+        bool isDraw() const;
+        void movePiece(Piece* target_piece, Coordinates final_coords);
     public:
-        Match(std::string playerW, std::string playerB); //Define o nome dos jogares e inicia o jogo.
-        void startGame(); //Inicia o jogo.
-        std::string movePiece(int row_start, int col_start, int row_end, int col_end); //Move a peça e retorna o estado do tabuleiro após o movimento.
-        bool getGameOver(); //Retorna true se o jogo finalizou.
-        void setGameState(Gamestate state);
+        Match(std::string playerW, std::string playerB);
+        void startGame(std::string playerW, std::string playerB); //Inicia um novo jogo.
+        std::string startTurn();
+        void movePiece(int row_start, int col_start, int row_end, int col_end); //Move a peça e retorna o estado do tabuleiro após o movimento.
 };
