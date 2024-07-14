@@ -33,8 +33,8 @@ void Board::initialize(){
 
     board_[0][2] = &(Bishop(Coordinates(0,2), Black, this));
     board_[0][5] = &(Bishop(Coordinates(0,5), Black, this));
-    board_[7][2] = &(Bishop(Coordinates(7,2), Black, this));
-    board_[7][5] = &(Bishop(Coordinates(7,5), Black, this));
+    board_[7][2] = &(Bishop(Coordinates(7,2), White, this));
+    board_[7][5] = &(Bishop(Coordinates(7,5), White, this));
 
     board_[0][3] = &(Queen(Coordinates(0,3), Black, this));
     board_[7][3] = &(Queen(Coordinates(7,3), White, this));
