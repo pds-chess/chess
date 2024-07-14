@@ -3,7 +3,7 @@
 #include "Piece.hpp"
 #include "Rook.hpp"
 
-class King: public Piece{
+class King: Piece{
     private:
         bool moved_;
     public:

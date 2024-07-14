@@ -19,7 +19,13 @@ bool King::hasMoved() const{
     return moved_;
 }
 
-void castle(Rook* rook){
+void King::castle(Rook* rook){
+    // bool king_side_ = rook->getCoords().getCol() - this->getCoords().getCol();
+    if (!this->hasMoved() && !rook->hasMoved())
+    {
+        
+    }
+    
 }
 
 char King::getPieceChar() const{

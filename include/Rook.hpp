@@ -2,7 +2,7 @@
 
 #include "Piece.hpp"
 
-class Rook: public Piece{
+class Rook: Piece{
     private:
         bool moved_;
     public:
