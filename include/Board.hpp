@@ -8,13 +8,15 @@
 
 class Board{
     private:
-        std::vector<std::vector<Piece*>> board;
-        std::vector<Piece*> pieces;
+        std::vector<std::vector<Piece*>> board_;
+        std::vector<Piece*> pieces_;
+        void clearBoard();
     public:
         Board();
         void initialize();
         void update();
-        std::vector<std::vector<Piece*>> getBoard();
-        std::string boardToString();
-        Piece* getPiece(Coordinates coords);
+        std::vector<std::vector<Piece*>> getBoard() const;
+        std::string boardToString() const;
+        Piece* getPiece(Coordinates coords) const;
+        void removePiece(Coordinates coords);
 };

@@ -61,7 +61,7 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
 }
 
 void Match::movePiece(Piece* target_piece, Coordinates final_coords){
-    Piece* piece_end = board_.getBoard()[final_coords.getCol()][final_coords.getRow()];
+    Piece* piece_end = board_.getPiece(final_coords);
 
     //testa en passant
     //. . .
@@ -75,7 +75,7 @@ void Match::movePiece(Piece* target_piece, Coordinates final_coords){
     }
     
     if(piece_end != nullptr){
-        board_.getBoard()[final_coords.getCol()][final_coords.getRow()] = nullptr;
+        board_.removePiece(final_coords);
     }
 }
 
