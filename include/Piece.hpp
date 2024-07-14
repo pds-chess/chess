@@ -15,6 +15,8 @@ class Piece{
         Coordinates getCoords() const;
         Color getColor() const;
         virtual bool validateMove(Coordinates final_coordinates) const = 0;
+        std::string pieceToString() const;
     protected:
+        virtual char getPieceChar() const = 0;
         Board* getBoard() const;
 };

@@ -25,3 +25,9 @@ Color Piece::getColor() const{
 Board* Piece::getBoard() const{
     return board_;
 }
+
+std::string Piece::pieceToString() const{
+    char pieceColor = color_==White?'w':'b';
+    std::string output = "" + getPieceChar() + pieceColor;
+    return output;
+}

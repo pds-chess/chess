@@ -26,3 +26,7 @@ bool Pawn::validateMove(Coordinates final_coordinates) const{
 void Pawn::en_passant() {
 
 }
+
+char Pawn::getPieceChar() const{
+    return 'P';
+}
