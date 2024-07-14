@@ -8,7 +8,8 @@ class King: public Piece{
         bool moved_;
     public:
         King(Coordinates initial_coords, Color color, Board* board);
-        bool validateMove(Coordinates final_coordinates) const;
+        bool validateMove(Coordinates final_coordinates);
         void castle(Rook* rook);
+        bool hasMoved() const;
         char getPieceChar() const;
 };
