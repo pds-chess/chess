@@ -51,6 +51,10 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
     }
 
     Coordinates final_coords(row_end, col_end);
+    if(isCheck()){
+        throw std::logic_error("Rei estará em cheque.");
+    }
+
     movePiece(target_piece, final_coords);
 
     endTurn();
@@ -58,22 +62,20 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
 
 void Match::movePiece(Piece* target_piece, Coordinates final_coords){
     Piece* piece_end = board_.getBoard()[final_coords.getCol()][final_coords.getRow()];
-    if(piece_end != nullptr){
-        if(target_piece->getColor() != piece_end->getColor()){
-            board_.getBoard()[final_coords.getCol()][final_coords.getRow()] = nullptr;
-        }
-        else{
-            //testa roque
-            //. . .
-        }
-    }
-    
+
     //testa en passant
     //. . .
-
-    target_piece->movePiece(final_coords);
-    if(isCheck()){
-        throw std::logic_error("Rei estará em cheque.");
+    try{
+        target_piece->movePiece(final_coords);
+    }
+    catch(std::invalid_argument e){
+        //checa se é um roque
+        //caso não for
+        throw e;
+    }
+    
+    if(piece_end != nullptr){
+        board_.getBoard()[final_coords.getCol()][final_coords.getRow()] = nullptr;
     }
 }
 
