@@ -19,6 +19,7 @@ class Match{
         bool isCheck() const;
         bool isDraw() const;
         void movePiece(Piece* target_piece, Coordinates final_coords);
+        void promotePawn(Piece* pawn, int chosen_piece);
     public:
         Match(std::string playerW, std::string playerB);
         void startGame(std::string playerW, std::string playerB); //Inicia um novo jogo.

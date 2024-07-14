@@ -86,3 +86,37 @@ bool Match::isDraw() const{
 bool Match::isCheck() const{
     return false;
 }
+
+void Match::promotePawn(Piece* pawn, int chosen_piece) {
+    if((current_turn_.getplayerColor() == White && pawn->getCoords().getRow() == 0) || (current_turn_.getplayerColor() == Black && pawn->getCoords().getRow() == 7))
+    {
+        // std::cout << "Escolha para qual peça promover o peão: " << std::endl;
+        // std::cout << "1. Rainha" << std::endl;
+        // std::cout << "2. Torre" << std::endl;
+        // std::cout << "3. Bispo" << std::endl;
+        // std::cout << "4. Cavalo" << std::endl;
+
+        // while(chosen_piece != 1 || chosen_piece != 2 || chosen_piece != 3 || chosen_piece != 4)
+        // {
+        //     std::cin << chosen_piece;
+        //     switch (chosen_piece) {
+        //         case 1:
+        //             pawn = QUEEN;
+        //             break;
+        //         case 2:
+        //             pawn = ROOK;
+        //             break;
+        //         case 3:
+        //             pawn = BISHOP;
+        //             break;
+        //         case 4:
+        //             pawn = KNIGHT;
+        //             break;
+        //         default:
+        //             std::cout << "Escolha inválida. Favor, escolher uma das opções listadas" << std::endl
+        //             break;        
+        //     }
+        // }
+    }
+
+}
