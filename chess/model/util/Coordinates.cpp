@@ -13,6 +13,9 @@ Coordinates::Coordinates(int row, int column){
     column_ = column-1;
 }
 
+Coordinates::Coordinates():Coordinates(0,0){
+}
+
 int Coordinates::getCol() const{
     return column_;
 }
