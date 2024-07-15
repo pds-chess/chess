@@ -46,7 +46,7 @@ void Board::initialize(){
 }
 
 void Board::update(){
-    std::vector<Piece*> pieces;
+    std::list<Piece*> pieces;
     for(auto row : board_){
         for(auto item : row){
             if(item != nullptr){
@@ -93,4 +93,8 @@ void Board::removePiece(Coordinates coords){
     int row = coords.getRow();
     int col = coords.getCol();
     board_[row][col] = nullptr;
+}
+
+std::list<Piece*> Board::getPieces() const{
+    return pieces_;
 }

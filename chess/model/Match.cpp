@@ -9,7 +9,8 @@ void Match::startGame(std::string playerW, std::string playerB){
     board_ = Board();
     player_W_ = Player(playerW, White);
     player_B_ = Player(playerB, Black);
-    current_turn_ = player_W_;
+    updatePlayers();
+    current_turn_ = &player_W_;
     game_state_ = inProgress;
 }
 
@@ -21,7 +22,7 @@ std::string Match::startTurn(){
             game_state_ = Draw;
             return "Jogo finalizou em empate por afogamento.";
     }
-    if(current_turn_.getplayerColor()==White){
+    if(current_turn_->getplayerColor()==White){
         game_state_ = VictoryW;
         return "Chequemate! Vitória do jogador " + player_W_.getPlayerName();
     }
@@ -29,13 +30,14 @@ std::string Match::startTurn(){
 }
 
 void Match::endTurn(){
-    if(current_turn_.getplayerColor() == White){
-        current_turn_ = player_B_;
+    if(current_turn_->getplayerColor() == White){
+        current_turn_ = &player_B_;
     }
     else{
-        current_turn_ = player_W_;
+        current_turn_ = &player_W_;
     }
     board_.update();
+    updatePlayers();
 }
 
 void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
@@ -46,7 +48,7 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
         throw std::invalid_argument("Nenhuma peça na posição inicial.");
     }
 
-    if(target_piece->getColor()!= current_turn_.getplayerColor()){
+    if(target_piece->getColor()!= current_turn_->getplayerColor()){
         throw std::logic_error("Jogador incorreto.");
     }
 
@@ -80,16 +82,42 @@ void Match::movePiece(Piece* target_piece, Coordinates final_coords){
 }
 
 bool Match::isDraw() const{
-
+    for(auto item: current_turn_->getPieces()){
+        for(int i =0; i<8; i++){
+            for(int j =0; j<8; j++){
+                if(item->getCoords().getRow() == i && item->getCoords().getCol() == i){
+                    continue;
+                }
+                if(item->validateMove(Coordinates(i,j))){
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
 }
 
 bool Match::isCheck() const{
     return false;
 }
 
+void Match::updatePlayers(){
+    std::list<Piece*> white_pieces, black_pieces;
+    for(auto item: board_.getPieces()){
+        if(item->getColor()==White){
+            white_pieces.push_back(item);
+        }
+        else{
+            black_pieces.push_back(item);
+        }
+    }
+    player_W_.setPieces(white_pieces);
+    player_B_.setPieces(black_pieces);
+}
+
 void Match::promotePawn(Piece* pawn, int chosen_piece) {
-    if((current_turn_.getplayerColor() == White && pawn->getCoords().getRow() == 0) || (current_turn_.getplayerColor() == Black && pawn->getCoords().getRow() == 7))
-    {
+    //if((current_turn_.getplayerColor() == White && pawn->getCoords().getRow() == 0) || (current_turn_.getplayerColor() == Black && pawn->getCoords().getRow() == 7))
+    //{
         // std::cout << "Escolha para qual peça promover o peão: " << std::endl;
         // std::cout << "1. Rainha" << std::endl;
         // std::cout << "2. Torre" << std::endl;
@@ -117,6 +145,6 @@ void Match::promotePawn(Piece* pawn, int chosen_piece) {
         //             break;        
         //     }
         // }
-    }
+    //}
 
 }

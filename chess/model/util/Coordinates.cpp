@@ -2,15 +2,12 @@
 #include <stdexcept>
 
 Coordinates::Coordinates(int row, int column){
-    if(row < 1 || row > 8){
+    if(row < 0 || row > 7){
         throw std::invalid_argument("Linha inválida.");
     }
-    if(column < 1 || column > 8){
+    if(column < 0 || column > 7){
         throw std::invalid_argument("Coluna inválida.");
     }
-
-    row_ = row-1;
-    column_ = column-1;
 }
 
 Coordinates::Coordinates():Coordinates(0,0){
