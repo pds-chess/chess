@@ -2,12 +2,12 @@
 
 #include "Piece.hpp"
 
-class Rook: Piece{
+class Rook: public Piece{
     private:
         bool moved_;
     public:
         Rook(Coordinates initial_coords, Color color, Board* board);
-        bool validateMove(Coordinates final_coordinates);
+        virtual bool validateMove(Coordinates final_coordinates) const;
         bool hasMoved() const;
-        char getPieceChar() const;
+        virtual char getPieceChar() const;
 };

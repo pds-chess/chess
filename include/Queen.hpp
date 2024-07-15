@@ -5,6 +5,6 @@
 class Queen: public Piece{
     public:
         Queen(Coordinates initial_coords, Color color, Board* board);
-        bool validateMove(Coordinates final_coordinates) const;
-        char getPieceChar() const;
+        virtual bool validateMove(Coordinates final_coordinates) const;
+        virtual char getPieceChar() const;
 };

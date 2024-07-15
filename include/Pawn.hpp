@@ -7,7 +7,7 @@ class Pawn: public Piece{
         bool moved_;
     public:
         Pawn(Coordinates initial_coords, Color color, Board* board);
-        bool validateMove(Coordinates final_coordinates) const;
+        virtual bool validateMove(Coordinates final_coordinates) const;
         void en_passant();
-        char getPieceChar() const;
+        virtual char getPieceChar() const;
 };

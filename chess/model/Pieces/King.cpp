@@ -6,12 +6,12 @@ King::King(Coordinates initial_coords, Color color, Board* board) : Piece(initia
     moved_ = false;
 };
 
-bool King::validateMove(Coordinates final_coordinates) {
+bool King::validateMove(Coordinates final_coordinates) const{
 
     //...Implementação normal da função
 
     if (this->getCoords().getRow() !=  final_coordinates.getRow() || this->getCoords().getCol() !=  final_coordinates.getCol())
-        this->moved_ = true;
+        this->moved_ = true; //Ler comentário no rook e fazer o mesmo aqui
     //Fim da função validateMove
 }
 

@@ -6,12 +6,12 @@ Rook::Rook(Coordinates initial_coords, Color color, Board* board) : Piece(initia
     moved_ = false;
 };
 
-bool Rook::validateMove(Coordinates final_coordinates) {
+bool Rook::validateMove(Coordinates final_coordinates) const{
 
     //...Implementação normal da função
 
     if (this->getCoords().getRow() !=  final_coordinates.getRow() || this->getCoords().getCol() !=  final_coordinates.getCol())
-        this->moved_ = true;
+        this->moved_ = true; //<- isso tem que ser uma função (setMoved()) que é chamada em um overwrite da função movePiece dentro dessa classe.
     //Fim da função validateMove
 }
 
