@@ -5,7 +5,7 @@
 #include "Board.hpp"
 
 class Piece{
-    private:
+    protected:
         Coordinates coords_;
         Color color_;
         Board* board_; 

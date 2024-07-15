@@ -1,18 +1,23 @@
 #pragma once
 
 #include "King.hpp"
+#include <stdexcept>
 
 King::King(Coordinates initial_coords, Color color, Board* board) : Piece(initial_coords, color, board){
     moved_ = false;
 };
 
-bool King::validateMove(Coordinates final_coordinates) const{
-
-    //...Implementação normal da função
+void King::movePiece(Coordinates final_coordinates){
+    if(!validateMove(final_coordinates)){
+        throw std::invalid_argument("Movimento inválido");
+    }
+    coords_=final_coordinates;
 
     if (this->getCoords().getRow() !=  final_coordinates.getRow() || this->getCoords().getCol() !=  final_coordinates.getCol())
-        this->moved_ = true; //Ler comentário no rook e fazer o mesmo aqui
-    //Fim da função validateMove
+        moved_ = true;
+}
+
+bool King::validateMove(Coordinates final_coordinates) const{
 }
 
 bool King::hasMoved() const{
@@ -20,8 +25,8 @@ bool King::hasMoved() const{
 }
 
 void King::castle(Rook* rook){
-    // bool king_side_ = rook->getCoords().getCol() - this->getCoords().getCol();
-    if (!this->hasMoved() && !rook->hasMoved())
+    bool king_side_ = rook->getCoords().getCol() - getCoords().getCol();
+    if (!hasMoved() && !rook->hasMoved())
     {
         
     }
