@@ -14,7 +14,7 @@ class Player{
     public:
         Player();
         Player(std::string name, Color color);
-        void setPieces(std::list<Piece*> pieces_);
+        void setPieces(std::list<Piece*> pieces);
         std::list<Piece*> getPieces() const;
         Color getplayerColor() const;
         std::string getPlayerName() const;
