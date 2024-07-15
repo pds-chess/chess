@@ -8,10 +8,7 @@ King::King(Coordinates initial_coords, Color color, Board* board) : Piece(initia
 };
 
 void King::movePiece(Coordinates final_coordinates){
-    if(!validateMove(final_coordinates)){
-        throw std::invalid_argument("Movimento inválido");
-    }
-    coords_=final_coordinates;
+    Piece::movePiece(final_coordinates);
 
     if (this->getCoords().getRow() !=  final_coordinates.getRow() || this->getCoords().getCol() !=  final_coordinates.getCol())
         moved_ = true;
