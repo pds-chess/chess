@@ -19,41 +19,74 @@ bool King::hasMoved() const{
     return moved_;
 }
 
-void King::castle(Rook* rook){
-    if (!hasMoved() && !rook->hasMoved())
-    {   
-        bool short_castle_ = rook->getCoords().getCol() > getCoords().getCol();
-        if (short_castle_)
+bool King::short_castle(Coordinates final_coordinates) const{
+    bool short_castle = NULL;
+        if (final_coordinates.getCol() == getCoords().getCol()+2)
+            short_castle = true;
+        else if (final_coordinates.getCol() == getCoords().getCol()-2)
+            short_castle = false;
+}
+
+bool King::validateCastle(Coordinates final_coordinates) const{
+    if (hasMoved)
+        return false;
+    else{        
+        Rook* rook = nullptr;
+        Piece* pieceCol_7 = getBoard()->getPiece(Coordinates(getCoords().getRow(), 7));
+        Piece* pieceCol_0 = getBoard()->getPiece(Coordinates(getCoords().getRow(), 0));
+        if (short_castle(final_coordinates) && dynamic_cast<Rook*>(pieceCol_7))
         {
-            if (getBoard()->getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()+1)) == nullptr &&
-                getBoard()->getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()+2)) == nullptr)
-            {   
-                rook->movePiece(Coordinates (rook->getCoords().getRow(),rook->getCoords().getCol()-2));
-                if (getColor() == Black)
-                    King(Coordinates(0,6), Color(Black), getBoard());
+            rook = dynamic_cast<Rook*>(pieceCol_7);
+            if (rook->hasMoved())
+                return false;
+            else{
+                if (getBoard()->getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()+1)) == nullptr &&
+                getBoard()->getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()+2)) == nullptr)  
+                    return true;
                 else
-                    King(Coordinates(7,6), Color(White),getBoard());
-                getBoard()->removePiece(getCoords());
-            }else
-                throw std::invalid_argument("Movimento inválido");
-        }else{
-            if (getBoard()->getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()-1)) == nullptr &&
-                getBoard()->getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()-2)) == nullptr &&
-                getBoard()->getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()-3)) == nullptr)
-            {   
-                rook->movePiece(Coordinates (rook->getCoords().getRow(),rook->getCoords().getCol()+3));
-                if (getColor() == Black)
-                    King(Coordinates(0,2), Color(Black), getBoard());
+                    return false;
+            }
+        }else if (!short_castle(final_coordinates) && dynamic_cast<Rook*>(pieceCol_0)){
+            rook = dynamic_cast<Rook*>(pieceCol_0);
+            if (rook->hasMoved())
+                return false;
+            else{
+                if (getBoard()->getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()-1)) == nullptr &&
+                    getBoard()->getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()-2)) == nullptr &&
+                    getBoard()->getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()-3)) == nullptr)
+                    return true;
                 else
-                    King(Coordinates(7,2), Color(White),getBoard());
-                getBoard()->removePiece(getCoords());
-            }else
-                throw std::invalid_argument("Movimento inválido");
-        }
-    }else
-        throw std::invalid_argument("Movimento inválido");
-    
-    //endTurn();
+                    return false;
+            }
+        }else
+            return false;
+    }
+}
+
+void King::castle(Coordinates final_coordinates){
+    Rook* rook = nullptr;
+    Piece* pieceCol_7 = getBoard()->getPiece(Coordinates(getCoords().getRow(), 7));
+    Piece* pieceCol_0 = getBoard()->getPiece(Coordinates(getCoords().getRow(), 0));
+
+    if (short_castle(final_coordinates))
+    { 
+        rook = dynamic_cast<Rook*>(pieceCol_7);
+        rook->movePiece(Coordinates(rook->getCoords().getRow(),rook->getCoords().getCol()-2));
+        if (getColor() == Black)
+            King(Coordinates(0,6), Color(Black), getBoard());
+        else
+            King(Coordinates(7,6), Color(White),getBoard());
+        getBoard()->removePiece(getCoords());
+        
+    }else{ 
+        rook = dynamic_cast<Rook*>(pieceCol_0);
+        rook->movePiece(Coordinates (rook->getCoords().getRow(),rook->getCoords().getCol()+3));
+        if (getColor() == Black)
+            King(Coordinates(0,2), Color(Black), getBoard());
+        else
+            King(Coordinates(7,2), Color(White),getBoard());
+        getBoard()->removePiece(getCoords());
+    }
 }
     
 char King::getPieceChar() const{

@@ -5,6 +5,7 @@
 #include "Player.hpp"
 #include "GameState.hpp"
 #include "Color.hpp"
+#include "King.hpp"
 
 #include <string>
 
