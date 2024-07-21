@@ -37,6 +37,7 @@
                      return false;
                 }
             }
+        return false;
         };
 
         char Bishop::getPieceChar() const {
