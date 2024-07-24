@@ -19,6 +19,9 @@ private:
 
     void printMatchHistory();
     void printMatch(int matchId);
+ // Novos métodos para propor, aceitar e rejeitar empate
+    void proposeDraw();
+    void handleDrawResponse();
 
 public:
     // Construtor padrão que inicia o jogo no console.
