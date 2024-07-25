@@ -23,9 +23,12 @@ private:
     void promotePawn(Piece* pawn, int chosen_piece);
     void updatePlayers();
 
-    // Novos atributos para proposta de empate
+   // Atributos para proposta de empate
     bool drawProposed;
     std::string proposingPlayer;
+
+    // Método para finalizar o jogo com empate
+    void draw();
 
 public:
     Match(std::string playerW, std::string playerB);
@@ -33,8 +36,11 @@ public:
     std::string startTurn();
     void movePiece(int row_start, int col_start, int row_end, int col_end); // Move a peça e retorna o estado do tabuleiro após o movimento.
 
-    // Novos métodos para gerenciamento de empate
+    // Métodos para gerenciamento de empate
     void proposeDraw(const std::string& player);
-    void acceptDraw();
-    void rejectDraw();
+    void confirmDraw(const std::string& player);
+
+    // Método para desistência
+    void resign();
+};
 };
