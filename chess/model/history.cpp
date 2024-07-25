@@ -6,6 +6,9 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <stdexcept>
+#include <list>
+#include <algorithm>
 
 History::History(std::string path) : path_to_file_(path) {}
 
@@ -57,7 +60,9 @@ std::list<Move> History::getMoves(int game_id) const {
         std::getline(iss, token, ',');
         player_name = token;
 
-        moves.emplace_back(origin, destination, color, player_name);
+        // Criar um Move com as informações lidas e adicionar à lista de movimentos
+        Move move(origin, destination, color, player_name);
+        moves.push_back(move);
     }
 
     file.close();
