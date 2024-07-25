@@ -1,7 +1,7 @@
 #include "ConsoleView.hpp"
 #include <iostream>
 
-Console::Console() {
+Console::Console() : match() {
     printMenu();
 }
 
@@ -33,8 +33,8 @@ void Console::printMenu() {
 }
 
 void Console::printNewGame() {
-    gameController.startNewGame();
-    while (!gameController.isGameOver()) {
+    match.startNewGame();
+    while (!match.isGameOver()) {
         printBoard();
         printGameActions();
     }
@@ -66,7 +66,8 @@ void Console::printGameActions() {
 }
 
 void Console::proposeDraw() {
-    gameController.proposeDraw();
+    std::cout << "Propondo empate..." << std::endl;
+    // Código para lidar com a lógica de proposta de empate
 }
 
 void Console::handleDrawResponse() {
@@ -75,11 +76,9 @@ void Console::handleDrawResponse() {
     std::cin >> response;
 
     if (response == 's') {
-        if (gameController.acceptDraw()) {
-            std::cout << "Empate aceito. O jogo terminou em empate." << std::endl;
-        }
+        match.endGameInDraw();
+        std::cout << "Empate aceito. O jogo terminou em empate." << std::endl;
     } else {
-        gameController.rejectDraw();
         std::cout << "Empate rejeitado. O jogo continua." << std::endl;
     }
 }
@@ -93,5 +92,5 @@ void Console::printMatchHistory() {
 }
 
 void Console::printMatch(int matchId) {
-    // Código para imprimir uma partida específica
+    // Código para imprimir uma partida específica
 }
