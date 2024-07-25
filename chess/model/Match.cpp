@@ -154,22 +154,30 @@ void Match::promotePawn(Piece* pawn, int chosen_piece) {
     //}
 }
 
+// Método para finalizar o jogo com empate
+void Match::draw() {
+    game_state_ = Draw;
+}
+
 // Métodos para gerenciamento de empate
 void Match::proposeDraw(const std::string& player) {
     drawProposed = true;
     proposingPlayer = player;
 }
 
-void Match::acceptDraw() {
-    if (drawProposed) {
-        game_state_ = Draw;
-        isGameOver = true;
+void Match::confirmDraw(const std::string& player) {
+    if (drawProposed && player != proposingPlayer) {
+        draw();
         drawProposed = false;
         proposingPlayer = "";
     }
 }
 
-void Match::rejectDraw() {
-    drawProposed = false;
-    proposingPlayer = "";
+// Método para desistência
+void Match::resign() {
+    if (current_turn_->getplayerColor() == White) {
+        game_state_ = VictoryB;
+    } else {
+        game_state_ = VictoryW;
+    }
 }
