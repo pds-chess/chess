@@ -43,4 +43,3 @@ public:
     // Método para desistência
     void resign();
 };
-};

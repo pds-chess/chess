@@ -34,7 +34,7 @@ bool King::validateCastle(Coordinates final_coordinates) const{
         Rook* rook = nullptr;
         Piece* pieceCol_7 = getBoard()->getPiece(Coordinates(getCoords().getRow(), 7));
         Piece* pieceCol_0 = getBoard()->getPiece(Coordinates(getCoords().getRow(), 0));
-        if (short_castle(final_coordinates) && dynamic_cast<Rook*>(pieceCol_7))
+        if (short_castle(final_coordinates) && dynamic_cast<Rook*>(pieceCol_7) != NULL)
         {
             rook = dynamic_cast<Rook*>(pieceCol_7);
             if (rook->hasMoved())
@@ -46,7 +46,7 @@ bool King::validateCastle(Coordinates final_coordinates) const{
                 else
                     return false;
             }
-        }else if (!short_castle(final_coordinates) && dynamic_cast<Rook*>(pieceCol_0)){
+        }else if (!short_castle(final_coordinates) && dynamic_cast<Rook*>(pieceCol_0) != NULL){
             rook = dynamic_cast<Rook*>(pieceCol_0);
             if (rook->hasMoved())
                 return false;

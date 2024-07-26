@@ -76,7 +76,7 @@ void Match::movePiece(Piece* target_piece, Coordinates final_coords){
     } catch (std::invalid_argument& e) {
         // Checa se é um roque
         King* king = dynamic_cast<King*>(target_piece);
-        if (king && final_coords.getCol() == (target_piece->getCoords().getCol() + 2 || target_piece->getCoords().getCol() - 2))
+        if (king != NULL && final_coords.getCol() == (target_piece->getCoords().getCol() + 2 || target_piece->getCoords().getCol() - 2))
             if (king->validateCastle(final_coords))
                 king->castle(final_coords);
             else
