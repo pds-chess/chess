@@ -30,7 +30,7 @@ if (RowF+ColF==Secundary_Diagonal || RowF-ColF==Primary_Diagonal) {
     }
     for (int i=2, j=2;i<=8 && j<=8; i++, j++) {
         Piece* PieceF= getBoard()->getPiece(Coordinates (RowP+i*multiplier_i,ColP+j*multiplier_j));
-        if (PieceF->getColor()!=getColor() && PieceF!=nullptr && PieceF->getCoords().getCol()==ColF && PieceF->getCoords().getRow()==RowF)
+        if (((PieceF->getColor()!=getColor() && PieceF!=nullptr)||PieceF==nullptr) && PieceF->getCoords().getCol()==ColF && PieceF->getCoords().getRow()==RowF)
             return true;
         if (PieceF!=nullptr)
                 return false;
