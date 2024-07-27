@@ -4,7 +4,7 @@
 Pawn::Pawn(Coordinates initial_coords, Color color, Board *board)
     : Piece(initial_coords, color, board){
     moved_ = false;
-};
+}
 
 bool Pawn::validateMove(Coordinates final_coordinates) const{
     int multiplier = 0;
