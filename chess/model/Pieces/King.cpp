@@ -3,7 +3,7 @@
 
 King::King(Coordinates initial_coords, Color color, Board* board) : Piece(initial_coords, color, board){
     moved_ = false;
-};
+}
 
 void King::movePiece(Coordinates final_coordinates){
     Piece::movePiece(final_coordinates);
@@ -11,6 +11,14 @@ void King::movePiece(Coordinates final_coordinates){
 }
 
 bool King::validateMove(Coordinates final_coordinates) const{
+    int DeltaRow = (final_coordinates.getRow() - getCoords().getRow());
+    int DeltaCol = (final_coordinates.getCol() - getCoords().getCol());
+    if (DeltaCol==1||DeltaRow==-1||DeltaCol==1||DeltaCol==-1) {
+        Piece* PieceF= getBoard()->getPiece(Coordinates (final_coordinates.getRow(), final_coordinates.getCol()));
+        if (PieceF==nullptr||PieceF->getColor()!=getColor())
+        return true;
+    }
+    return false;
 }
 
 bool King::hasMoved() const{
