@@ -61,7 +61,7 @@ std::list<Move> History::getMoves(int game_id) const {
         player_name = token;
 
         // Criar um Move com as informações lidas e adicionar à lista de movimentos
-        Move move(origin, destination, color, player_name);
+        Move move(origin, destination, color, player_name, game_id);
         moves.push_back(move);
     }
 

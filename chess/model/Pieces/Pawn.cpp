@@ -1,4 +1,5 @@
 #include "Pawn.hpp"
+#include "Board.hpp"
 
 Pawn::Pawn(Coordinates initial_coords, Color color, Board *board)
     : Piece(initial_coords, color, board){

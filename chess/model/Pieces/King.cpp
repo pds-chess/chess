@@ -1,7 +1,5 @@
-#pragma once
-
 #include "King.hpp"
-#include <stdexcept>
+#include "Board.hpp"
 
 King::King(Coordinates initial_coords, Color color, Board* board) : Piece(initial_coords, color, board){
     moved_ = false;
@@ -28,7 +26,7 @@ bool King::short_castle(Coordinates final_coordinates) const{
 }
 
 bool King::validateCastle(Coordinates final_coordinates) const{
-    if (hasMoved)
+    if (hasMoved())
         return false;
     else{        
         Rook* rook = nullptr;

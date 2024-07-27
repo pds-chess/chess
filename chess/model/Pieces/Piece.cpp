@@ -1,4 +1,5 @@
 #include "Piece.hpp"
+#include "Board.hpp"
 #include <stdexcept>
 
 Piece::Piece(Coordinates initial_coords, Color color, Board* board){

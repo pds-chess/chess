@@ -1,5 +1,8 @@
 #include "Coordinates.hpp"
+
 #include <stdexcept>
+
+Coordinates::Coordinates() {}
 
 Coordinates::Coordinates(int row, int column){
     if(row < 0 || row > 7){
@@ -8,15 +11,38 @@ Coordinates::Coordinates(int row, int column){
     if(column < 0 || column > 7){
         throw std::invalid_argument("Coluna inválida.");
     }
-}
-
-Coordinates::Coordinates():Coordinates(0,0){
-}
-
-int Coordinates::getCol() const{
-    return column_;
+    row_ = row;
+    column_ = column;
 }
 
 int Coordinates::getRow() const{
     return row_;
 }
+
+int  Coordinates::getCol() const{
+    return column_;
+}
+
+std::string Coordinates::toString() {
+    return std::to_string(row_) + "," + std::to_string(column_);
+}
+
+static Coordinates fromString(const std::string& str) {
+        std::istringstream iss(str);
+        std::string token;
+        int row, column;
+
+        if (std::getline(iss, token, ',')) {
+            row = std::stoi(token);
+        } else {
+            throw std::invalid_argument("String format is incorrect for Coordinates.");
+        }
+
+        if (std::getline(iss, token, ',')) {
+            column = std::stoi(token);
+        } else {
+            throw std::invalid_argument("String format is incorrect for Coordinates.");
+        }
+
+        return Coordinates(row, column);
+    }

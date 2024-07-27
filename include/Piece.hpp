@@ -2,7 +2,8 @@
 
 #include "Coordinates.hpp"
 #include "Color.hpp"
-#include "Board.hpp"
+
+class Board;
 
 class Piece{
     private:

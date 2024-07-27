@@ -1,6 +1,5 @@
-#pragma once
-
 #include "Rook.hpp"
+#include "Board.hpp"
 
 Rook::Rook(Coordinates initial_coords, Color color, Board* board) : Piece(initial_coords, color, board){
     moved_ = false;
