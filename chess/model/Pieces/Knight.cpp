@@ -8,8 +8,8 @@ Knight::Knight(Coordinates initial_coords, Color color, Board* board) : Piece(in
 bool Knight::validateMove(Coordinates final_coordinates) const {
     int RowP=getCoords().getRow(), ColP=getCoords().getCol();
     int RowF=final_coordinates.getRow(), ColF=final_coordinates.getCol();
-    int DeltaRow = (final_coordinates.getRow() - Piece::getCoords().getRow());
-    int DeltaCol = (final_coordinates.getCol() - Piece::getCoords().getCol());
+    int DeltaRow = (final_coordinates.getRow() - getCoords().getRow());
+    int DeltaCol = (final_coordinates.getCol() - getCoords().getCol());
     if(DeltaCol<0)
     DeltaCol*=-1;
     if(DeltaRow<0)
