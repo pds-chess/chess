@@ -6,7 +6,7 @@
 #include "GameState.hpp"
 #include "Color.hpp"
 #include "King.hpp"
-
+#include "Pawn.hpp"
 #include <string>
 
 class Match {

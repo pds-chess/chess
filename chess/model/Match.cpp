@@ -70,6 +70,9 @@ void Match::movePiece(Piece* target_piece, Coordinates final_coords){
     Piece* piece_end = board_.getPiece(final_coords);
 
     // Testa en passant
+    Pawn* pawn = dynamic_cast<Pawn*>(target_piece);
+    if (pawn != NULL && pawn->validateEnPassant(final_coords) == true)
+        pawn->enPassant(final_coords);
     //. . .
     try {
         target_piece->movePiece(final_coords);
