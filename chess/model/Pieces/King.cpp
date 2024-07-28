@@ -78,20 +78,11 @@ void King::castle(Coordinates final_coordinates){
     { 
         rook = dynamic_cast<Rook*>(pieceCol_7);
         rook->movePiece(Coordinates(rook->getCoords().getRow(),rook->getCoords().getCol()-2));
-        if (getColor() == Black)
-            King(Coordinates(0,6), Color(Black), getBoard());
-        else
-            King(Coordinates(7,6), Color(White),getBoard());
-        getBoard()->removePiece(getCoords());
-        
+        setCoords(final_coordinates);        
     }else{ 
         rook = dynamic_cast<Rook*>(pieceCol_0);
         rook->movePiece(Coordinates (rook->getCoords().getRow(),rook->getCoords().getCol()+3));
-        if (getColor() == Black)
-            King(Coordinates(0,2), Color(Black), getBoard());
-        else
-            King(Coordinates(7,2), Color(White),getBoard());
-        getBoard()->removePiece(getCoords());
+        setCoords(final_coordinates);
     }
 }
     

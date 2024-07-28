@@ -57,7 +57,7 @@ bool Pawn::validateEnPassant(Coordinates final_coordinates){
 
 void Pawn::enPassant(Coordinates final_coordinates) {
     int mult = 0;
-    if (getColor()==White)
+    if (getColor()==Black)
         mult = -1;
     else
         mult = 1;
