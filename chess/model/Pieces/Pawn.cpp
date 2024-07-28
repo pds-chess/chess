@@ -8,7 +8,7 @@ Pawn::Pawn(Coordinates initial_coords, Color color, Board *board)
 
 bool Pawn::validateMove(Coordinates final_coordinates) const{
     int multiplier = 0;
-    if (Piece::getColor())
+    if (Piece::getColor()==1)
         int multiplier = -1;
     else
         int multiplier = 1;
