@@ -7,6 +7,10 @@ Piece::Piece(Coordinates initial_coords, Color color, Board* board){
     color_ = color;
     board_ = board;
 }
+void Piece::setCoords(Coordinates coords){
+    coords_ = coords;
+}
+
 
 void Piece::movePiece(Coordinates final_coordinates){
     if(!validateMove(final_coordinates)){
