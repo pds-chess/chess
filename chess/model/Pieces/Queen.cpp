@@ -44,15 +44,16 @@ bool Queen::validateMove(Coordinates final_coordinates) const {
             multiplier_i=1;
             multiplier_j=-1;
     }
-     for (int i=2, j=2;i<=8 && j<=8; i++, j++) {
+    for (int i=2, j=2;i<=8 && j<=8; i++, j++) {
         Piece* PieceF= getBoard()->getPiece(Coordinates (RowP+i*multiplier_i,ColP+j*multiplier_j));
         if (((PieceF->getColor()!=getColor() && PieceF!=nullptr)||PieceF==nullptr) && PieceF->getCoords().getCol()==ColF && PieceF->getCoords().getRow()==RowF)
             return true;
         if (PieceF!=nullptr)
             return false;
-        }
-    return false;
     }
+    
+    }
+    return false;
 }
 
 char Queen::getPieceChar() const{
