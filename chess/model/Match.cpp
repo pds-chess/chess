@@ -134,33 +134,36 @@ void Match::updatePlayers(){
 }
 
 void Match::promotePawn(Piece* pawn) {
+    Coordinates auxCoords = pawn->getCoords();
+    Color auxColor = pawn->getColor();
+    board_.removePiece(pawn->getCoords());
+    
     char choice = NULL;
-    std::cout << "Digite a letra correspondente a qual peça promover o peão: " << std::endl;
+    std::cout << "Seu peão será promovido! Digite a letra correspondente a qual peça deseja promovê-lo: " << std::endl;
     std::cout << "Rainha - R" << std::endl;
     std::cout << "Torre - T" << std::endl;
     std::cout << "Bispo - B" << std::endl;
     std::cout << "Cavalo - C" << std::endl;
     while(choice != 'R' || choice != 'C' || choice != 'T' || choice != 'B')
     {
-        // std::cin >> choice;
-        // switch (choice) {
-        //     case 'R':
-        //         board_.removePiece(pawn->getCoords());
-        //         Queen(pawn->getCoords(),pawn->getColor(),board_);
-        //         break;
-        //     case 'T':
-        //         pawn = ROOK;
-        //         break;
-        //     case 'B':
-        //         pawn = BISHOP;
-        //         break;
-        //     case 'C':
-        //         pawn = KNIGHT;
-        //         break;
-        //     default:
-        //         std::cout << "Escolha inválida. Favor, escolher uma das opções listadas" << std::endl;
-        //         break;        
-        // }
+        std::cin >> choice;
+        switch (choice) {
+            case 'R':
+                Queen(auxCoords, auxColor,&board_);
+                break;
+            case 'T':
+                Rook(auxCoords, auxColor,&board_);
+                break;
+            case 'B':
+                Bishop(auxCoords, auxColor,&board_);
+                break;
+            case 'C':
+                Knight(auxCoords, auxColor,&board_);
+                break;
+            default:
+                std::cout << "Escolha inválida. Favor, escolher uma das opções listadas" << std::endl;
+                break;        
+        }
     }
 }
 
