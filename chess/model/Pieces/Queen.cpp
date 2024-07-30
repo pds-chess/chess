@@ -3,7 +3,7 @@
 
 Queen::Queen(Coordinates initial_coords, Color color, Board* board) : Piece(initial_coords, color, board) {
 
-        }
+    }
         
 bool Queen::validateMove(Coordinates final_coordinates) const {
     int Secundary_Diagonal= getCoords().getRow() + getCoords().getCol();

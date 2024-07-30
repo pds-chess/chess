@@ -1,5 +1,10 @@
 #include "Match.hpp"
 #include <stdexcept>
+#include <iostream>
+#include <Queen.hpp>
+#include <Rook.hpp>
+#include <Bishop.hpp>
+#include <Knight.hpp>
 
 Match::Match(std::string playerW, std::string playerB) {
     startGame(playerW, playerB);
@@ -85,7 +90,11 @@ void Match::movePiece(Piece* target_piece, Coordinates final_coords){
             else
                 throw e;
     }
-
+    //Promover o peão caso chegue ao fim do tabuleiro
+    if (pawn != NULL && pawn->validatePromotion() == true)
+        promotePawn(pawn);
+    
+    // isso aqui vai apagar a propria peça assim que ela fizer o movimento (eu acho)
     if (piece_end != nullptr) {
         board_.removePiece(final_coords);
     }
@@ -124,37 +133,35 @@ void Match::updatePlayers(){
     player_B_.setPieces(black_pieces);
 }
 
-void Match::promotePawn(Piece* pawn, int chosen_piece) {
-    //if((current_turn_.getplayerColor() == White && pawn->getCoords().getRow() == 0) || (current_turn_.getplayerColor() == Black && pawn->getCoords().getRow() == 7))
-    //{
-        // std::cout << "Escolha para qual peça promover o peão: " << std::endl;
-        // std::cout << "1. Rainha" << std::endl;
-        // std::cout << "2. Torre" << std::endl;
-        // std::cout << "3. Bispo" << std::endl;
-        // std::cout << "4. Cavalo" << std::endl;
-
-        // while(chosen_piece != 1 || chosen_piece != 2 || chosen_piece != 3 || chosen_piece != 4)
-        // {
-        //     std::cin << chosen_piece;
-        //     switch (chosen_piece) {
-        //         case 1:
-        //             pawn = QUEEN;
-        //             break;
-        //         case 2:
-        //             pawn = ROOK;
-        //             break;
-        //         case 3:
-        //             pawn = BISHOP;
-        //             break;
-        //         case 4:
-        //             pawn = KNIGHT;
-        //             break;
-        //         default:
-        //             std::cout << "Escolha inválida. Favor, escolher uma das opções listadas" << std::endl
-        //             break;        
-        //     }
+void Match::promotePawn(Piece* pawn) {
+    char choice = NULL;
+    std::cout << "Digite a letra correspondente a qual peça promover o peão: " << std::endl;
+    std::cout << "Rainha - R" << std::endl;
+    std::cout << "Torre - T" << std::endl;
+    std::cout << "Bispo - B" << std::endl;
+    std::cout << "Cavalo - C" << std::endl;
+    while(choice != 'R' || choice != 'C' || choice != 'T' || choice != 'B')
+    {
+        // std::cin >> choice;
+        // switch (choice) {
+        //     case 'R':
+        //         board_.removePiece(pawn->getCoords());
+        //         Queen(pawn->getCoords(),pawn->getColor(),board_);
+        //         break;
+        //     case 'T':
+        //         pawn = ROOK;
+        //         break;
+        //     case 'B':
+        //         pawn = BISHOP;
+        //         break;
+        //     case 'C':
+        //         pawn = KNIGHT;
+        //         break;
+        //     default:
+        //         std::cout << "Escolha inválida. Favor, escolher uma das opções listadas" << std::endl;
+        //         break;        
         // }
-    //}
+    }
 }
 
 // Método para finalizar o jogo com empate

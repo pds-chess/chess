@@ -20,7 +20,7 @@ private:
     bool isCheck() const;
     bool isDraw() const;
     void movePiece(Piece* target_piece, Coordinates final_coords);
-    void promotePawn(Piece* pawn, int chosen_piece);
+    void promotePawn(Piece* pawn);
     void updatePlayers();
 
    // Atributos para proposta de empate

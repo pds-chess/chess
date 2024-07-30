@@ -71,3 +71,10 @@ void Pawn::enPassant(Coordinates final_coordinates) {
 char Pawn::getPieceChar() const{
     return 'P';
 }
+
+bool Pawn::validatePromotion() const {
+    if((getColor() == White && getCoords().getRow() == 0) || (getColor() == Black && getCoords().getRow() == 7))
+        return true;
+    else
+        return false;
+}
