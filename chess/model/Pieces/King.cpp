@@ -90,83 +90,88 @@ char King::getPieceChar() const{
     return 'K';
 }
 
-bool King::isCheck(const Board* board, Coordinates kingCoords, Color kingColor) {
-    // Verificar ameaças diagonais (bispos, rainha)
-    for (int dirRow = -1; dirRow <= 1; dirRow += 2) {
-        for (int dirCol = -1; dirCol <= 1; dirCol += 2) {
-            int row = kingCoords.getRow() + dirRow;
-            int col = kingCoords.getCol() + dirCol;
-            while (board->isValid(Coordinates(row, col))) {
-                Piece* piece = board->getPiece(Coordinates(row, col));
+    bool isKingInCheck(const Board* board, Coordinates kingCoords, Color kingColor) {
+        // Verificar ameaças diagonais (bispos, rainha)
+        for (int dirRow = -1; dirRow <= 1; dirRow += 2) {
+            for (int dirCol = -1; dirCol <= 1; dirCol += 2) {
+                int row = kingCoords.getRow() + dirRow;
+                int col = kingCoords.getCol() + dirCol;
+                while (board->isValid(Coordinates(row, col))) {
+                    Piece* piece = board->getPiece(Coordinates(row, col));
+                    if (piece != nullptr) {
+                        if (piece->getColor() != kingColor && (dynamic_cast<Bishop*>(piece) || dynamic_cast<Queen*>(piece))) {
+                            return true;
+                        }
+                        break;
+                    }
+                    row += dirRow;
+                    col += dirCol;
+                }
+            }
+        }
+
+        // Verificar ameaças horizontais e verticais (torres, rainha)
+        for (int dir = -1; dir <= 1; dir += 2) {
+            // Verificar linhas
+            int row = kingCoords.getRow() + dir;
+            while (board->isValid(Coordinates(row, kingCoords.getCol()))) {
+                Piece* piece = board->getPiece(Coordinates(row, kingCoords.getCol()));
                 if (piece != nullptr) {
-                    if (piece->getColor() != kingColor && (dynamic_cast<Bishop*>(piece) || dynamic_cast<Queen*>(piece))) {
+                    if (piece->getColor() != kingColor && (dynamic_cast<Rook*>(piece) || dynamic_cast<Queen*>(piece))) {
                         return true;
                     }
                     break;
                 }
-                row += dirRow;
-                col += dirCol;
+                row += dir;
+            }
+
+            // Verificar colunas
+            int col = kingCoords.getCol() + dir;
+            while (board->isValid(Coordinates(kingCoords.getRow(), col))) {
+                Piece* piece = board->getPiece(Coordinates(kingCoords.getRow(), col));
+                if (piece != nullptr) {
+                    if (piece->getColor() != kingColor && (dynamic_cast<Rook*>(piece) || dynamic_cast<Queen*>(piece))) {
+                        return true;
+                    }
+                    break;
+                }
+                col += dir;
             }
         }
-    }
 
-    // Verificar ameaças horizontais e verticais (torres, rainha)
-    for (int dir = -1; dir <= 1; dir += 2) {
-        // Verificar linhas
-        int row = kingCoords.getRow() + dir;
-        while (board->isValid(Coordinates(row, kingCoords.getCol()))) {
-            Piece* piece = board->getPiece(Coordinates(row, kingCoords.getCol()));
-            if (piece != nullptr) {
-                if (piece->getColor() != kingColor && (dynamic_cast<Rook*>(piece) || dynamic_cast<Queen*>(piece))) {
+        // Verificar ameaças do cavalo
+        int knightMoves[8][2] = {
+            {2, 1},  {2, -1},  {-2, 1},  {-2, -1},
+            {1, 2},  {1, -2},  {-1, 2},  {-1, -2}
+        };
+        for (int i = 0; i < 8; ++i) {
+            Coordinates coords(kingCoords.getRow() + knightMoves[i][0], kingCoords.getCol() + knightMoves[i][1]);
+            if (board->isValid(coords)) {
+                Piece* piece = board->getPiece(coords);
+                if (piece != nullptr && piece->getColor() != kingColor && dynamic_cast<Knight*>(piece)) {
                     return true;
                 }
-                break;
             }
-            row += dir;
         }
 
-        // Verificar colunas
-        int col = kingCoords.getCol() + dir;
-        while (board->isValid(Coordinates(kingCoords.getRow(), col))) {
-            Piece* piece = board->getPiece(Coordinates(kingCoords.getRow(), col));
-            if (piece != nullptr) {
-                if (piece->getColor() != kingColor && (dynamic_cast<Rook*>(piece) || dynamic_cast<Queen*>(piece))) {
+        // Verificar ameaças dos peões
+        int pawnMoves[2][2];
+        if (kingColor == WHITE) {
+            pawnMoves[0][0] = -1; pawnMoves[0][1] = -1; // Peão branco atacando para cima e para a esquerda
+            pawnMoves[1][0] = -1; pawnMoves[1][1] = 1;  // Peão branco atacando para cima e para a direita
+        } else {
+            pawnMoves[0][0] = 1; pawnMoves[0][1] = -1; // Peão preto atacando para baixo e para a esquerda
+            pawnMoves[1][0] = 1; pawnMoves[1][1] = 1;  // Peão preto atacando para baixo e para a direita
+        }
+
+        for (int i = 0; i < 2; ++i) {
+            Coordinates coords(kingCoords.getRow() + pawnMoves[i][0], kingCoords.getCol() + pawnMoves[i][1]);
+            if (board->isValid(coords)) {
+                Piece* piece = board->getPiece(coords);
+                if (piece != nullptr && piece->getColor() != kingColor && dynamic_cast<Pawn*>(piece)) {
                     return true;
                 }
-                break;
-            }
-            col += dir;
-        }
-    }
-
-    // Verificar ameaças do cavalo
-    int knightMoves[8][2] = {
-        {2, 1},  {2, -1},  {-2, 1},  {-2, -1},
-        {1, 2},  {1, -2},  {-1, 2},  {-1, -2}
-    };
-    for (int i = 0; i < 8; ++i) {
-        Coordinates coords(kingCoords.getRow() + knightMoves[i][0], kingCoords.getCol() + knightMoves[i][1]);
-        if (board->isValid(coords)) {
-            Piece* piece = board->getPiece(coords);
-            if (piece != nullptr && piece->getColor() != kingColor && dynamic_cast<Knight*>(piece)) {
-                return true;
             }
         }
-    }
-
-    // Verificar ameaças dos peões
-    int pawnMoves[2][2] = {
-        {kingColor == WHITE ? -1 : 1, -1}, // Peão atacando para cima e para a esquerda
-        {kingColor == WHITE ? -1 : 1, 1}   // Peão atacando para cima e para a direita
-    };
-    for (int i = 0; i < 2; ++i) {
-        Coordinates coords(kingCoords.getRow() + pawnMoves[i][0], kingCoords.getCol() + pawnMoves[i][1]);
-        if (board->isValid(coords)) {
-            Piece* piece = board->getPiece(coords);
-            if (piece != nullptr && piece->getColor() != kingColor && dynamic_cast<Pawn*>(piece)) {
-                return true;
-            }
-        }
-    }
     return false;
 }
