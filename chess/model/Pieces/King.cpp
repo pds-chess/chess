@@ -6,7 +6,11 @@ King::King(Coordinates initial_coords, Color color, Board* board) : Piece(initia
 }
 
 void King::movePiece(Coordinates final_coordinates){
+    if (!hasMoved() && (final_coordinates.getCol() == 6 || final_coordinates.getCol() == 2))
+        castle(final_coordinates);
+    else
     Piece::movePiece(final_coordinates);
+    
     moved_ = true;
 }
 
@@ -18,6 +22,10 @@ bool King::validateMove(Coordinates final_coordinates) const{
         if (PieceF==nullptr||PieceF->getColor()!=getColor())
         return true;
     }
+
+    if (!hasMoved() && (final_coordinates.getCol() == 6 || final_coordinates.getCol() == 2))
+        return validateCastle(final_coordinates);
+    
     return false;
 }
 

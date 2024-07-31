@@ -142,7 +142,7 @@ void Match::promotePawn(Piece* pawn) {
     Color auxColor = pawn->getColor();
     board_.removePiece(pawn->getCoords());
     
-    char choice = NULL;
+    char choice = 'p';
     std::cout << "Seu peão será promovido! Digite a letra correspondente a qual peça deseja promovê-lo: " << std::endl;
     std::cout << "Rainha - R" << std::endl;
     std::cout << "Torre - T" << std::endl;

@@ -66,7 +66,7 @@ TEST_CASE ("Castle validation"){
                 b_.removePiece(long_W_1);
                 b_.removePiece(long_W_2);
                 b_.removePiece(long_W_3);
-                CHECK(b_.getPiece(kingW)->validateMove(short_W_2) == true);
+                CHECK(b_.getPiece(kingW)->validateMove(long_W_2) == true);
             }
             SUBCASE("One piece between 1"){
                 b_.removePiece(long_W_1);
@@ -76,7 +76,7 @@ TEST_CASE ("Castle validation"){
             SUBCASE("One piece between 2"){
                 b_.removePiece(long_W_1);
                 b_.removePiece(long_W_3);
-                CHECK(b_.getPiece(kingW)->validateMove(short_W_2) == false);
+                CHECK(b_.getPiece(kingW)->validateMove(long_W_2) == false);
             }
             SUBCASE("One piece between 3"){
                 b_.removePiece(long_W_3);
@@ -103,14 +103,14 @@ TEST_CASE ("Castle validation"){
                 //Caso precise mover a peça preta:
                 //b_.getPiece(Coordinates(1,6))->movePiece(Coordinates(2,6));
                 b_.getPiece(long_W_2)->movePiece(rookWL);
-                CHECK(b_.getPiece(kingW)->validateMove(short_W_2) == false);
+                CHECK(b_.getPiece(kingW)->validateMove(long_W_2) == false);
             }
             SUBCASE("Rook has moved 2"){
                 b_.removePiece(long_W_1);
                 b_.removePiece(long_W_2);
                 b_.removePiece(long_W_3);
                 b_.getPiece(rookWL)->movePiece(long_W_1);
-                CHECK(b_.getPiece(kingW)->validateMove(short_W_2) == false);
+                CHECK(b_.getPiece(kingW)->validateMove(long_W_2) == false);
             }
             SUBCASE("King has moved "){
                 b_.removePiece(long_W_1);
@@ -120,7 +120,7 @@ TEST_CASE ("Castle validation"){
                 //Caso precise mover a peça preta:
                 //b_.getPiece(Coordinates(1,6))->movePiece(Coordinates(2,6));
                 b_.getPiece(long_W_3)->movePiece(kingW);
-                CHECK(b_.getPiece(kingW)->validateMove(short_W_2) == false);
+                CHECK(b_.getPiece(kingW)->validateMove(long_W_2) == false);
             }
         }
     }
