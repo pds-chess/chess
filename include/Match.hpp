@@ -8,6 +8,7 @@
 #include "King.hpp"
 #include "Pawn.hpp"
 #include <string>
+#include <vector>
 
 class Match {
 private:
@@ -23,12 +24,18 @@ private:
     void promotePawn(Piece* pawn);
     void updatePlayers();
 
-   // Atributos para proposta de empate
+    // Atributos para proposta de empate
     bool drawProposed;
     std::string proposingPlayer;
 
     // Método para finalizar o jogo com empate
     void draw();
+
+    // Lista de movimentos
+    std::vector<std::string> moves_;
+
+    // Método para registrar um movimento
+    void registerMove(Piece* target_piece, Coordinates final_coords);
 
 public:
     Match(std::string playerW, std::string playerB);
