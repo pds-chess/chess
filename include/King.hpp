@@ -15,4 +15,5 @@ class King: public Piece{
         void castle(Coordinates final_coordinates);
         bool hasMoved() const;
         virtual char getPieceChar() const;
+        bool isCheck(const Board* board, Coordinates kingCoords, Color kingColor);
 };
