@@ -68,6 +68,9 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
 
     movePiece(target_piece, final_coords);
 
+    // Registrar o movimento
+    registerMove(target_piece, final_coords);
+
     endTurn();
 }
 
@@ -78,7 +81,7 @@ void Match::movePiece(Piece* target_piece, Coordinates final_coords){
     Pawn* pawn = dynamic_cast<Pawn*>(target_piece);
     if (pawn != NULL && pawn->validateEnPassant(final_coords) == true)
         pawn->enPassant(final_coords);
-    //. . .
+    
     try {
         target_piece->movePiece(final_coords);
     } catch (std::invalid_argument& e) {
@@ -90,11 +93,11 @@ void Match::movePiece(Piece* target_piece, Coordinates final_coords){
             else
                 throw e;
     }
-    //Promover o peão caso chegue ao fim do tabuleiro
+
+    // Promover o peão caso chegue ao fim do tabuleiro
     if (pawn != NULL && pawn->validatePromotion() == true)
         promotePawn(pawn);
-    
-    // isso aqui vai apagar a propria peça assim que ela fizer o movimento (eu acho)
+
     if (piece_end != nullptr) {
         board_.removePiece(final_coords);
     }
@@ -165,6 +168,12 @@ void Match::promotePawn(Piece* pawn) {
                 break;        
         }
     }
+}
+
+// Método para registrar um movimento
+void Match::registerMove(Piece* target_piece, Coordinates final_coords) {
+    std::string move = target_piece->toString() + " para " + final_coords.toString();
+    moves_.push_back(move);
 }
 
 // Método para finalizar o jogo com empate
