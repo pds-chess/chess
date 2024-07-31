@@ -12,17 +12,17 @@
 
 History::History(std::string path) : path_to_file_(path) {}
 
-void History::saveMove(Coordinates origin_coords, Coordinates final_coords, Color player_color, std::string player_name, int game_id) {
+void History::saveMove(Move move){
     std::ofstream file(path_to_file_, std::ios::app); // Abrir o arquivo em modo de adição (append)
     if (!file.is_open()) {
         throw std::runtime_error("Não foi possível abrir o arquivo de histórico.");
     }
 
-    file << game_id << ","
-         << origin_coords.toString() << ","
-         << final_coords.toString() << ","
-         << (player_color == White ? "White" : "Black") << ","
-         << player_name << "\n";
+    file << move.game_id_ << ", "
+         << move.origin_coordinates_ << " para "
+         << move.final_coordinates_ << ", "
+         << (move.color_ == White ? "White" : "Black") << ", "
+         << move.player_name_ << "\n";
 
     file.close();
 }

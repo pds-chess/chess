@@ -11,6 +11,7 @@ Match::Match(std::string playerW, std::string playerB) {
 }
 
 void Match::startGame(std::string playerW, std::string playerB){
+    //game_id_ = 
     board_ = Board();
     player_W_ = Player(playerW, White);
     player_B_ = Player(playerB, Black);
@@ -68,9 +69,6 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
 
     movePiece(target_piece, final_coords);
 
-    // Registrar o movimento
-    registerMove(target_piece, final_coords);
-
     endTurn();
 }
 
@@ -80,10 +78,13 @@ void Match::movePiece(Piece* target_piece, Coordinates final_coords){
     // Testa en passant
     Pawn* pawn = dynamic_cast<Pawn*>(target_piece);
     if (pawn != NULL && pawn->validateEnPassant(final_coords) == true)
+    {
         pawn->enPassant(final_coords);
-    
+        registerMove(target_piece, final_coords);
+    }
     try {
         target_piece->movePiece(final_coords);
+        registerMove(target_piece, final_coords);
     } catch (std::invalid_argument& e) {
         // Checa se é um roque
         King* king = dynamic_cast<King*>(target_piece);
@@ -172,8 +173,10 @@ void Match::promotePawn(Piece* pawn) {
 
 // Método para registrar um movimento
 void Match::registerMove(Piece* target_piece, Coordinates final_coords) {
-    std::string move = target_piece->toString() + " para " + final_coords.toString();
-    moves_.push_back(move);
+    std::string moves = target_piece->getCoords().toString() + " para " + final_coords.toString();
+    Move move = Move(target_piece->getCoords(),final_coords,current_turn_->getplayerColor(),current_turn_->getPlayerName(), game_id_);
+    moves_.push_back(moves);
+    //history_.saveMove(move);
 }
 
 // Método para finalizar o jogo com empate

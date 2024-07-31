@@ -8,7 +8,7 @@
 #include "King.hpp"
 #include "Pawn.hpp"
 #include <string>
-#include <vector>
+#include <list>
 
 class Match {
 private:
@@ -17,6 +17,7 @@ private:
     Player player_B_;
     Player* current_turn_;
     Gamestate game_state_;
+    int game_id_;
     void endTurn();
     bool isCheck() const;
     bool isDraw() const;
@@ -32,7 +33,8 @@ private:
     void draw();
 
     // Lista de movimentos
-    std::vector<std::string> moves_;
+    std::list<std::string> moves_;
+    //History history_;
 
     // Método para registrar um movimento
     void registerMove(Piece* target_piece, Coordinates final_coords);
