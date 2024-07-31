@@ -14,11 +14,12 @@ class Board{
         void clearBoard();
     public:
         Board();
+        Board(const Board& copyBoard);
         void initialize();
         void update();
         std::vector<std::vector<Piece*>> getBoard() const;
         std::string boardToString() const;
-        Piece* getPiece(Coordinates coords) const;
-        void removePiece(Coordinates coords);
+        Piece* getPiece(const Coordinates& coords) const;
+        void removePiece(const Coordinates& coords);
         std::list<Piece*> getPieces() const;
 };

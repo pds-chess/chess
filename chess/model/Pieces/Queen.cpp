@@ -1,11 +1,11 @@
 #include "Board.hpp"
 #include "Queen.hpp"
 
-Queen::Queen(Coordinates initial_coords, Color color, Board* board) : Piece(initial_coords, color, board) {
+Queen::Queen(const Coordinates& initial_coords, Color color, const  Board& board) : Piece(initial_coords, color, board) {
 
     }
         
-bool Queen::validateMove(Coordinates final_coordinates) const {
+bool Queen::validateMove(const Coordinates& final_coordinates) const {
     int Secundary_Diagonal= getCoords().getRow() + getCoords().getCol();
     int Primary_Diagonal= getCoords().getRow() - getCoords().getCol();
     int RowF = final_coordinates.getRow(), ColF = final_coordinates.getCol();
@@ -45,7 +45,7 @@ bool Queen::validateMove(Coordinates final_coordinates) const {
             multiplier_j=-1;
     }
     for (int i=2, j=2;i<=8 && j<=8; i++, j++) {
-        Piece* PieceF= getBoard()->getPiece(Coordinates (RowP+i*multiplier_i,ColP+j*multiplier_j));
+        Piece* PieceF= getBoard().getPiece(Coordinates (RowP+i*multiplier_i,ColP+j*multiplier_j));
         if (((PieceF->getColor()!=getColor() && PieceF!=nullptr)||PieceF==nullptr) && PieceF->getCoords().getCol()==ColF && PieceF->getCoords().getRow()==RowF)
             return true;
         if (PieceF!=nullptr)

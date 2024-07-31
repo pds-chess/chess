@@ -4,7 +4,7 @@
 
 class Knight: public Piece{
     public:
-        Knight(Coordinates initial_coords, Color color, Board* board);
-        virtual bool validateMove(Coordinates final_coordinates) const;
+        Knight(const Coordinates& initial_coords, Color color, const Board& board);
+        virtual bool validateMove(const Coordinates& final_coordinates) const;
         virtual char getPieceChar() const;
 };

@@ -72,7 +72,7 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
     endTurn();
 }
 
-void Match::movePiece(Piece* target_piece, Coordinates final_coords){
+void Match::movePiece(Piece* target_piece, const Coordinates& final_coords){
     Piece* piece_end = board_.getPiece(final_coords);
 
     // Testa en passant
@@ -153,16 +153,16 @@ void Match::promotePawn(Piece* pawn) {
         std::cin >> choice;
         switch (choice) {
             case 'R':
-                Queen(auxCoords, auxColor,&board_);
+                // Queen(auxCoords, auxColor,&board_);
                 break;
             case 'T':
-                Rook(auxCoords, auxColor,&board_);
+                // Rook(auxCoords, auxColor,&board_);
                 break;
             case 'B':
-                Bishop(auxCoords, auxColor,&board_);
+                // Bishop(auxCoords, auxColor,&board_);
                 break;
             case 'C':
-                Knight(auxCoords, auxColor,&board_);
+                // Knight(auxCoords, auxColor,&board_);
                 break;
             default:
                 std::cout << "Escolha inválida. Favor, escolher uma das opções listadas" << std::endl;

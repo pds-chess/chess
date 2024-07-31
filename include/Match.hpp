@@ -21,7 +21,7 @@ private:
     void endTurn();
     bool isCheck() const;
     bool isDraw() const;
-    void movePiece(Piece* target_piece, Coordinates final_coords);
+    void movePiece(Piece* target_piece, const Coordinates& final_coords);
     void promotePawn(Piece* pawn);
     void updatePlayers();
 

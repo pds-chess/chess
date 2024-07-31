@@ -2,10 +2,10 @@
 #include "Knight.hpp"
 
 
-Knight::Knight(Coordinates initial_coords, Color color, Board* board) : Piece(initial_coords, color, board) {
+Knight::Knight(const Coordinates& initial_coords, Color color, const Board& board) : Piece(initial_coords, color, board) {
 
 }
-bool Knight::validateMove(Coordinates final_coordinates) const {
+bool Knight::validateMove(const Coordinates& final_coordinates) const {
     int RowP=getCoords().getRow(), ColP=getCoords().getCol();
     int RowF=final_coordinates.getRow(), ColF=final_coordinates.getCol();
     int DeltaRow = (final_coordinates.getRow() - getCoords().getRow());
@@ -15,7 +15,7 @@ bool Knight::validateMove(Coordinates final_coordinates) const {
     if(DeltaRow<0)
     DeltaRow*=-1;
     if(DeltaCol+DeltaRow==3) {
-        Piece* PieceF= getBoard()->getPiece(Coordinates (final_coordinates.getRow(), final_coordinates.getCol()));
+        Piece* PieceF= getBoard().getPiece(Coordinates (final_coordinates.getRow(), final_coordinates.getCol()));
         if (PieceF==nullptr||PieceF->getColor()!=getColor())
         return true;
     }

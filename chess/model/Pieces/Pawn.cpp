@@ -1,7 +1,7 @@
 #include "Pawn.hpp"
 #include "Board.hpp"
 
-Pawn::Pawn(Coordinates initial_coords, Color color, Board *board)
+Pawn::Pawn(const Coordinates& initial_coords, Color color, const Board& board)
     : Piece(initial_coords, color, board){
     moved_ = false;
     movedTwice_ = false;
@@ -16,7 +16,7 @@ void Pawn::movePiece(Coordinates final_coordinates){
     moved_ = true;
 }
 
-bool Pawn::validateMove(Coordinates final_coordinates) const{
+bool Pawn::validateMove(const Coordinates& final_coordinates) const{
     int multiplier = 0;
     if (getColor()==Black)
         multiplier = -1;
@@ -26,10 +26,10 @@ bool Pawn::validateMove(Coordinates final_coordinates) const{
     int DeltaCol = (final_coordinates.getCol() - getCoords().getCol()) * multiplier;
     if (DeltaRow > 0 && DeltaRow <= 2 && (DeltaCol == 0)){
         for (int i = 2; i <= 3 && (i < 3 || !moved_); i++)
-            if (getBoard()->getPiece(Coordinates(getCoords().getRow() + i * multiplier, getCoords().getCol())) != nullptr)
+            if (getBoard().getPiece(Coordinates(getCoords().getRow() + i * multiplier, getCoords().getCol())) != nullptr)
                 return false;
     }
-    else if (getBoard()->getPiece(final_coordinates) != nullptr && getBoard()->getPiece(final_coordinates)->getColor() != getColor() && DeltaCol == 1 && DeltaRow == 1)
+    else if (getBoard().getPiece(final_coordinates) != nullptr && getBoard().getPiece(final_coordinates)->getColor() != getColor() && DeltaCol == 1 && DeltaRow == 1)
         return true;
     return false;
 }
@@ -46,9 +46,9 @@ bool Pawn::validateEnPassant(Coordinates final_coordinates){
     }
     int DeltaRow = (final_coordinates.getRow() - getCoords().getRow()) * mult;
     int DeltaCol = (final_coordinates.getCol() - getCoords().getCol()) * mult;
-    if (final_coordinates.getRow() == finalRow && getBoard()->getPiece(final_coordinates) == nullptr && DeltaRow == 1 && DeltaCol == 1)
+    if (final_coordinates.getRow() == finalRow && getBoard().getPiece(final_coordinates) == nullptr && DeltaRow == 1 && DeltaCol == 1)
     {
-        Piece* target = getBoard()->getPiece(Coordinates(final_coordinates.getRow()-mult, final_coordinates.getCol()));
+        Piece* target = getBoard().getPiece(Coordinates(final_coordinates.getRow()-mult, final_coordinates.getCol()));
         Pawn* enemyPawn = dynamic_cast<Pawn*>(target);
         if (enemyPawn != NULL && enemyPawn->movedTwice_ == false && enemyPawn->previousRow_ == enemyPawn->initialRow_)
             return true;
@@ -65,7 +65,7 @@ void Pawn::enPassant(Coordinates final_coordinates) {
     else
         mult = 1;
     setCoords(final_coordinates);
-    getBoard()->removePiece(Coordinates(final_coordinates.getRow()-mult, final_coordinates.getCol()));
+    getBoard().removePiece(Coordinates(final_coordinates.getRow()-mult, final_coordinates.getCol()));
 }
 
 char Pawn::getPieceChar() const{

@@ -9,8 +9,8 @@ class Pawn: public Piece{
         int previousRow_;
         int initialRow_;
     public:
-        Pawn(Coordinates initial_coords, Color color, Board* board);
-        virtual bool validateMove(Coordinates final_coordinates) const;
+        Pawn(const Coordinates& initial_coords, Color color, const Board& board);
+        virtual bool validateMove(const Coordinates& final_coordinates) const;
         void movePiece(Coordinates final_coordinates);
         bool validatePromotion() const;
         bool validateEnPassant(Coordinates final_coordinates);

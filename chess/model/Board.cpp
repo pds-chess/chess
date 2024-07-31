@@ -11,36 +11,52 @@ Board::Board(){
     initialize();
 }
 
+Board::Board(const Board& copy_board){
+    clearBoard();
+    // for(int i = 0; i <8; i++){
+    //     for(int j =0; j< 8; j++){
+    //         board_[i][j] = copy_board.getBoard()[i][j];
+    //     }
+    // }
+}
+
 void Board::clearBoard(){
+    if(!board_.empty()){
+        for(auto row : board_){
+            for(auto item : row){
+                delete item;
+            }
+        }
+    }
     board_ = std::vector<std::vector<Piece*>> (8, std::vector<Piece*>(8, nullptr));
 }
 
 void Board::initialize(){
     clearBoard();
     for(int j = 0; j<8; j++){
-        board_[1][j] = new Pawn(Coordinates(1,j), Black, this);
-        board_[6][j] = new Pawn(Coordinates(1,j), White, this);
+        board_[1][j] = new Pawn(Coordinates(1,j), Black, *this);
+        board_[6][j] = new Pawn(Coordinates(1,j), White, *this);
     }
-    board_[0][0] = new Rook(Coordinates(0,0), Black, this);
-    board_[0][7] = new Rook(Coordinates(0,7), Black, this);
-    board_[7][0] = new Rook(Coordinates(7,0), White, this);
-    board_[7][7] = new Rook(Coordinates(7,7), White, this);
+    board_[0][0] = new Rook(Coordinates(0,0), Black, *this);
+    board_[0][7] = new Rook(Coordinates(0,7), Black, *this);
+    board_[7][0] = new Rook(Coordinates(7,0), White, *this);
+    board_[7][7] = new Rook(Coordinates(7,7), White, *this);
 
-    board_[0][1] = new Knight(Coordinates(0,1), Black, this);
-    board_[0][6] = new Knight(Coordinates(0,6), Black, this);
-    board_[7][1] = new Knight(Coordinates(7,1), White, this);
-    board_[7][6] = new Knight(Coordinates(7,6), White, this);
+    board_[0][1] = new Knight(Coordinates(0,1), Black, *this);
+    board_[0][6] = new Knight(Coordinates(0,6), Black, *this);
+    board_[7][1] = new Knight(Coordinates(7,1), White, *this);
+    board_[7][6] = new Knight(Coordinates(7,6), White, *this);
 
-    board_[0][2] = new Bishop(Coordinates(0,2), Black, this);
-    board_[0][5] = new Bishop(Coordinates(0,5), Black, this);
-    board_[7][2] = new Bishop(Coordinates(7,2), White, this);
-    board_[7][5] = new Bishop(Coordinates(7,5), White, this);
+    board_[0][2] = new Bishop(Coordinates(0,2), Black, *this);
+    board_[0][5] = new Bishop(Coordinates(0,5), Black, *this);
+    board_[7][2] = new Bishop(Coordinates(7,2), White, *this);
+    board_[7][5] = new Bishop(Coordinates(7,5), White, *this);
 
-    board_[0][3] = new Queen(Coordinates(0,3), Black, this);
-    board_[7][3] = new Queen(Coordinates(7,3), White, this);
+    board_[0][3] = new Queen(Coordinates(0,3), Black, *this);
+    board_[7][3] = new Queen(Coordinates(7,3), White, *this);
 
-    board_[0][4] = new King(Coordinates(0,4), Black, this);
-    board_[7][4] = new King(Coordinates(7,4), White, this);
+    board_[0][4] = new King(Coordinates(0,4), Black, *this);
+    board_[7][4] = new King(Coordinates(7,4), White, *this);
 
     update();
 }
@@ -83,13 +99,13 @@ std::string Board::boardToString() const{
     return output;
 }
 
-Piece* Board::getPiece(Coordinates coords) const{
+Piece* Board::getPiece(const Coordinates& coords) const{
     int row = coords.getRow();
     int col = coords.getCol();
     return board_[row][col];
 }
 
-void Board::removePiece(Coordinates coords){
+void Board::removePiece(const Coordinates& coords){
     int row = coords.getRow();
     int col = coords.getCol();
     delete board_[row][col];
