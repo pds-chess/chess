@@ -68,3 +68,7 @@ bool Pawn::validatePromotion() const {
     else
         return false;
 }
+
+PieceType Pawn::getType() const{
+    return PAWN;
+}

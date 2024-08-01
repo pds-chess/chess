@@ -3,7 +3,7 @@
 
 Bishop::Bishop(const Coordinates& initial_coords, Color color, const Board& board)
 : Piece(initial_coords, color, board) {
-};
+}
 
 bool Bishop::validateMove(const Coordinates& final_coordinates) const {
 int Secundary_Diagonal= getCoords().getRow() + getCoords().getCol();
@@ -37,8 +37,12 @@ if (RowF+ColF==Secundary_Diagonal || RowF-ColF==Primary_Diagonal) {
         }
     }
 return false;
-};
+}
 
 char Bishop::getPieceChar() const {
     return 'B';
-};
+}
+
+PieceType Bishop::getType() const{
+    return BISHOP;
+}

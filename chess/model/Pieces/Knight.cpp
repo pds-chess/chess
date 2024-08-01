@@ -5,7 +5,7 @@
 Knight::Knight(const Coordinates& initial_coords, Color color, const Board& board) : Piece(initial_coords, color, board) {
 
 }
-bool Knight::validateMove(const Coordinates& final_coordinates) const {
+bool Knight::validateMove(const Coordinates& final_coordinates) const{
     int RowP=getCoords().getRow(), ColP=getCoords().getCol();
     int RowF=final_coordinates.getRow(), ColF=final_coordinates.getCol();
     int DeltaRow = (final_coordinates.getRow() - getCoords().getRow());
@@ -23,4 +23,8 @@ bool Knight::validateMove(const Coordinates& final_coordinates) const {
 }
 char Knight::getPieceChar() const {
     return 'N';
+}
+
+PieceType Knight::getType() const{
+    return KNIGHT;
 }

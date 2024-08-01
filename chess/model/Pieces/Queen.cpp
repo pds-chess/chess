@@ -59,3 +59,7 @@ bool Queen::validateMove(const Coordinates& final_coordinates) const {
 char Queen::getPieceChar() const{
         return 'Q';
 }
+
+PieceType Queen::getType() const{
+    return QUEEN;
+}

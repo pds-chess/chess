@@ -49,3 +49,7 @@ bool Rook::hasMoved() const{
 char Rook::getPieceChar() const{
     return 'R';
 }
+
+PieceType Rook::getType() const{
+    return ROOK;
+}

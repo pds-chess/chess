@@ -98,3 +98,6 @@ char King::getPieceChar() const{
     return 'K';
 }
 
+PieceType King::getType() const{
+    return KING;
+}

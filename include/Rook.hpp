@@ -7,8 +7,10 @@ class Rook: public Piece{
         bool moved_;
     public:
         Rook(const Coordinates& initial_coords, Color color, const Board& board);
-        virtual bool validateMove(const Coordinates& final_coordinates) const;
+        bool validateMove(const Coordinates& final_coordinates) const override;
         void movePiece(Coordinates final_coordinates);
         bool hasMoved() const;
-        virtual char getPieceChar() const;
+        PieceType getType() const override;
+    protected:
+        char getPieceChar() const override;
 };
