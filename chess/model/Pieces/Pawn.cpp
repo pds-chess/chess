@@ -58,16 +58,6 @@ bool Pawn::validateEnPassant(Coordinates final_coordinates){
         return false;
 }
 
-void Pawn::enPassant(Coordinates final_coordinates) {
-    int mult = 0;
-    if (getColor()==Black)
-        mult = -1;
-    else
-        mult = 1;
-    setCoords(final_coordinates);
-    getBoard().removePiece(Coordinates(final_coordinates.getRow()-mult, final_coordinates.getCol()));
-}
-
 char Pawn::getPieceChar() const{
     return 'P';
 }
