@@ -3,11 +3,13 @@
 #include "Coordinates.hpp"
 #include "Color.hpp"
 
+class Board;
+
 class Piece{
     private:
         Coordinates coords_;
         Color color_;
-        Board board_; 
+        const Board& board_; 
     public:
         Piece(const Coordinates& initial_coords, Color color, const Board& board);
         void movePiece(const Coordinates& final_coordinates);
