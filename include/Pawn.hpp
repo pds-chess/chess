@@ -14,6 +14,5 @@ class Pawn: public Piece{
         void movePiece(Coordinates final_coordinates);
         bool validatePromotion() const;
         bool validateEnPassant(Coordinates final_coordinates);
-        void enPassant(Coordinates final_coordinates);
         virtual char getPieceChar() const;
 };
