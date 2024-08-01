@@ -6,6 +6,9 @@
 #include "Queen.hpp"
 #include "King.hpp"
 #include "Color.hpp"
+#include "PieceFactory.hpp"
+
+#include <stdexcept>
 
 Board::Board(){
     initialize();
@@ -114,4 +117,15 @@ void Board::removePiece(const Coordinates& coords){
 
 std::list<Piece*> Board::getPieces() const{
     return pieces_;
+}
+
+void Board::createPiece(const Coordinates& coords, Color color, PieceType type){
+    if(getPiece(coords)!=nullptr){
+        throw std::logic_error("Não é possível criar uma peça em um espaço ocupado.");
+    }
+
+    PieceFactory creator;
+    int row = coords.getRow();
+    int col = coords.getCol();
+    board_[row][col] = creator.createPiece(coords, color, *this, type);
 }

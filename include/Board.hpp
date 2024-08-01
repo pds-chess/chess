@@ -21,5 +21,6 @@ class Board{
         std::string boardToString() const;
         Piece* getPiece(const Coordinates& coords) const;
         void removePiece(const Coordinates& coords);
+        void createPiece(const Coordinates& coords, Color color, PieceType type);
         std::list<Piece*> getPieces() const;
 };
