@@ -12,62 +12,62 @@
 
 History::History(std::string path) : path_to_file_(path) {}
 
-void History::saveMove(Coordinates origin_coords, Coordinates final_coords, Color player_color, std::string player_name, int game_id) {
+void History::saveMove(Move move){
     std::ofstream file(path_to_file_, std::ios::app); // Abrir o arquivo em modo de adição (append)
     if (!file.is_open()) {
         throw std::runtime_error("Não foi possível abrir o arquivo de histórico.");
     }
 
-    file << game_id << ","
-         << origin_coords.toString() << ","
-         << final_coords.toString() << ","
-         << (player_color == White ? "White" : "Black") << ","
-         << player_name << "\n";
+    file << move.game_id_ << ", "
+         << move.origin_coordinates_ << " para "
+         << move.final_coordinates_ << ", "
+         << (move.color_ == White ? "White" : "Black") << ", "
+         << move.player_name_ << "\n";
 
     file.close();
 }
 
-std::list<Move> History::getMoves(int game_id) const {
-    std::ifstream file(path_to_file_);
-    if (!file.is_open()) {
-        throw std::runtime_error("Não foi possível abrir o arquivo de histórico.");
-    }
+// std::list<Move> History::getMoves(int game_id) const {
+//     std::ifstream file(path_to_file_);
+//     if (!file.is_open()) {
+//         throw std::runtime_error("Não foi possível abrir o arquivo de histórico.");
+//     }
 
-    std::list<Move> moves;
-    std::string line;
-    while (std::getline(file, line)) {
-        std::istringstream iss(line);
-        std::string token;
-        int id;
-        Coordinates origin, destination;
-        Color color;
-        std::string player_name;
+//     std::list<Move> moves;
+//     std::string line;
+//     while (std::getline(file, line)) {
+//         std::istringstream iss(line);
+//         std::string token;
+//         int id;
+//         Coordinates origin, destination;
+//         Color color;
+//         std::string player_name;
 
-        std::getline(iss, token, ',');
-        id = std::stoi(token);
+//         std::getline(iss, token, ',');
+//         id = std::stoi(token);
 
-        if (id != game_id) continue;
+//         if (id != game_id) continue;
 
-        std::getline(iss, token, ',');
-        origin = Coordinates::fromString(token);
+//         std::getline(iss, token, ',');
+//         origin = Coordinates::fromString(token);
 
-        std::getline(iss, token, ',');
-        destination = Coordinates::fromString(token);
+//         std::getline(iss, token, ',');
+//         destination = Coordinates::fromString(token);
 
-        std::getline(iss, token, ',');
-        color = (token == "White") ? White : Black;
+//         std::getline(iss, token, ',');
+//         color = (token == "White") ? White : Black;
 
-        std::getline(iss, token, ',');
-        player_name = token;
+//         std::getline(iss, token, ',');
+//         player_name = token;
 
-        // Criar um Move com as informações lidas e adicionar à lista de movimentos
-        Move move(origin, destination, color, player_name, game_id);
-        moves.push_back(move);
-    }
+//         // Criar um Move com as informações lidas e adicionar à lista de movimentos
+//         Move move(origin, destination, color, player_name, game_id);
+//         moves.push_back(move);
+//     }
 
-    file.close();
-    return moves;
-}
+//     file.close();
+//     return moves;
+// }
 
 std::list<int> History::getGames() const {
     std::ifstream file(path_to_file_);

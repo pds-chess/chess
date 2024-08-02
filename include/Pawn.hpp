@@ -9,10 +9,12 @@ class Pawn: public Piece{
         int previousRow_;
         int initialRow_;
     public:
-        Pawn(Coordinates initial_coords, Color color, Board* board);
-        virtual bool validateMove(Coordinates final_coordinates) const;
+        Pawn(const Coordinates& initial_coords, Color color, const Board& board);
+        bool validateMove(const Coordinates& final_coordinates) const override;
         void movePiece(Coordinates final_coordinates);
+        bool validatePromotion() const;
         bool validateEnPassant(Coordinates final_coordinates);
-        void enPassant(Coordinates final_coordinates);
-        virtual char getPieceChar() const;
+        PieceType getType() const override;
+    protected:
+        char getPieceChar() const override;
 };

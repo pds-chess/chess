@@ -2,17 +2,16 @@
 #include "Board.hpp"
 #include <stdexcept>
 
-Piece::Piece(Coordinates initial_coords, Color color, Board* board){
+Piece::Piece(const Coordinates& initial_coords, Color color, const Board& board) : board_(board){
     coords_ = initial_coords;
     color_ = color;
-    board_ = board;
 }
-void Piece::setCoords(Coordinates coords){
+void Piece::setCoords(const Coordinates& coords){
     coords_ = coords;
 }
 
 
-void Piece::movePiece(Coordinates final_coordinates){
+void Piece::movePiece(const Coordinates& final_coordinates){
     if(!validateMove(final_coordinates)){
         throw std::invalid_argument("Movimento inválido");
     }
@@ -27,7 +26,7 @@ Color Piece::getColor() const{
     return color_;
 }
 
-Board* Piece::getBoard() const{
+const Board& Piece::getBoard() const{
     return board_;
 }
 

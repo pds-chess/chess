@@ -4,7 +4,10 @@
 
 class Bishop: public Piece{
     public:
-        Bishop(Coordinates initial_coords, Color color, Board* board);
-        virtual bool validateMove(Coordinates final_coordinates) const;
-        virtual char getPieceChar() const;
+        Bishop(const Coordinates& initial_coords, Color color, const Board& board);
+        bool validateMove(const Coordinates& final_coordinates) const override;
+        char getPieceChar() const override;
+        PieceType getType() const override;
+    protected:
+        char getPieceChar() const override;
 };

@@ -2,6 +2,7 @@
 
 #include "Coordinates.hpp"
 #include "Color.hpp"
+#include "PieceType.hpp"
 
 class Board;
 
@@ -9,16 +10,17 @@ class Piece{
     private:
         Coordinates coords_;
         Color color_;
-        Board* board_; 
+        const Board& board_;
     public:
-        Piece(Coordinates initial_coords, Color color, Board* board);
-        void movePiece(Coordinates final_coordinates);
+        Piece(const Coordinates& initial_coords, Color color, const Board& board);
+        void movePiece(const Coordinates& final_coordinates);
         Coordinates getCoords() const;
         Color getColor() const;
-        virtual bool validateMove(Coordinates final_coordinates) const = 0;
+        virtual bool validateMove(const Coordinates& final_coordinates) const = 0;
         std::string pieceToString() const;
+        void setCoords(const Coordinates& coords);
+        virtual PieceType getType() const = 0;
     protected:
-        void setCoords(Coordinates coords);
         virtual char getPieceChar() const = 0;
-        Board* getBoard() const;
+        const Board& getBoard() const;
 };
