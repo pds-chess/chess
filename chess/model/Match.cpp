@@ -1,10 +1,6 @@
 #include "Match.hpp"
 #include <stdexcept>
 #include <iostream>
-#include <Queen.hpp>
-#include <Rook.hpp>
-#include <Bishop.hpp>
-#include <Knight.hpp>
 
 Match::Match(std::string playerW, std::string playerB) {
     startGame(playerW, playerB);
@@ -91,6 +87,7 @@ void Match::movePiece(Piece* target_piece, const Coordinates& final_coords){
         board_.removePiece(Coordinates(final_coords.getRow()-mult, final_coords.getCol()));
         registerMove(target_piece, final_coords);
     }
+
     try {
         target_piece->movePiece(final_coords);
         registerMove(target_piece, final_coords);
@@ -102,6 +99,8 @@ void Match::movePiece(Piece* target_piece, const Coordinates& final_coords){
                 king->castle(final_coords);
             else
                 throw e;
+        else
+            throw e;
     }
 
     // Promover o peão caso chegue ao fim do tabuleiro
@@ -162,20 +161,20 @@ void Match::promotePawn(Piece* pawn) {
         std::cin >> choice;
         switch (choice) {
             case 'R':
-                // Queen(auxCoords, auxColor,&board_);
+                board_.createPiece(auxCoords, auxColor, QUEEN);
                 break;
             case 'T':
-                // Rook(auxCoords, auxColor,&board_);
+                board_.createPiece(auxCoords, auxColor, ROOK);
                 break;
             case 'B':
-                // Bishop(auxCoords, auxColor,&board_);
+                board_.createPiece(auxCoords, auxColor, BISHOP);
                 break;
             case 'C':
-                // Knight(auxCoords, auxColor,&board_);
+                board_.createPiece(auxCoords, auxColor, KNIGHT);
                 break;
             default:
                 std::cout << "Escolha inválida. Favor, escolher uma das opções listadas" << std::endl;
-                break;        
+                break;
         }
     }
 }

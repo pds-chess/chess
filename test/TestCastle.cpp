@@ -1,13 +1,10 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
-#include "King.hpp"
 #include "Match.hpp"
 
-//g++ -I include test/TestCastle.cpp -o test
-
 TEST_CASE ("Castle validation"){
-    Board b_ = Board();
+    Board b_;
 
     Coordinates kingW = Coordinates(7,4);
     Coordinates rookWS = Coordinates(7,7);
