@@ -28,16 +28,23 @@ std::string Match::startTurn(){
     if (!isDraw()) {
         return board_.boardToString();
     }
+
+    std::string output;
     if (!isCheck()) {
         game_state_ = Draw;
-        return "Jogo finalizou em empate por afogamento.";
+        output = "Jogo finalizou em empate por afogamento.";
     }
-    if (current_turn_->getplayerColor() == White) {
+    else if (current_turn_->getplayerColor() == White) {
         game_state_ = VictoryW;
-        return "Chequemate! Vitória do jogador " + player_W_.getPlayerName();
+        output = "Chequemate! Vitória do jogador " + player_W_.getPlayerName();
     }
-    game_state_ = VictoryB;
-    return "Chequemate! Vitória do jogador " + player_B_.getPlayerName();
+    else{
+        game_state_ = VictoryB;
+        output = "Chequemate! Vitória do jogador " + player_B_.getPlayerName();
+    }
+
+    board_.destroyPieces();
+    return output;
 }
 
 void Match::endTurn(){

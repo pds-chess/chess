@@ -30,31 +30,30 @@ void Board::clearBoard(){
 void Board::initialize(){
     clearBoard();
 
-    PieceFactory creator;
     for(int j = 0; j<8; j++){
-        board_[1][j] = creator.createPiece(Coordinates(1,j), Black, *this, PAWN);
-        board_[6][j] = creator.createPiece(Coordinates(1,j), White, *this, PAWN);
+        createPiece(Coordinates(1,j), Black, PAWN);
+        createPiece(Coordinates(6,j), White, PAWN);
     }
-    board_[0][0] = creator.createPiece(Coordinates(0,0), Black, *this, ROOK);
-    board_[0][7] = creator.createPiece(Coordinates(0,7), Black, *this, ROOK);
-    board_[7][0] = creator.createPiece(Coordinates(7,0), White, *this, ROOK);
-    board_[7][7] = creator.createPiece(Coordinates(7,7), White, *this, ROOK);
+    createPiece(Coordinates(0,0), Black, ROOK);
+    createPiece(Coordinates(0,7), Black, ROOK);
+    createPiece(Coordinates(7,0), White, ROOK);
+    createPiece(Coordinates(7,7), White, ROOK);
 
-    board_[0][1] = creator.createPiece(Coordinates(0,1), Black, *this, KNIGHT);
-    board_[0][6] = creator.createPiece(Coordinates(0,6), Black, *this, KNIGHT);
-    board_[7][1] = creator.createPiece(Coordinates(7,1), White, *this, KNIGHT);
-    board_[7][6] = creator.createPiece(Coordinates(7,6), White, *this, KNIGHT);
+    createPiece(Coordinates(0,1), Black, KNIGHT);
+    createPiece(Coordinates(0,6), Black, KNIGHT);
+    createPiece(Coordinates(7,1), White, KNIGHT);
+    createPiece(Coordinates(7,6), White, KNIGHT);
 
-    board_[0][2] = creator.createPiece(Coordinates(0,2), Black, *this, BISHOP);
-    board_[0][5] = creator.createPiece(Coordinates(0,5), Black, *this, BISHOP);
-    board_[7][2] = creator.createPiece(Coordinates(7,2), White, *this, BISHOP);
-    board_[7][5] = creator.createPiece(Coordinates(7,5), White, *this, BISHOP);
+    createPiece(Coordinates(0,2), Black, BISHOP);
+    createPiece(Coordinates(0,5), Black, BISHOP);
+    createPiece(Coordinates(7,2), White, BISHOP);
+    createPiece(Coordinates(7,5), White, BISHOP);
 
-    board_[0][3] = creator.createPiece(Coordinates(0,3), Black, *this, QUEEN);
-    board_[7][3] = creator.createPiece(Coordinates(7,3), White, *this, QUEEN);
+    createPiece(Coordinates(0,3), Black, QUEEN);
+    createPiece(Coordinates(7,3), White, QUEEN);
 
-    board_[0][4] = creator.createPiece(Coordinates(0,4), Black, *this, KING);
-    board_[7][4] = creator.createPiece(Coordinates(7,4), White, *this, KING);
+    createPiece(Coordinates(0,4), Black, KING);
+    createPiece(Coordinates(7,4), White, KING);
 
     update();
 }

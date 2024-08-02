@@ -109,7 +109,7 @@ bool King::isCheck() {
             int row = kingCoords.getRow() + dirRow;
             int col = kingCoords.getCol() + dirCol;
             while (row >= 0 && row < 8 && col >= 0 && col < 8) {
-                Piece* piece = board->getPiece(Coordinates(row, col));
+                Piece* piece = board.getPiece(Coordinates(row, col));
                 if (piece != nullptr) {
                     if (piece->getColor() != kingColor && (getType() == BISHOP || getType() == QUEEN)) {
                         return true;
@@ -127,7 +127,7 @@ bool King::isCheck() {
         // Verificar linhas
         int row = kingCoords.getRow() + dir;
         while (row >= 0 && row < 8) {
-            Piece* piece = board->getPiece(Coordinates(row, kingCoords.getCol()));
+            Piece* piece = board.getPiece(Coordinates(row, kingCoords.getCol()));
             if (piece != nullptr) {
                 if (piece->getColor() != kingColor && (getType() == ROOK || getType() == QUEEN)) {
                     return true;
@@ -140,7 +140,7 @@ bool King::isCheck() {
         // Verificar colunas
         int col = kingCoords.getCol() + dir;
         while (col >= 0 && col < 8) {
-            Piece* piece = board->getPiece(Coordinates(kingCoords.getRow(), col));
+            Piece* piece = board.getPiece(Coordinates(kingCoords.getRow(), col));
             if (piece != nullptr) {
                 if (piece->getColor() != kingColor && (getType() == ROOK || getType() == QUEEN)) {
                     return true;
@@ -160,7 +160,7 @@ bool King::isCheck() {
         int row = kingCoords.getRow() + knightMoves[i][0];
         int col = kingCoords.getCol() + knightMoves[i][1];
         if (row >= 0 && row < 8 && col >= 0 && col < 8) {
-            Piece* piece = board->getPiece(Coordinates(row, col));
+            Piece* piece = board.getPiece(Coordinates(row, col));
             if (piece != nullptr && piece->getColor() != kingColor && getType() == KNIGHT) {
                 return true;
             }
@@ -169,7 +169,7 @@ bool King::isCheck() {
 
     // Verificar ameaças dos peões
     int pawnMoves[2][2];
-    if (kingColor == WHITE) {
+    if (kingColor == White) {
         pawnMoves[0][0] = -1; pawnMoves[0][1] = -1; // Peão branco atacando para cima e para a esquerda
         pawnMoves[1][0] = -1; pawnMoves[1][1] = 1;  // Peão branco atacando para cima e para a direita
     } else {
@@ -181,7 +181,7 @@ bool King::isCheck() {
         int row = kingCoords.getRow() + pawnMoves[i][0];
         int col = kingCoords.getCol() + pawnMoves[i][1];
         if (row >= 0 && row < 8 && col >= 0 && col < 8) {
-            Piece* piece = board->getPiece(Coordinates(row, col));
+            Piece* piece = board.getPiece(Coordinates(row, col));
             if (piece != nullptr && piece->getColor() != kingColor && getType() == PAWN) {
                 return true;
             }
