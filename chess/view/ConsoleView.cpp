@@ -12,6 +12,7 @@ void Console::printMenu() {
     do {
         std::cout << "1. Novo Jogo" << std::endl;
         std::cout << "2. Histórico de Partidas" << std::endl;
+        std::cout << "3. Ver todas as peças adversárias que foram capturadas" << std::endl;
         std::cout << "0. Sair" << std::endl;
         std::cout << "Escolha uma opção: ";
         std::cin >> choice;
@@ -22,6 +23,9 @@ void Console::printMenu() {
                 break;
             case 2:
                 printMatchHistory();
+                break;
+            case 3:
+                showCapturedPieces();
                 break;
             case 0:
                 std::cout << "Saindo..." << std::endl;
