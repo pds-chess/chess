@@ -1,31 +1,32 @@
 #include "ConsoleView.hpp"
+#include "GameState.hpp"
 #include <iostream>
 
-Console::Console() : match() {
-    printMenu();
+Console::Console() {
 }
 
 Console::~Console() {}
 
 void Console::printMenu() {
     int choice;
+    std::string playerA, playerB;
     do {
         std::cout << "1. Novo Jogo" << std::endl;
         std::cout << "2. Histórico de Partidas" << std::endl;
-        std::cout << "3. Ver todas as peças adversárias que foram capturadas" << std::endl;
         std::cout << "0. Sair" << std::endl;
         std::cout << "Escolha uma opção: ";
         std::cin >> choice;
 
         switch (choice) {
             case 1:
-                printNewGame();
+                std::cout << "Escreva o nome do Jogador 1: " <<std::endl;
+                std::cin >> playerA;
+                std::cout << "Escreva o nome do Jogador 2: " <<std::endl;
+                std::cin >> playerB;
+                createNewGame(playerA, playerB);
                 break;
             case 2:
                 printMatchHistory();
-                break;
-            case 3:
-                showCapturedPieces();
                 break;
             case 0:
                 std::cout << "Saindo..." << std::endl;
@@ -36,56 +37,70 @@ void Console::printMenu() {
     } while (choice != 0);
 }
 
-void Console::printNewGame() {
-    match.startNewGame();
-    while (!match.isGameOver()) {
-        printBoard();
-        printGameActions();
+void Console::createNewGame(std::string playerA, std::string playerB) {
+    Match match = Match(playerA, playerB);
+    while (match.getGameState() == inProgress){
+        std::cout << match.boardToString() << std::endl;
+        printGameActions(match);
     }
     printGameEnd();
 }
 
-void Console::printBoard() {
-    // Código para imprimir o tabuleiro
-}
-
-void Console::printGameActions() {
+void Console::printGameActions(Match& match) {
     int choice;
     std::cout << "1. Fazer Movimento" << std::endl;
     std::cout << "2. Propor Empate" << std::endl;
+    std::cout << "3. Ver todas as peças adversárias que foram capturadas" << std::endl;
     std::cout << "Escolha uma ação: ";
     std::cin >> choice;
 
     switch (choice) {
         case 1:
-            // Código para fazer movimento
+            movePiece(match);
             break;
         case 2:
-            proposeDraw();
-            handleDrawResponse();
+            handleDraw(match);
+            break;
+        case 3:
+            showCapturedPieces(match);
             break;
         default:
             std::cout << "Ação inválida!" << std::endl;
     }
 }
 
-void Console::proposeDraw() {
-    std::cout << "Propondo empate..." << std::endl;
-    // Código para lidar com a lógica de proposta de empate
+void movePiece(Match& match){
+    int row_origin, col_origin, row_destiny, col_destiny;
+    std::cout << "Escreva a linha da peça que deseja mover: ";
+    std::cin >> row_origin;
+    std::cout << "Escreva a coluna da peça que deseja mover: ";
+    std::cin >> col_origin;
+    std::cout << "Escreva a linha para onde deseja mover a peça: ";
+    std::cin >> row_destiny;
+    std::cout << "Escreva a coluna para onde deseja mover a peça: ";
+    std::cin >> col_destiny;
+    try{
+        match.movePiece(row_origin, col_origin, row_destiny, col_destiny);
+    } catch(...){
+        std::cout << "Movimento inválido" << std::endl;
+    }
 }
 
-void Console::handleDrawResponse() {
+void Console::handleDraw(Match& match) {
     char response;
-    std::cout << "Seu oponente propôs um empate. Você aceita? (s/n): ";
+    std::cout << match.getCurrentPlayerName() <<" propôs um empate." << std::endl;
+    std::cout << "Ambos jogadores concordam em finalizar o jogo? (s/n): ";
     std::cin >> response;
 
     if (response == 's') {
-        match.endGameInDraw();
+        match.draw();
         std::cout << "Empate aceito. O jogo terminou em empate." << std::endl;
     } else {
         std::cout << "Empate rejeitado. O jogo continua." << std::endl;
     }
 }
+
+
 
 void Console::printGameEnd() {
     // Código para imprimir o final do jogo
@@ -97,4 +112,8 @@ void Console::printMatchHistory() {
 
 void Console::printMatch(int matchId) {
     // Código para imprimir uma partida específica
+}
+
+void showCapturedPieces(Match match){
+
 }

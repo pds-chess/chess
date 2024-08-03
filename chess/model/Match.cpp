@@ -3,44 +3,37 @@
 #include <iostream>
 
 Match::Match(std::string playerW, std::string playerB) {
-    startGame(playerW, playerB);
-}
-
-void Match::startGame(std::string playerW, std::string playerB){
-    //game_id_ = 
-    board_ = Board();
     player_W_ = Player(playerW, White);
     player_B_ = Player(playerB, Black);
-    updatePlayers();
-    current_turn_ = &player_W_;
-    game_state_ = inProgress;
-
-    // Inicializando atributos de proposta de empate
-    drawProposed = false;
-    proposingPlayer = "";
+    startGame();
 }
 
-std::string Match::startTurn(){
-    if (!isDraw()) {
-        return board_.boardToString();
+Gamestate Match::getGameState(){
+    if(!isDraw()){
+        return game_state_;
     }
-
-    std::string output;
     if (!isCheck()) {
         game_state_ = Draw;
-        output = "Jogo finalizou em empate por afogamento.";
     }
     else if (current_turn_->getplayerColor() == White) {
         game_state_ = VictoryW;
-        output = "Chequemate! Vitória do jogador " + player_W_.getPlayerName();
     }
     else{
         game_state_ = VictoryB;
-        output = "Chequemate! Vitória do jogador " + player_B_.getPlayerName();
     }
+    return game_state_;
+}
 
-    board_.destroyPieces();
-    return output;
+void Match::startGame(){
+    //game_id_ = 
+    board_ = Board();
+    current_turn_ = &player_W_;
+    game_state_ = inProgress;
+    updatePlayers();
+}
+
+std::string Match::boardToString() const{
+    return board_.boardToString();
 }
 
 void Match::endTurn(){
@@ -192,20 +185,6 @@ void Match::draw() {
     game_state_ = Draw;
 }
 
-// Métodos para gerenciamento de empate
-void Match::proposeDraw(const std::string& player) {
-    drawProposed = true;
-    proposingPlayer = player;
-}
-
-void Match::confirmDraw(const std::string& player) {
-    if (drawProposed && player != proposingPlayer) {
-        draw();
-        drawProposed = false;
-        proposingPlayer = "";
-    }
-}
-
 // Método para desistência
 void Match::resign() {
     if (current_turn_->getplayerColor() == White) {
@@ -213,4 +192,8 @@ void Match::resign() {
     } else {
         game_state_ = VictoryW;
     }
+}
+
+std::string Match::getCurrentPlayerName() const{
+    return current_turn_->getPlayerName();
 }

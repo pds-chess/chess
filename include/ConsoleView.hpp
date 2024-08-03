@@ -1,31 +1,28 @@
 #pragma once
 
 #include "Match.hpp"
+#include <string>
 
 class Console
 {
 private:
-    Match match;
-
-    // Primeira função chamada, imprime o menu com as opções de criar novo jogo e ver histórico.
-    void printMenu();
-
-    void printNewGame();
+    void createNewGame(std::string playerA, std::string playerB);
 
     void printBoard();
-    void printGameActions();
+    void printGameActions(Match& match);
     void printGameEnd();
 
     void printMatchHistory();
     void printMatch(int matchId);
 
     // Novos métodos para propor, aceitar e rejeitar empate
-    void proposeDraw();
-    void handleDrawResponse();
+    void handleDraw(Match& match);
 
 public:
     // Construtor padrão que inicia o jogo no console.
     Console();
-
+    
+    // Primeira função chamada, imprime o menu com as opções de criar novo jogo e ver histórico.
+    void printMenu();
     ~Console();
 };

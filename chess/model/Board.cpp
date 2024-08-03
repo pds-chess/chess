@@ -81,15 +81,16 @@ std::vector<std::vector<Piece*>> Board::getBoard() const{
 }
 
 std::string Board::boardToString() const{
-    std::string output = "Estado atual do tabuleiro: \n";
-    for(auto row: board_){
-        output += "[";
-        for(auto item: row){
+    std::string output = "Estado atual do tabuleiro: \n[ 1  2  3  4  5  6  7  8 ]\n";
+    for(int i=0; i< 8; i++){
+        output += "[ " + std::to_string(i) + " ]";
+        for(int j =0; j< 8; j++){
+            Piece* item = board_[i][j];
             if(item!=nullptr){
                 output += " " + item->pieceToString();
                 continue;
             }
-            output += " _";
+            output += " __";
         }
         output += " ]\n";
     }

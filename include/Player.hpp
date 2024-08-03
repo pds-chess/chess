@@ -22,5 +22,4 @@ class Player{
         // Método para saber as peças capturadas por um jogador
         void addCapturedPiece(Piece* piece);
         std::list<Piece*> getCapturedPieces() const;
-        void showCapturedPieces();
 };
