@@ -8,28 +8,36 @@ Pawn::Pawn(const Coordinates& initial_coords, Color color, const Board& board)
     initialRow_ = initial_coords.getRow();
 }
 
-void Pawn::movePiece(Coordinates final_coordinates){
-    previousRow_ = getCoords().getRow();
-    Piece::movePiece(final_coordinates);
+ void Pawn::movePiece(Coordinates final_coordinates){
     if(moved_ == true)
         movedTwice_ = true;
     moved_ = true;
+    previousRow_ = getCoords().getRow();
+    Piece::movePiece(final_coordinates);
 }
 
 bool Pawn::validateMove(const Coordinates& final_coordinates) const{
-    int multiplier = 0;
-    if (getColor()==White)
-        multiplier = -1;
+    int multiplier = 0, flag=0;
+    int DeltaRow = (final_coordinates.getRow() - getCoords().getRow());
+    int DeltaCol = (final_coordinates.getCol() - getCoords().getCol());
+    if (getColor()==White) {
+        DeltaRow*=-1;
+        multiplier=-1;
+        }
     else
         multiplier = 1;
-    int DeltaRow = (final_coordinates.getRow() - getCoords().getRow()) * multiplier;
-    int DeltaCol = (final_coordinates.getCol() - getCoords().getCol()) * multiplier;
+    if(final_coordinates.getCol()<getCoords().getCol())
+        DeltaCol*=-1;
     if (DeltaRow > 0 && DeltaRow <= 2 && (DeltaCol == 0)){
-        for (int i = 2; i <= 3 && (i < 3 || !moved_); i++)
-            if (getBoard().getPiece(Coordinates(getCoords().getRow() + i * multiplier, getCoords().getCol())) != nullptr)
+        for (int i = 1; i <=2 && (i < 2 || !moved_); i++)
+            if (getBoard().getPiece(Coordinates(getCoords().getRow()+ i * multiplier, getCoords().getCol())) != nullptr)
                 return false;
+            else if (getCoords().getRow()+ i * multiplier==final_coordinates.getRow()&&getCoords().getCol()==final_coordinates.getCol())
+                flag=1;
     }
     else if (getBoard().getPiece(final_coordinates) != nullptr && getBoard().getPiece(final_coordinates)->getColor() != getColor() && DeltaCol == 1 && DeltaRow == 1)
+        return true;
+    if(flag==1)
         return true;
     return false;
 }
@@ -37,15 +45,16 @@ bool Pawn::validateMove(const Coordinates& final_coordinates) const{
 bool Pawn::validateEnPassant(Coordinates final_coordinates){
     int mult = 0;
     int finalRow = 0;
-    if (getColor()==White){
-        mult = -1;
-        finalRow = 5;
-    }else{
+    int DeltaRow = (final_coordinates.getRow() - getCoords().getRow());
+    int DeltaCol = (final_coordinates.getCol() - getCoords().getCol());
+    if (getColor()==White) {
+        DeltaRow*=-1;
+        mult=-1;
+        }
+    else
         mult = 1;
-        finalRow = 2;
-    }
-    int DeltaRow = (final_coordinates.getRow() - getCoords().getRow()) * mult;
-    int DeltaCol = (final_coordinates.getCol() - getCoords().getCol()) * mult;
+    if(final_coordinates.getCol()<getCoords().getCol())
+        DeltaCol*=-1;
     if (final_coordinates.getRow() == finalRow && getBoard().getPiece(final_coordinates) == nullptr && DeltaRow == 1 && DeltaCol == 1)
     {
         Piece* target = getBoard().getPiece(Coordinates(final_coordinates.getRow()-mult, final_coordinates.getCol()));
