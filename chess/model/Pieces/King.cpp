@@ -17,7 +17,11 @@ void King::movePiece(const Coordinates& final_coordinates){
 bool King::validateMove(const Coordinates& final_coordinates) const{
     int DeltaRow = (final_coordinates.getRow() - getCoords().getRow());
     int DeltaCol = (final_coordinates.getCol() - getCoords().getCol());
-    if (DeltaCol==1||DeltaRow==-1||DeltaCol==1||DeltaCol==-1) {
+    if(DeltaCol<0)
+        DeltaCol*=-1;
+    if(DeltaRow<0)
+        DeltaRow*=-1;
+    if (DeltaCol<=1&&DeltaRow<=1) {
         Piece* PieceF= getBoard().getPiece(Coordinates (final_coordinates.getRow(), final_coordinates.getCol()));
         if (PieceF==nullptr||PieceF->getColor()!=getColor())
         return true;
