@@ -19,13 +19,13 @@ Piece* PieceFactory::createPiece(const Coordinates& coords, Color color, const B
     if(type==KNIGHT){
         return new Knight(coords, color, board);
     }
-    if(type=BISHOP){
+    if(type==BISHOP){
         return new Bishop(coords, color, board);
     }
-    if(type=QUEEN){
+    if(type==QUEEN){
         return new Queen(coords, color, board);
     }
-    if(type=KING){
+    if(type==KING){
         return new King(coords, color, board);
     }
     return nullptr;

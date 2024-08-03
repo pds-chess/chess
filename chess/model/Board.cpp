@@ -59,17 +59,17 @@ void Board::initialize(){
 }
 
 void Board::update(){
-    std::list<Piece*> pieces;
+    pieces_ = {};
     for(auto row : board_){
         for(auto item : row){
             if(item != nullptr){
-                pieces.push_back(item);
+                pieces_.push_back(item);
             }
         }
     }
     clearBoard();
 
-    for(auto piece : pieces){
+    for(auto piece : pieces_){
         int row = piece->getCoords().getRow();
         int col = piece->getCoords().getCol();
         board_[row][col] = piece;

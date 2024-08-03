@@ -17,6 +17,8 @@ private:
 
     // Novos métodos para propor, aceitar e rejeitar empate
     void handleDraw(Match& match);
+    void showCapturedPieces(Match& match);
+    void movePiece(Match& match);
 
 public:
     // Construtor padrão que inicia o jogo no console.

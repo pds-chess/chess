@@ -11,7 +11,7 @@ void Console::printMenu() {
     int choice;
     std::string playerA, playerB;
     do {
-        std::cout << "1. Novo Jogo" << std::endl;
+        std::cout << "\n1. Novo Jogo" << std::endl;
         std::cout << "2. Histórico de Partidas" << std::endl;
         std::cout << "0. Sair" << std::endl;
         std::cout << "Escolha uma opção: ";
@@ -40,6 +40,7 @@ void Console::printMenu() {
 void Console::createNewGame(std::string playerA, std::string playerB) {
     Match match = Match(playerA, playerB);
     while (match.getGameState() == inProgress){
+        std::cout << std::endl << std::endl;
         std::cout << match.boardToString() << std::endl;
         printGameActions(match);
     }
@@ -48,7 +49,7 @@ void Console::createNewGame(std::string playerA, std::string playerB) {
 
 void Console::printGameActions(Match& match) {
     int choice;
-    std::cout << "1. Fazer Movimento" << std::endl;
+    std::cout << "\n1. Fazer Movimento" << std::endl;
     std::cout << "2. Propor Empate" << std::endl;
     std::cout << "3. Ver todas as peças adversárias que foram capturadas" << std::endl;
     std::cout << "Escolha uma ação: ";
@@ -69,7 +70,7 @@ void Console::printGameActions(Match& match) {
     }
 }
 
-void movePiece(Match& match){
+void Console::movePiece(Match& match){
     int row_origin, col_origin, row_destiny, col_destiny;
     std::cout << "Escreva a linha da peça que deseja mover: ";
     std::cin >> row_origin;
@@ -114,6 +115,6 @@ void Console::printMatch(int matchId) {
     // Código para imprimir uma partida específica
 }
 
-void showCapturedPieces(Match match){
+void Console::showCapturedPieces(Match& match){
 
 }
