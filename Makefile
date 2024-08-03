@@ -9,11 +9,12 @@ SRCEXT      := cpp
 OBJEXT      := o
 
 CFLAGS      := -fopenmp -Wall -O3 -g
-INC         := -I$(INCDIR)
+INC         := -I $(INCDIR)
 
 SOURCES     := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS     := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 TESTSOURCES := $(filter-out chess/chess.cpp, $(SOURCES))
+TESTOBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(TESTSOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
 all: directories $(TARGET)
 
@@ -33,7 +34,10 @@ $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
-tests: directories test/testRun
+tests: directories test
 
-test/testRun: $(TESTSOURCES) test/tests.cpp
+test: $(TESTOBJECTS) obj/tests.o
 	$(CC) $(INC) -o test/test $^
+
+obj/tests.o: test/tests.cpp
+	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
