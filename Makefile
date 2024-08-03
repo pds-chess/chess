@@ -13,6 +13,7 @@ INC         := -I$(INCDIR)
 
 SOURCES     := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS     := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
+TESTSOURCES := $(filter-out chess/chess.cpp, $(SOURCES))
 
 all: directories $(TARGET)
 
@@ -31,3 +32,8 @@ $(TARGET): $(OBJECTS)
 $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
+
+tests: directories test/testRun
+
+test/testRun: $(TESTSOURCES) test/tests.cpp
+	$(CC) $(INC) -o test/test $^
