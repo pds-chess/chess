@@ -6,8 +6,6 @@ Knight::Knight(const Coordinates& initial_coords, Color color, const Board& boar
 
 }
 bool Knight::validateMove(const Coordinates& final_coordinates) const{
-    int RowP=getCoords().getRow(), ColP=getCoords().getCol();
-    int RowF=final_coordinates.getRow(), ColF=final_coordinates.getCol();
     int DeltaRow = (final_coordinates.getRow() - getCoords().getRow());
     int DeltaCol = (final_coordinates.getCol() - getCoords().getCol());
     if(DeltaCol<0)
