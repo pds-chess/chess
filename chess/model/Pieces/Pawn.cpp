@@ -18,7 +18,7 @@ void Pawn::movePiece(Coordinates final_coordinates){
 
 bool Pawn::validateMove(const Coordinates& final_coordinates) const{
     int multiplier = 0;
-    if (getColor()==Black)
+    if (getColor()==White)
         multiplier = -1;
     else
         multiplier = 1;
@@ -37,7 +37,7 @@ bool Pawn::validateMove(const Coordinates& final_coordinates) const{
 bool Pawn::validateEnPassant(Coordinates final_coordinates){
     int mult = 0;
     int finalRow = 0;
-    if (getColor()==Black){
+    if (getColor()==White){
         mult = -1;
         finalRow = 5;
     }else{
