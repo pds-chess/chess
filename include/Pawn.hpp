@@ -12,7 +12,7 @@ class Pawn: public Piece{
         Pawn(const Coordinates& initial_coords, Color color, const Board& board);
         ~Pawn();
         bool validateMove(const Coordinates& final_coordinates) const override;
-        void movePiece(Coordinates final_coordinates);
+        void movePiece(const Coordinates& final_coordinates) override;
         bool validatePromotion() const;
         bool validateEnPassant(Coordinates final_coordinates);
         PieceType getType() const override;

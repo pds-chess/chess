@@ -11,11 +11,11 @@ class King: public Piece{
         King(const Coordinates& initial_coords, Color color, const Board& board);
         ~King();
         bool validateMove(const Coordinates& final_coordinates) const override;
-        void movePiece(const Coordinates& final_coordinates);
+        void movePiece(const Coordinates& final_coordinates) override;
         bool validateCastle(const Coordinates& final_coordinates) const;
         void castle(const Coordinates& final_coordinates);
         bool hasMoved() const;
-        bool isCheck();   
+        bool isCheck();
         PieceType getType() const override;
     protected:
         char getPieceChar() const override;

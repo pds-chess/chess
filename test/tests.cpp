@@ -104,18 +104,18 @@ TEST_CASE("Create Piece"){
 //                 b_.removePiece(short_W_1);
 //                 b_.removePiece(short_W_2);
 //                 b_.getPiece(rookWS)->movePiece(short_W_2);
-//                 //Caso precise mover a peça preta:
-//                 //b_.getPiece(Coordinates(1,6))->movePiece(Coordinates(2,6));
+//                 b_.update();
 //                 b_.getPiece(short_W_2)->movePiece(rookWS);
+//                 b_.update();
 //                 CHECK(b_.getPiece(kingW)->validateMove(short_W_2) == false);
 //             }
 //             SUBCASE("King has moved"){
 //                 b_.removePiece(short_W_1);
 //                 b_.removePiece(short_W_2);   
 //                 b_.getPiece(kingW)->movePiece(short_W_1);
-//                 //Caso precise mover a peça preta:
-//                 //b_.getPiece(Coordinates(1,6))->movePiece(Coordinates(2,6));
-//                 b_.getPiece(short_W_1)->movePiece(kingW);             
+//                 b_.update();
+//                 b_.getPiece(short_W_1)->movePiece(kingW);
+//                 b_.update();           
 //                 CHECK(b_.getPiece(kingW)->validateMove(short_W_2) == false);
 //             }
 //         }
@@ -158,9 +158,9 @@ TEST_CASE("Create Piece"){
 //                 b_.removePiece(long_W_2);
 //                 b_.removePiece(long_W_3);
 //                 b_.getPiece(rookWL)->movePiece(long_W_2);
-//                 //Caso precise mover a peça preta:
-//                 //b_.getPiece(Coordinates(1,6))->movePiece(Coordinates(2,6));
+//                 b_.update();
 //                 b_.getPiece(long_W_2)->movePiece(rookWL);
+//                 b_.update();
 //                 CHECK(b_.getPiece(kingW)->validateMove(long_W_2) == false);
 //             }
 //             SUBCASE("Rook has moved 2"){
@@ -168,6 +168,7 @@ TEST_CASE("Create Piece"){
 //                 b_.removePiece(long_W_2);
 //                 b_.removePiece(long_W_3);
 //                 b_.getPiece(rookWL)->movePiece(long_W_1);
+//                 b_.update();
 //                 CHECK(b_.getPiece(kingW)->validateMove(long_W_2) == false);
 //             }
 //             SUBCASE("King has moved "){
@@ -175,9 +176,9 @@ TEST_CASE("Create Piece"){
 //                 b_.removePiece(long_W_2);
 //                 b_.removePiece(long_W_3);
 //                 b_.getPiece(kingW)->movePiece(long_W_3);
-//                 //Caso precise mover a peça preta:
-//                 //b_.getPiece(Coordinates(1,6))->movePiece(Coordinates(2,6));
+//                 b_.update();
 //                 b_.getPiece(long_W_3)->movePiece(kingW);
+//                 b_.update();
 //                 CHECK(b_.getPiece(kingW)->validateMove(long_W_2) == false);
 //             }
 //         }
@@ -201,18 +202,18 @@ TEST_CASE("Create Piece"){
 //                 b_.removePiece(short_B_1);
 //                 b_.removePiece(short_B_2);
 //                 b_.getPiece(rookBS)->movePiece(short_B_2);
-//                 //Caso precise mover a peça branca:
-//                 //b_.getPiece(Coordinates(6,6))->movePiece(Coordinates(5,6));
+//                 b_.update();
 //                 b_.getPiece(short_B_2)->movePiece(rookBS);
+//                 b_.update();
 //                 CHECK(b_.getPiece(kingB)->validateMove(short_B_2) == false);
 //             }
 //             SUBCASE("King has moved"){
 //                 b_.removePiece(short_B_1);
 //                 b_.removePiece(short_B_2);
 //                 b_.getPiece(kingB)->movePiece(short_B_1);
-//                 //Caso precise mover a peça branca:
-//                 //b_.getPiece(Coordinates(6,6))->movePiece(Coordinates(5,6));
-//                 b_.getPiece(short_W_1)->movePiece(kingW);             
+//                 b_.update();
+//                 b_.getPiece(short_W_1)->movePiece(kingW);
+//                 b_.update();
 //                 CHECK(b_.getPiece(kingB)->validateMove(short_B_2) == false);
 //             }
 //         }
@@ -255,9 +256,9 @@ TEST_CASE("Create Piece"){
 //                 b_.removePiece(long_B_2);
 //                 b_.removePiece(long_B_3);
 //                 b_.getPiece(rookBL)->movePiece(long_B_2);
-//                 //Caso precise mover a peça preta:
-//                 //b_.getPiece(Coordinates(6,6))->movePiece(Coordinates(5,6));
+//                 b_.update();
 //                 b_.getPiece(long_B_2)->movePiece(rookBL);
+//                 b_.update();
 //                 CHECK(b_.getPiece(kingB)->validateMove(long_B_2) == false);
 //             }
 //             SUBCASE("Rook has moved 2"){
@@ -265,6 +266,7 @@ TEST_CASE("Create Piece"){
 //                 b_.removePiece(long_B_2);
 //                 b_.removePiece(long_B_3);
 //                 b_.getPiece(rookBL)->movePiece(long_B_1);
+//                 b_.update();
 //                 CHECK(b_.getPiece(kingB)->validateMove(long_B_2) == false);
 //             }
 //             SUBCASE("King has moved"){
@@ -272,9 +274,9 @@ TEST_CASE("Create Piece"){
 //                 b_.removePiece(long_B_2);
 //                 b_.removePiece(long_B_3);
 //                 b_.getPiece(kingB)->movePiece(long_B_3);
-//                 //Caso precise mover a peça preta:
-//                 //b_.getPiece(Coordinates(6,6))->movePiece(Coordinates(5,6));
+//                 b_.update();
 //                 b_.getPiece(long_B_3)->movePiece(kingB);
+//                 b_.update();
 //                 CHECK(b_.getPiece(kingB)->validateMove(long_B_2) == false);
 //             }
 //         }

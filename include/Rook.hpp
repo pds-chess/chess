@@ -9,7 +9,7 @@ class Rook: public Piece{
         Rook(const Coordinates& initial_coords, Color color, const Board& board);
         ~Rook();
         bool validateMove(const Coordinates& final_coordinates) const override;
-        void movePiece(Coordinates final_coordinates);
+        void movePiece(const Coordinates& final_coordinates) override;
         bool hasMoved() const;
         PieceType getType() const override;
     protected:

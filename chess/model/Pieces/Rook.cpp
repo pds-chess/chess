@@ -9,7 +9,7 @@ Rook::~Rook(){
     
 }
 
-void Rook::movePiece(Coordinates final_coordinates){
+void Rook::movePiece(const Coordinates& final_coordinates){
     Piece::movePiece(final_coordinates);
     moved_ = true;
 }
