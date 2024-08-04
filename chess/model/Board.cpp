@@ -22,6 +22,9 @@ Board::Board(const Board& copy_board){
     //     }
     // }
 }
+Board::~Board(){
+    destroyPieces();
+}
 
 void Board::clearBoard(){
     board_ = std::vector<std::vector<Piece*>> (8, std::vector<Piece*>(8, nullptr));

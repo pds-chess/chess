@@ -23,4 +23,5 @@ class Board{
         void createPiece(const Coordinates& coords, Color color, PieceType type);
         std::list<Piece*> getPieces() const;
         void destroyPieces();
+        ~Board();
 };
