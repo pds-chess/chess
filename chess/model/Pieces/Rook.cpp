@@ -35,19 +35,26 @@ bool Rook::validateMove(const Coordinates& final_coordinates) const{
         multiplier_i=0;
         multiplier_j=-1;
     }
-    if (ColP==ColF && ColP < ColF) {
+    if (RowP==RowF && ColP < ColF) {
         multiplier_i=0;
         multiplier_j=1;
     }
-     for (int i=2, j=2;i<=8 && j<=8; i++, j++) {
-            Piece* PieceF= getBoard().getPiece(Coordinates (RowP+i*multiplier_i,ColP+j*multiplier_j));
-            if (((PieceF->getColor()!=getColor() && PieceF!=nullptr)||PieceF==nullptr) && PieceF->getCoords().getCol()==ColF && PieceF->getCoords().getRow()==RowF)
-                return true;
-            if (PieceF!=nullptr)
-                return false;
+    for (int i=1, j=1;RowP+i*multiplier_i<8 && ColP+j*multiplier_j<8; i++, j++) {
+        Piece* PieceF= getBoard().getPiece(Coordinates (RowP+i*multiplier_i,ColP+j*multiplier_j));
+        if (PieceF==nullptr) {
+             if (RowP+i*multiplier_i==RowF&&ColP+j*multiplier_j==ColF)
+                 return true;
+              else continue;
+        } 
+        if (PieceF!=nullptr)
+        if (PieceF->getColor()!=getColor() &&RowP+i*multiplier_i==RowF&&ColP+j*multiplier_j==ColF) {
+            return true;
+            }
+        if (PieceF!=nullptr)
+            return false;
+        }
     }
-    }
-    return false;
+return false;
 }
 
 bool Rook::hasMoved() const{
