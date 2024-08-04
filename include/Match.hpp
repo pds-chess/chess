@@ -45,4 +45,5 @@ public:
 
     // Método para desistência
     void resign();
+    void showCapturedPieces();
 };
