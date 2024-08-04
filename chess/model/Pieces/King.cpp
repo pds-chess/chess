@@ -33,7 +33,6 @@ bool King::validateMove(const Coordinates& final_coordinates) const{
 
     if (!hasMoved() && (final_coordinates.getCol() == 6 || final_coordinates.getCol() == 2))
         return validateCastle(final_coordinates);
-    
     return false;
 }
 
@@ -49,40 +48,37 @@ bool King::short_castle(const Coordinates& final_coordinates) const{
             short_castle = false;
 }
 
-bool King::validateCastle(const Coordinates& final_coordinates) const{
-    if (hasMoved())
-        return false;
-    else{        
-        Rook* rook = nullptr;
-        Piece* pieceCol_7 = getBoard().getPiece(Coordinates(getCoords().getRow(), 7));
-        Piece* pieceCol_0 = getBoard().getPiece(Coordinates(getCoords().getRow(), 0));
-        if (short_castle(final_coordinates) && dynamic_cast<Rook*>(pieceCol_7) != NULL)
-        {
-            rook = dynamic_cast<Rook*>(pieceCol_7);
-            if (rook->hasMoved())
-                return false;
-            else{
-                if (getBoard().getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()+1)) == nullptr &&
-                getBoard().getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()+2)) == nullptr)  
-                    return true;
-                else
-                    return false;
-            }
-        }else if (!short_castle(final_coordinates) && dynamic_cast<Rook*>(pieceCol_0) != NULL){
-            rook = dynamic_cast<Rook*>(pieceCol_0);
-            if (rook->hasMoved())
-                return false;
-            else{
-                if (getBoard().getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()-1)) == nullptr &&
-                    getBoard().getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()-2)) == nullptr &&
-                    getBoard().getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()-3)) == nullptr)
-                    return true;
-                else
-                    return false;
-            }
-        }else
+bool King::validateCastle(const Coordinates& final_coordinates) const{       
+    Rook* rook = nullptr;
+    Piece* pieceCol_7 = getBoard().getPiece(Coordinates(getCoords().getRow(), 7));
+    Piece* pieceCol_0 = getBoard().getPiece(Coordinates(getCoords().getRow(), 0));
+    if (short_castle(final_coordinates) && dynamic_cast<Rook*>(pieceCol_7) != NULL)
+    {
+        rook = dynamic_cast<Rook*>(pieceCol_7);
+        if (rook->hasMoved())
             return false;
-    }
+        else{
+            if (getBoard().getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()+1)) == nullptr &&
+            getBoard().getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()+2)) == nullptr)  
+                return true;
+            else
+                return false;
+        }
+    }else if (!short_castle(final_coordinates) && dynamic_cast<Rook*>(pieceCol_0) != NULL)
+    {
+        rook = dynamic_cast<Rook*>(pieceCol_0);
+        if (rook->hasMoved())
+            return false;
+        else{
+            if (getBoard().getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()-1)) == nullptr &&
+            getBoard().getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()-2)) == nullptr &&
+            getBoard().getPiece(Coordinates(getCoords().getRow(), getCoords().getCol()-3)) == nullptr)
+                return true;
+            else
+                return false;
+        }
+    }else
+        return false;
 }
 
 void King::castle(const Coordinates& final_coordinates){

@@ -59,7 +59,7 @@ TEST_CASE ("Castle validation"){
             }
         }
         SUBCASE("Long Castle"){
-            SUBCASE("No pieces between"){
+            SUBCASE("No pieces between, no move"){
                 b_.removePiece(long_W_1);
                 b_.removePiece(long_W_2);
                 b_.removePiece(long_W_3);
@@ -151,7 +151,7 @@ TEST_CASE ("Castle validation"){
                 b_.removePiece(short_B_2);
                 b_.getPiece(kingB)->movePiece(short_B_1);
                 b_.update();
-                b_.getPiece(short_W_1)->movePiece(kingW);
+                b_.getPiece(short_B_1)->movePiece(kingB);
                 b_.update();
                 CHECK(b_.getPiece(kingB)->validateMove(short_B_2) == false);
             }
