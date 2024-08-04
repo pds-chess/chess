@@ -62,7 +62,12 @@ TEST_CASE("Create Piece"){
     }
 }
 
-
+TEST_CASE("Remove Piece"){
+    Board board_;
+    CHECK(board_.getPiece(Coordinates(0,0))!=nullptr);
+    board_.removePiece(Coordinates(0,0));
+    CHECK(board_.getPiece(Coordinates(0,0))==nullptr);
+}
 
 TEST_CASE ("Castle"){
     Board b_;
@@ -305,7 +310,7 @@ TEST_CASE ("Castle"){
             }
         }
     }
-};
+}
 
 // TEST_CASE("En passant validation"){
 //     Match m("Branco", "Preto");
@@ -337,3 +342,1215 @@ TEST_CASE ("Castle"){
 //         CHECK(b_.getPiece(Coordinates(5,4)) != nullptr); //true
 //     }
 // }
+
+TEST_CASE("ValidateMove") {
+    Coordinates bishopB=Coordinates(0,5);
+    Coordinates bishopW=Coordinates(7,5);
+
+    //WHITE
+    SUBCASE ("Bishop move NW") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(5,5));
+    b_.update();
+    bishopW=Coordinates(5,5);
+    b_.update();
+    CHECK(b_.getPiece(bishopW)->validateMove(Coordinates(2,2)) == true);
+    }
+    SUBCASE ("Bishop move NE") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(5,4));
+    b_.update();
+    bishopW=Coordinates(5,4);
+    CHECK(b_.getPiece(bishopW)->validateMove(Coordinates(2,7)) == true);
+    }
+    SUBCASE ("Bishop move SE") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(3,5));
+    b_.update();
+    bishopW=Coordinates(3,5);
+    CHECK(b_.getPiece(bishopW)->validateMove(Coordinates(5,7)) == true);
+    }
+    SUBCASE ("Bishop move SW") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(3,5));
+    b_.update();
+    bishopW=Coordinates(3,5);
+    CHECK(b_.getPiece(bishopW)->validateMove(Coordinates(5,3)) == true);
+    }
+    SUBCASE ("Bishop fails to move NW due to piece in the way") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(4,5));
+    b_.getPiece(bishopB)->setCoords(Coordinates(3,4));
+    b_.update();
+    bishopW=Coordinates(4,5);
+    bishopB=Coordinates(3,4);
+    CHECK(b_.getPiece(bishopW)->validateMove(Coordinates(2,3)) == false);
+    }
+    SUBCASE ("Bishop fails to move NE due to piece in the way") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(4,5));
+    b_.getPiece(bishopB)->setCoords(Coordinates(3,6));
+    b_.update();
+    bishopW=Coordinates(4,5);
+    bishopB=Coordinates(3,6);
+    CHECK(b_.getPiece(bishopW)->validateMove(Coordinates(2,7)) == false);
+    }
+    SUBCASE ("Bishop fails to move SE due to piece in the way") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(3,5));
+    b_.getPiece(bishopB)->setCoords(Coordinates(4,6));
+    b_.update();
+    bishopW=Coordinates(3,5);
+    bishopB=Coordinates(4,6);
+    CHECK(b_.getPiece(bishopW)->validateMove(Coordinates(5,7)) == false);
+    }
+    SUBCASE ("Bishop fails to move SW due to piece in the way") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(3,5));
+    b_.getPiece(bishopB)->setCoords(Coordinates(4,4));
+    b_.update();
+    bishopW=Coordinates(3,5);
+    bishopB=Coordinates(4,4);
+    CHECK(b_.getPiece(bishopW)->validateMove(Coordinates(5,3)) == false);
+    }
+}
+
+TEST_CASE("ValidateCapture") {
+    Coordinates bishopB=Coordinates(0,5);
+    Coordinates bishopW=Coordinates(7,5);
+    
+    SUBCASE ("White Bishop capture Black Bishop - NW") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(4,5));
+    b_.getPiece(bishopB)->setCoords(Coordinates(2,3));
+    b_.update();
+    bishopW=Coordinates(4,5);
+    bishopB=Coordinates(2,3);
+    CHECK(b_.getPiece(bishopW)->validateMove(bishopB) == true);
+    }
+    SUBCASE ("White Bishop capture Black Bishop - NE") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(4,5));
+    b_.getPiece(bishopB)->setCoords(Coordinates(2,7));
+    b_.update();
+    bishopW=Coordinates(4,5);
+    bishopB=Coordinates(2,7);
+    CHECK(b_.getPiece(bishopW)->validateMove(bishopB) == true);
+    }
+    SUBCASE ("White Bishop capture Black Bishop - SE") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(3,5));
+    b_.getPiece(bishopB)->setCoords(Coordinates(5,7));
+    b_.update();
+    bishopW=Coordinates(3,5);
+    bishopB=Coordinates(5,7);
+    CHECK(b_.getPiece(bishopW)->validateMove(bishopB) == true);
+    }
+    SUBCASE ("White Bishop capture Black Bishop - SW") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(3,5));
+    b_.getPiece(bishopB)->setCoords(Coordinates(5,3));
+    b_.update();
+    bishopW=Coordinates(3,5);
+    bishopB=Coordinates(5,3);
+    CHECK(b_.getPiece(bishopW)->validateMove(bishopB) == true);
+    }
+    SUBCASE ("White Bishop fails to capture White Piece - NW") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(7,2))->setCoords(Coordinates(2,3));
+    b_.update();
+    bishopW=Coordinates(4,5);
+    CHECK(b_.getPiece(bishopW)->validateMove(Coordinates(2,3)) == false);
+    }
+    SUBCASE ("White Bishop fails to capture White Piece - NE") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(7,2))->setCoords(Coordinates(2,7));
+    b_.update();
+    bishopW=Coordinates(4,5);
+    CHECK(b_.getPiece(bishopW)->validateMove(Coordinates(2,7)) == false);
+    }
+    SUBCASE ("White Bishop fails to capture White Piece - SE") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(7,2))->setCoords(Coordinates(5,7));
+    b_.update();
+    bishopW=Coordinates(3,5);
+    CHECK(b_.getPiece(bishopW)->validateMove(Coordinates(5,7)) == false);
+    }
+    SUBCASE ("White Bishop fails to capture White Piece - SW") {
+    Board b_;
+    b_.getPiece(bishopW)->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(7,2))->setCoords(Coordinates(5,3));
+    b_.update();
+    bishopW=Coordinates(3,5);
+    CHECK(b_.getPiece(bishopW)->validateMove(Coordinates(5,3)) == false);
+    }
+}
+
+TEST_CASE("ValidateMove") {
+    Coordinates BlackPiece=Coordinates(1,0);
+    Coordinates KingW=Coordinates(7,4);
+
+ //WHITE
+    SUBCASE ("King move N") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.update();
+    KingW=Coordinates(5,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(4,5)) == true);
+    }
+    SUBCASE ("King move NW") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.update();
+    KingW=Coordinates(5,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(4,4)) == true);
+    }
+    SUBCASE ("King move W") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.update();
+    KingW=Coordinates(5,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(5,4)) == true);
+    }
+    SUBCASE ("King move E") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.update();
+    KingW=Coordinates(5,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(5,6)) == true);
+    }
+    SUBCASE ("King move NE") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.update();
+    KingW=Coordinates(5,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(4,6)) == true);
+    }
+    SUBCASE ("King move SW") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(2,5));
+    b_.update();
+    KingW=Coordinates(2,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(3,4)) == true);
+    }
+    SUBCASE ("King move S") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(2,5));
+    b_.update();
+    KingW=Coordinates(2,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(3,5)) == true);
+    }
+    SUBCASE ("King move SE") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(2,5));
+    b_.update();
+    KingW=Coordinates(2,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(3,6)) == true);
+    }
+}
+TEST_CASE("ValidateCapture") {
+    Coordinates BlackPiece=Coordinates(1,0);
+    Coordinates KingW=Coordinates(7,4);
+
+    SUBCASE ("White King capture Black Piece - N") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.getPiece(BlackPiece)->setCoords(Coordinates(4,5));
+    b_.update();
+    KingW=Coordinates(5,5);
+    BlackPiece=Coordinates(4,5);
+    CHECK(b_.getPiece(KingW)->validateMove(BlackPiece) == true);
+    }
+    SUBCASE ("White King capture Black Piece - NW") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.getPiece(BlackPiece)->setCoords(Coordinates(4,4));
+    b_.update();
+    KingW=Coordinates(5,5);
+    BlackPiece=Coordinates(4,4);
+    CHECK(b_.getPiece(KingW)->validateMove(BlackPiece) == true);
+    }
+    SUBCASE ("White King capture Black Piece - W") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.getPiece(BlackPiece)->setCoords(Coordinates(5,4));
+    b_.update();
+    KingW=Coordinates(5,5);
+    BlackPiece=Coordinates(5,4);
+    CHECK(b_.getPiece(KingW)->validateMove(BlackPiece) == true);
+    }
+    SUBCASE ("White King capture Black Piece - E") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.getPiece(BlackPiece)->setCoords(Coordinates(5,6));
+    b_.update();
+    KingW=Coordinates(5,5);
+    BlackPiece=Coordinates(5,6);
+    CHECK(b_.getPiece(KingW)->validateMove(BlackPiece) == true);
+    }
+    SUBCASE ("White King capture Black Piece - NE") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.getPiece(BlackPiece)->setCoords(Coordinates(4,6));
+    b_.update();
+    KingW=Coordinates(5,5);
+    BlackPiece=Coordinates(4,6);
+    CHECK(b_.getPiece(KingW)->validateMove(BlackPiece) == true);
+    }
+    SUBCASE ("White King capture Black Piece - SW") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(2,5));
+    b_.getPiece(BlackPiece)->setCoords(Coordinates(3,4));
+    b_.update();
+    KingW=Coordinates(2,5);
+    BlackPiece=Coordinates(3,4);
+    CHECK(b_.getPiece(KingW)->validateMove(BlackPiece) == true);
+    }
+    SUBCASE ("White King capture Black Piece - S") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(2,5));
+    b_.getPiece(BlackPiece)->setCoords(Coordinates(3,5));
+    b_.update();
+    KingW=Coordinates(2,5);
+    BlackPiece=Coordinates(3,5);
+    CHECK(b_.getPiece(KingW)->validateMove(BlackPiece) == true);
+    }
+    SUBCASE ("White King capture Black Piece - SE") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(2,5));
+    b_.getPiece(BlackPiece)->setCoords(Coordinates(3,6));
+    b_.update();
+    KingW=Coordinates(2,5);
+    BlackPiece=Coordinates(3,6);
+    CHECK(b_.getPiece(KingW)->validateMove(BlackPiece) == true);
+    }
+    SUBCASE ("White King fails to capture White Piece - N") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(4,5));
+    b_.update();
+    KingW=Coordinates(5,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(4,5)) == false);
+    }
+    SUBCASE ("White King fails to capture White Piece - NW") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(4,4));
+    b_.update();
+    KingW=Coordinates(5,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(4,4)) == false);
+    }
+    SUBCASE ("White King fails to capture White Piece - W") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(5,4));
+    b_.update();
+    KingW=Coordinates(5,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(5,4)) == false);
+    }
+    SUBCASE ("White King fails to capture White Piece - E") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(5,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(5,6));
+    b_.update();
+    KingW=Coordinates(5,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(5,6)) == false);
+    }
+    SUBCASE ("White King fails to capture White Piece - NE") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(4,6));
+    b_.update();
+    KingW=Coordinates(2,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(4,6)) == false);
+    }
+    SUBCASE ("White King fails to capture White Piece - SW") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(3,4));
+    b_.update();
+    KingW=Coordinates(2,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(3,4)) == false);
+    }
+    SUBCASE ("White King fails to capture White Piece - S") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(3,5));
+    b_.update();
+    KingW=Coordinates(2,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(3,5)) == false);
+    }
+    SUBCASE ("White King fails to capture White Piece - SE") {
+    Board b_;
+    b_.getPiece(KingW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(3,6));
+    b_.update();
+    KingW=Coordinates(2,5);
+    CHECK(b_.getPiece(KingW)->validateMove(Coordinates(3,6)) == false);
+    }
+}
+
+TEST_CASE("ValidateMove") {
+    Coordinates KnightB=Coordinates(0,1);
+    Coordinates KnightW=Coordinates(7,1);
+
+ //WHITE
+    SUBCASE ("Knight move NNW") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(5,5));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(5,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(5,6));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(4,6));
+    b_.update();
+    KnightW=Coordinates(5,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(3,4)) == true);
+    }
+    SUBCASE ("Knight move WNW") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(5,5));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(5,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(5,6));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(4,6));
+    b_.update();
+    KnightW=Coordinates(5,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(4,3)) == true);
+    }
+    SUBCASE ("Knight move NNE") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(5,5));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(5,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(5,6));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(4,6));
+    b_.update();
+    KnightW=Coordinates(5,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(3,6)) == true);
+    }
+    SUBCASE ("Knight move ESE") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(5,5));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(5,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(5,6));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(4,6));
+    b_.update();
+    KnightW=Coordinates(5,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(4,7)) == true);
+    }
+    SUBCASE ("Knight move SSW") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(2,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(2,6));
+    b_.update();
+    KnightW=Coordinates(2,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(4,4)) == true);
+    }
+    SUBCASE ("Knight move WSW") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(2,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(2,6));
+    b_.update();
+    KnightW=Coordinates(2,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(3,3)) == true);
+    }
+    SUBCASE ("Knight move SSE") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(2,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(2,6));
+    b_.update();
+    KnightW=Coordinates(2,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(4,6)) == true);
+    }
+    SUBCASE ("Knight move ESE") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(2,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(2,6));
+    b_.update();
+    KnightW=Coordinates(2,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(3,7)) == true);
+    }
+}
+TEST_CASE("ValidateCapture") {
+    Coordinates KnightB=Coordinates(0,1);
+    Coordinates KnightW=Coordinates(7,1);
+
+    SUBCASE ("White Knight capture Black Knight - NNW") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(5,5));
+    b_.getPiece(KnightB)->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(5,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(5,6));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(4,6));
+    b_.update();
+    KnightW=Coordinates(5,5);
+    KnightB=Coordinates(3,4);
+    CHECK(b_.getPiece(KnightW)->validateMove(KnightB) == true);
+    }
+    SUBCASE ("White Knight capture Black Knight - WNW") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(5,5));
+    b_.getPiece(KnightB)->setCoords(Coordinates(4,3));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(5,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(5,6));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(4,6));
+    b_.update();
+    KnightW=Coordinates(5,5);
+    KnightB=Coordinates(4,3);
+    CHECK(b_.getPiece(KnightW)->validateMove(KnightB) == true);
+    }
+    SUBCASE ("White Knight capture Black Knight - NNE") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(5,5));
+    b_.getPiece(KnightB)->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(5,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(5,6));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(4,6));
+    b_.update();
+    KnightW=Coordinates(5,5);
+    KnightB=Coordinates(3,6);
+    CHECK(b_.getPiece(KnightW)->validateMove(KnightB) == true);
+    }
+    SUBCASE ("White Knight capture Black Knight - ESE") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(5,5));
+    b_.getPiece(KnightB)->setCoords(Coordinates(4,7));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(5,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(5,6));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(4,6));
+    b_.update();
+    KnightW=Coordinates(5,5);
+    KnightB=Coordinates(4,7);
+    CHECK(b_.getPiece(KnightW)->validateMove(KnightB) == true);
+    }
+    SUBCASE ("White Knight capture Black Knight - SSW") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(2,5));
+    b_.getPiece(KnightB)->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(2,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(2,6));
+    b_.update();
+    KnightW=Coordinates(2,5);
+    KnightB=Coordinates(4,4);
+    CHECK(b_.getPiece(KnightW)->validateMove(KnightB) == true);
+    }
+    SUBCASE ("White Knight capture Black Knight - WSW") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(2,5));
+    b_.getPiece(KnightB)->setCoords(Coordinates(3,3));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(2,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(2,6));
+    b_.update();
+    KnightW=Coordinates(2,5);
+    KnightB=Coordinates(3,3);
+    CHECK(b_.getPiece(KnightW)->validateMove(KnightB) == true);
+    }
+    SUBCASE ("White Knight capture Black Knight - SSE") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(2,5));
+    b_.getPiece(KnightB)->setCoords(Coordinates(4,6));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(2,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(2,6));
+    b_.update();
+    KnightW=Coordinates(2,5);
+    KnightB=Coordinates(4,6);
+    CHECK(b_.getPiece(KnightW)->validateMove(KnightB) == true);
+    }
+    SUBCASE ("White Knight capture Black Knight - ESE") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(2,5));
+    b_.getPiece(KnightB)->setCoords(Coordinates(3,7));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(2,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(2,6));
+    b_.update();
+    KnightW=Coordinates(2,5);
+    KnightB=Coordinates(3,7);
+    CHECK(b_.getPiece(KnightW)->validateMove(KnightB) == true);
+    }
+    SUBCASE ("White Knight fails to capture White Piece - NNW") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(5,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(5,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(5,6));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(4,6));
+    b_.update();
+    KnightW=Coordinates(5,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(3,4)) == false);
+    }
+    SUBCASE ("White Knight fails to capture White Piece - WNW") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(5,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(4,3));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(5,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(5,6));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(4,6));
+    b_.update();
+    KnightW=Coordinates(5,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(4,3)) == false);
+    }
+    SUBCASE ("White Knight fails to capture White Piece - NNE") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(5,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(5,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(5,6));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(4,6));
+    b_.update();
+    KnightW=Coordinates(5,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(3,6)) == false);
+    }
+    SUBCASE ("White Knight fails to capture White Piece - ESE") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(5,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(4,7));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(5,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(5,6));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(4,6));
+    b_.update();
+    KnightW=Coordinates(5,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(4,7)) == false);
+    }
+    SUBCASE ("White Knight fails to capture White Piece - SSW") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(4,4));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(2,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(2,6));
+    b_.update();
+    KnightW=Coordinates(2,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(4,4)) == false);
+    }
+    SUBCASE ("White Knight fails to capture White Piece - WSW") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(3,3));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(2,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(2,6));
+    b_.update();
+    KnightW=Coordinates(2,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(3,3)) == false);
+    }
+    SUBCASE ("White Knight fails to capture White Piece - SSE") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(4,6));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(2,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(2,6));
+    b_.update();
+    KnightW=Coordinates(2,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(4,6)) == false);
+    }
+    SUBCASE ("White Knight fails to capture White Piece - ESE") {
+    Board b_;
+    b_.getPiece(KnightW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(3,7));
+    b_.getPiece(Coordinates(6,0))->setCoords(Coordinates(2,4));
+    b_.getPiece(Coordinates(7,0))->setCoords(Coordinates(3,4));
+    b_.getPiece(Coordinates(6,1))->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(6,3))->setCoords(Coordinates(3,6));
+    b_.getPiece(Coordinates(6,2))->setCoords(Coordinates(2,6));
+    b_.update();
+    KnightW=Coordinates(2,5);
+    CHECK(b_.getPiece(KnightW)->validateMove(Coordinates(3,7)) == false);
+    }
+}
+
+TEST_CASE("ValidateMove") {
+    Coordinates pawnB=Coordinates(1,6);
+    Coordinates pawnW=Coordinates(6,6);
+
+    //WHITE
+    SUBCASE ("PawnWhite move 1") {
+    Board b_;
+    CHECK(b_.getPiece(pawnW)->validateMove(Coordinates(5,6)) == true);
+    }
+    SUBCASE ("PawnWhite move 2") {
+    Board b_;
+    CHECK(b_.getPiece(pawnW)->validateMove(Coordinates(4,6)) == true);
+    }
+    SUBCASE ("PawnWhite fails to move due to piece in the way") {
+    Board b_;
+    b_.getPiece(pawnB)->setCoords(Coordinates(5,6));
+    b_.update();
+    CHECK(b_.getPiece(pawnW)->validateMove(Coordinates(5,6)) == false);
+    }
+    SUBCASE ("PawnWhite fails to move due to piece in the way - 2") {
+    Board b_;
+    b_.getPiece(pawnB)->setCoords(Coordinates(5,6));
+    b_.update();
+    CHECK(b_.getPiece(pawnW)->validateMove(Coordinates(4,6)) == false);
+    }
+    SUBCASE ("PawnWhite fails to move twice (moved=true)") {
+    Board b_;
+    b_.getPiece(pawnW)->movePiece(Coordinates(5,6));
+    b_.update();
+    pawnW=Coordinates(5,6);
+    CHECK(b_.getPiece(pawnW)->validateMove(Coordinates(3,6)) == false);
+    }
+
+
+    //BLACK
+    SUBCASE ("PawnBlack move 1") {
+    Board b_;
+    CHECK(b_.getPiece(pawnB)->validateMove(Coordinates(2,6)) == true);
+    }
+    SUBCASE ("PawnBlack move 2") {
+    Board b_;
+    CHECK(b_.getPiece(pawnB)->validateMove(Coordinates(3,6)) == true);
+    }
+    SUBCASE ("PawnBlack fails to move due to piece in the way") {
+    Board b_;
+    b_.getPiece(pawnW)->setCoords(Coordinates(2,6));
+    b_.update();
+    CHECK(b_.getPiece(pawnB)->validateMove(Coordinates(2,6)) == false);
+    }
+    SUBCASE ("PawnBlack fails to move due to piece in the way - 2") {
+    Board b_;
+    b_.getPiece(pawnW)->setCoords(Coordinates(2,6));
+    b_.update();
+    CHECK(b_.getPiece(pawnB)->validateMove(Coordinates(3,6)) == false);
+    }
+    SUBCASE ("PawnBlack fails to move twice (moved=true)") {
+    Board b_;
+    b_.getPiece(pawnB)->movePiece(Coordinates(2,6));
+    b_.update();
+    pawnB=Coordinates(2,6);
+    CHECK(b_.getPiece(pawnB)->validateMove(Coordinates(4,6)) == false);
+    }
+}
+
+TEST_CASE("ValidateCapture") {
+    Coordinates pawnB=Coordinates(1,6);
+    Coordinates pawnW=Coordinates(6,6);
+
+    //WHITE
+    SUBCASE ("PawnWhite capture PawnBlack") {
+    Board b_;
+    b_.getPiece(pawnB)->setCoords(Coordinates(5,5));
+    b_.update();
+    pawnB=Coordinates(5,5);
+    CHECK(b_.getPiece(pawnW)->validateMove(pawnB) == true);
+    }
+    SUBCASE ("PawnWhite capture PawnBlack 2") {
+    Board b_;
+    b_.getPiece(pawnB)->setCoords(Coordinates(5,7));
+    b_.update();
+    pawnB=Coordinates(5,7);
+    CHECK(b_.getPiece(pawnW)->validateMove(pawnB) == true);
+    }
+    SUBCASE ("PawnWhite fails to capture White Piece") {
+    Board b_;
+    b_.getPiece(Coordinates (6,5))->setCoords(Coordinates(5,5));
+    b_.update();
+    CHECK(b_.getPiece(pawnW)->validateMove(Coordinates(5,5)) == false);
+    }
+
+    //BLACK
+    SUBCASE ("PawnBlack capture PawnWhite") {
+    Board b_;
+    b_.getPiece(pawnW)->setCoords(Coordinates(2,5));
+    b_.update();
+    pawnW=Coordinates(2,5);
+    CHECK(b_.getPiece(pawnB)->validateMove(pawnW) == true);
+    }
+    SUBCASE ("PawnBlack capture PawnWhite 2") {
+    Board b_;
+    b_.getPiece(pawnW)->setCoords(Coordinates(2,7));
+    b_.update();
+    pawnW=Coordinates(2,7);
+    CHECK(b_.getPiece(pawnB)->validateMove(pawnW) == true);
+    }
+    SUBCASE ("PawnBlack fails to capture Black Piece") {
+    Board b_;
+    b_.getPiece(Coordinates (1,5))->setCoords(Coordinates(2,5));
+    b_.update();
+    CHECK(b_.getPiece(pawnB)->validateMove(Coordinates(2,5)) == false);
+    }
+}
+
+TEST_CASE("ValidateMove") {
+    Coordinates QueenB=Coordinates(0,3);
+    Coordinates QueenW=Coordinates(7,3);
+
+    //WHITE
+    SUBCASE ("Queen move NW") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(5,5));
+    b_.update();
+    QueenW=Coordinates(5,5);
+    b_.update();
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(2,2)) == true);
+    }
+    SUBCASE ("Queen move NE") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(5,4));
+    b_.update();
+    QueenW=Coordinates(5,4);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(2,7)) == true);
+    }
+    SUBCASE ("Queen move SE") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(3,5));
+    b_.update();
+    QueenW=Coordinates(3,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(5,7)) == true);
+    }
+    SUBCASE ("Queen move SW") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(3,5));
+    b_.update();
+    QueenW=Coordinates(3,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(5,3)) == true);
+    }
+    SUBCASE ("Queen fails to move NW due to piece in the way") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,5));
+    b_.getPiece(QueenB)->setCoords(Coordinates(3,4));
+    b_.update();
+    QueenW=Coordinates(4,5);
+    QueenB=Coordinates(3,4);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(2,3)) == false);
+    }
+    SUBCASE ("Queen fails to move NE due to piece in the way") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,5));
+    b_.getPiece(QueenB)->setCoords(Coordinates(3,6));
+    b_.update();
+    QueenW=Coordinates(4,5);
+    QueenB=Coordinates(3,6);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(2,7)) == false);
+    }
+    SUBCASE ("Queen fails to move SE due to piece in the way") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(3,5));
+    b_.getPiece(QueenB)->setCoords(Coordinates(4,6));
+    b_.update();
+    QueenW=Coordinates(3,5);
+    QueenB=Coordinates(4,6);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(5,7)) == false);
+    }
+    SUBCASE ("Queen fails to move SW due to piece in the way") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(3,5));
+    b_.getPiece(QueenB)->setCoords(Coordinates(4,4));
+    b_.update();
+    QueenW=Coordinates(3,5);
+    QueenB=Coordinates(4,4);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(5,3)) == false);
+    }
+    SUBCASE ("Queen move N") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,3));
+    b_.update();
+    QueenW=Coordinates(4,3);
+    b_.update();
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(2,3)) == true);
+    }
+    SUBCASE ("Queen move E") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(2,3));
+    b_.update();
+    QueenW=Coordinates(2,3);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(2,7)) == true);
+    }
+    SUBCASE ("Queen move W") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(3,5));
+    b_.update();
+    QueenW=Coordinates(3,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(3,0)) == true);
+    }
+    SUBCASE ("Queen move S") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(3,5));
+    b_.update();
+    QueenW=Coordinates(3,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(5,5)) == true);
+    }
+    SUBCASE ("Queen fails to move N due to piece in the way") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,5));
+    b_.getPiece(QueenB)->setCoords(Coordinates(3,5));
+    b_.update();
+    QueenW=Coordinates(4,5);
+    QueenB=Coordinates(3,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(2,5)) == false);
+    }
+    SUBCASE ("Queen fails to move E due to piece in the way") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,0));
+    b_.getPiece(QueenB)->setCoords(Coordinates(4,4));
+    b_.update();
+    QueenW=Coordinates(4,0);
+    QueenB=Coordinates(4,4);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(4,7)) == false);
+    }
+    SUBCASE ("Queen fails to move W due to piece in the way") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(3,7));
+    b_.getPiece(QueenB)->setCoords(Coordinates(3,3));
+    b_.update();
+    QueenW=Coordinates(3,7);
+    QueenB=Coordinates(3,3);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(3,0)) == false);
+    }
+    SUBCASE ("Queen fails to move S due to piece in the way") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(2,5));
+    b_.getPiece(QueenB)->setCoords(Coordinates(3,5));
+    b_.update();
+    QueenW=Coordinates(2,5);
+    QueenB=Coordinates(3,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(5,5)) == false);
+    }
+}
+
+TEST_CASE("ValidateCapture") {
+    Coordinates QueenB=Coordinates(0,3);
+    Coordinates QueenW=Coordinates(7,3);
+    
+    SUBCASE ("White Queen capture Black Queen - NW") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,5));
+    b_.getPiece(QueenB)->setCoords(Coordinates(2,3));
+    b_.update();
+    QueenW=Coordinates(4,5);
+    QueenB=Coordinates(2,3);
+    CHECK(b_.getPiece(QueenW)->validateMove(QueenB) == true);
+    }
+    SUBCASE ("White Queen capture Black Queen - NE") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,5));
+    b_.getPiece(QueenB)->setCoords(Coordinates(2,7));
+    b_.update();
+    QueenW=Coordinates(4,5);
+    QueenB=Coordinates(2,7);
+    CHECK(b_.getPiece(QueenW)->validateMove(QueenB) == true);
+    }
+    SUBCASE ("White Queen capture Black Queen - SE") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(3,5));
+    b_.getPiece(QueenB)->setCoords(Coordinates(5,7));
+    b_.update();
+    QueenW=Coordinates(3,5);
+    QueenB=Coordinates(5,7);
+    CHECK(b_.getPiece(QueenW)->validateMove(QueenB) == true);
+    }
+    SUBCASE ("White Queen capture Black Queen - SW") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(3,5));
+    b_.getPiece(QueenB)->setCoords(Coordinates(5,3));
+    b_.update();
+    QueenW=Coordinates(3,5);
+    QueenB=Coordinates(5,3);
+    CHECK(b_.getPiece(QueenW)->validateMove(QueenB) == true);
+    }
+    SUBCASE ("White Queen fails to capture White Piece - NW") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(7,2))->setCoords(Coordinates(2,3));
+    b_.update();
+    QueenW=Coordinates(4,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(2,3)) == false);
+    }
+    SUBCASE ("White Queen fails to capture White Piece - NE") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(7,2))->setCoords(Coordinates(2,7));
+    b_.update();
+    QueenW=Coordinates(4,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(2,7)) == false);
+    }
+    SUBCASE ("White Queen fails to capture White Piece - SE") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(7,2))->setCoords(Coordinates(5,7));
+    b_.update();
+    QueenW=Coordinates(3,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(5,7)) == false);
+    }
+    SUBCASE ("White Queen fails to capture White Piece - SW") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(3,5));
+    b_.getPiece(Coordinates(7,2))->setCoords(Coordinates(5,3));
+    b_.update();
+    QueenW=Coordinates(3,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(5,3)) == false);
+    }
+    SUBCASE ("White Queen capture Black Queen - N") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,5));
+    b_.getPiece(QueenB)->setCoords(Coordinates(2,5));
+    b_.update();
+    QueenW=Coordinates(4,5);
+    QueenB=Coordinates(2,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(QueenB) == true);
+    }
+    SUBCASE ("White Queen capture Black Queen - E") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,0));
+    b_.getPiece(QueenB)->setCoords(Coordinates(4,7));
+    b_.update();
+    QueenW=Coordinates(4,0);
+    QueenB=Coordinates(4,7);
+    CHECK(b_.getPiece(QueenW)->validateMove(QueenB) == true);
+    }
+    SUBCASE ("White Queen capture Black Queen - W") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,7));
+    b_.getPiece(QueenB)->setCoords(Coordinates(4,0));
+    b_.update();
+    QueenW=Coordinates(4,7);
+    QueenB=Coordinates(4,0);
+    CHECK(b_.getPiece(QueenW)->validateMove(QueenB) == true);
+    }
+    SUBCASE ("White Queen capture Black Queen - S") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(2,5));
+    b_.getPiece(QueenB)->setCoords(Coordinates(5,5));
+    b_.update();
+    QueenW=Coordinates(2,5);
+    QueenB=Coordinates(5,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(QueenB) == true);
+    }
+    SUBCASE ("White Queen fails to capture White Piece - N") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(2,5));
+    b_.update();
+    QueenW=Coordinates(4,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(2,5)) == false);
+    }
+    SUBCASE ("White Queen fails to capture White Piece - E") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,0));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(4,7));
+    b_.update();
+    QueenW=Coordinates(4,0);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(4,7)) == false);
+    }
+    SUBCASE ("White Queen fails to capture White Piece - W") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(4,7));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(4,0));
+    b_.update();
+    QueenW=Coordinates(4,7);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(4,0)) == false);
+    }
+    SUBCASE ("White Queen fails to capture White Piece - S") {
+    Board b_;
+    b_.getPiece(QueenW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(5,5));
+    b_.update();
+    QueenW=Coordinates(2,5);
+    CHECK(b_.getPiece(QueenW)->validateMove(Coordinates(5,5)) == false);
+    }
+}
+
+TEST_CASE("ValidateMove") {
+    Coordinates rookB=Coordinates(0,0);
+    Coordinates rookW=Coordinates(7,0);
+
+    //WHITE
+    SUBCASE ("Rook move N") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(4,3));
+    b_.update();
+    rookW=Coordinates(4,3);
+    b_.update();
+    CHECK(b_.getPiece(rookW)->validateMove(Coordinates(2,3)) == true);
+    }
+    SUBCASE ("Rook move E") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(2,3));
+    b_.update();
+    rookW=Coordinates(2,3);
+    CHECK(b_.getPiece(rookW)->validateMove(Coordinates(2,7)) == true);
+    }
+    SUBCASE ("Rook move W") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(3,5));
+    b_.update();
+    rookW=Coordinates(3,5);
+    CHECK(b_.getPiece(rookW)->validateMove(Coordinates(3,0)) == true);
+    }
+    SUBCASE ("Rook move S") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(3,5));
+    b_.update();
+    rookW=Coordinates(3,5);
+    CHECK(b_.getPiece(rookW)->validateMove(Coordinates(5,5)) == true);
+    }
+    SUBCASE ("Rook fails to move N due to piece in the way") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(4,5));
+    b_.getPiece(rookB)->setCoords(Coordinates(3,5));
+    b_.update();
+    rookW=Coordinates(4,5);
+    rookB=Coordinates(3,5);
+    CHECK(b_.getPiece(rookW)->validateMove(Coordinates(2,5)) == false);
+    }
+    SUBCASE ("Rook fails to move E due to piece in the way") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(4,0));
+    b_.getPiece(rookB)->setCoords(Coordinates(4,4));
+    b_.update();
+    rookW=Coordinates(4,0);
+    rookB=Coordinates(4,4);
+    CHECK(b_.getPiece(rookW)->validateMove(Coordinates(4,7)) == false);
+    }
+    SUBCASE ("Rook fails to move W due to piece in the way") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(3,7));
+    b_.getPiece(rookB)->setCoords(Coordinates(3,3));
+    b_.update();
+    rookW=Coordinates(3,7);
+    rookB=Coordinates(3,3);
+    CHECK(b_.getPiece(rookW)->validateMove(Coordinates(3,0)) == false);
+    }
+    SUBCASE ("Rook fails to move S due to piece in the way") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(2,5));
+    b_.getPiece(rookB)->setCoords(Coordinates(3,5));
+    b_.update();
+    rookW=Coordinates(2,5);
+    rookB=Coordinates(3,5);
+    CHECK(b_.getPiece(rookW)->validateMove(Coordinates(5,5)) == false);
+    }
+}
+
+TEST_CASE("ValidateCapture") {
+    Coordinates rookB=Coordinates(0,0);
+    Coordinates rookW=Coordinates(7,0);
+    
+    SUBCASE ("White Rook capture Black Rook - N") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(4,5));
+    b_.getPiece(rookB)->setCoords(Coordinates(2,5));
+    b_.update();
+    rookW=Coordinates(4,5);
+    rookB=Coordinates(2,5);
+    CHECK(b_.getPiece(rookW)->validateMove(rookB) == true);
+    }
+    SUBCASE ("White Rook capture Black Rook - E") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(4,0));
+    b_.getPiece(rookB)->setCoords(Coordinates(4,7));
+    b_.update();
+    rookW=Coordinates(4,0);
+    rookB=Coordinates(4,7);
+    CHECK(b_.getPiece(rookW)->validateMove(rookB) == true);
+    }
+    SUBCASE ("White Rook capture Black Rook - W") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(4,7));
+    b_.getPiece(rookB)->setCoords(Coordinates(4,0));
+    b_.update();
+    rookW=Coordinates(4,7);
+    rookB=Coordinates(4,0);
+    CHECK(b_.getPiece(rookW)->validateMove(rookB) == true);
+    }
+    SUBCASE ("White Rook capture Black Rook - S") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(2,5));
+    b_.getPiece(rookB)->setCoords(Coordinates(5,5));
+    b_.update();
+    rookW=Coordinates(2,5);
+    rookB=Coordinates(5,5);
+    CHECK(b_.getPiece(rookW)->validateMove(rookB) == true);
+    }
+    SUBCASE ("White Rook fails to capture White Piece - N") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(4,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(2,5));
+    b_.update();
+    rookW=Coordinates(4,5);
+    CHECK(b_.getPiece(rookW)->validateMove(Coordinates(2,5)) == false);
+    }
+    SUBCASE ("White Rook fails to capture White Piece - E") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(4,0));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(4,7));
+    b_.update();
+    rookW=Coordinates(4,0);
+    CHECK(b_.getPiece(rookW)->validateMove(Coordinates(4,7)) == false);
+    }
+    SUBCASE ("White Rook fails to capture White Piece - W") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(4,7));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(4,0));
+    b_.update();
+    rookW=Coordinates(4,7);
+    CHECK(b_.getPiece(rookW)->validateMove(Coordinates(4,0)) == false);
+    }
+    SUBCASE ("White Rook fails to capture White Piece - S") {
+    Board b_;
+    b_.getPiece(rookW)->setCoords(Coordinates(2,5));
+    b_.getPiece(Coordinates(7,7))->setCoords(Coordinates(5,5));
+    b_.update();
+    rookW=Coordinates(2,5);
+    CHECK(b_.getPiece(rookW)->validateMove(Coordinates(5,5)) == false);
+    }
+}
