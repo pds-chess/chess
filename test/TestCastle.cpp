@@ -3,7 +3,7 @@
 
 #include "Match.hpp"
 
-TEST_CASE ("Castle validation"){
+TEST_CASE ("Castle"){
     Board b_;
 
     Coordinates kingW = Coordinates(7,4);
@@ -30,6 +30,12 @@ TEST_CASE ("Castle validation"){
                 b_.removePiece(short_W_1);
                 b_.removePiece(short_W_2);
                 CHECK(b_.getPiece(kingW)->validateMove(short_W_2) == true);
+                b_.getPiece(kingW)->movePiece(short_W_2);
+                b_.update();
+                King* king = dynamic_cast<King*>(b_.getPiece(short_W_2));
+                Rook* rook = dynamic_cast<Rook*>(b_.getPiece(short_W_1));
+                CHECK(king!=nullptr);
+                CHECK(rook!=nullptr);
             }
             SUBCASE("One piece between 1"){
                 b_.removePiece(short_W_1);
@@ -64,6 +70,12 @@ TEST_CASE ("Castle validation"){
                 b_.removePiece(long_W_2);
                 b_.removePiece(long_W_3);
                 CHECK(b_.getPiece(kingW)->validateMove(long_W_2) == true);
+                b_.getPiece(kingW)->movePiece(long_W_2);
+                b_.update();
+                King* king = dynamic_cast<King*>(b_.getPiece(long_W_2));
+                Rook* rook = dynamic_cast<Rook*>(b_.getPiece(long_W_3));
+                CHECK(king!=nullptr);
+                CHECK(rook!=nullptr);
             }
             SUBCASE("One piece between 1"){
                 b_.removePiece(long_W_1);
@@ -128,6 +140,12 @@ TEST_CASE ("Castle validation"){
                 b_.removePiece(short_B_1);
                 b_.removePiece(short_B_2);
                 CHECK(b_.getPiece(kingB)->validateMove(short_B_2) == true);
+                b_.getPiece(kingB)->movePiece(short_B_2);
+                b_.update();
+                King* king = dynamic_cast<King*>(b_.getPiece(short_B_2));
+                Rook* rook = dynamic_cast<Rook*>(b_.getPiece(short_B_1));
+                CHECK(king!=nullptr);
+                CHECK(rook!=nullptr);
             }
             SUBCASE("One piece between 1"){
                 b_.removePiece(short_B_1);
@@ -162,6 +180,12 @@ TEST_CASE ("Castle validation"){
                 b_.removePiece(long_B_2);
                 b_.removePiece(long_B_3);
                 CHECK(b_.getPiece(kingB)->validateMove(long_B_2) == true);
+                b_.getPiece(kingB)->movePiece(long_B_2);
+                b_.update();
+                King* king = dynamic_cast<King*>(b_.getPiece(long_B_2));
+                Rook* rook = dynamic_cast<Rook*>(b_.getPiece(long_B_3));
+                CHECK(king!=nullptr);
+                CHECK(rook!=nullptr);
             }
             SUBCASE("One piece between 1"){
                 b_.removePiece(long_B_1);

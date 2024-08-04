@@ -13,8 +13,7 @@ void King::movePiece(const Coordinates& final_coordinates){
     if (!hasMoved() && (final_coordinates.getCol() == 6 || final_coordinates.getCol() == 2))
         castle(final_coordinates);
     else
-    Piece::movePiece(final_coordinates);
-    
+        Piece::movePiece(final_coordinates);
     moved_ = true;
 }
 
@@ -41,11 +40,10 @@ bool King::hasMoved() const{
 }
 
 bool King::short_castle(const Coordinates& final_coordinates) const{
-    bool short_castle = NULL;
         if (final_coordinates.getCol() == getCoords().getCol()+2)
-            short_castle = true;
-        else if (final_coordinates.getCol() == getCoords().getCol()-2)
-            short_castle = false;
+            return true;
+        if (final_coordinates.getCol() == getCoords().getCol()-2)
+            return false;
 }
 
 bool King::validateCastle(const Coordinates& final_coordinates) const{       
@@ -64,7 +62,8 @@ bool King::validateCastle(const Coordinates& final_coordinates) const{
             else
                 return false;
         }
-    }else if (!short_castle(final_coordinates) && dynamic_cast<Rook*>(pieceCol_0) != NULL)
+    }
+    if (!short_castle(final_coordinates) && dynamic_cast<Rook*>(pieceCol_0) != NULL)
     {
         rook = dynamic_cast<Rook*>(pieceCol_0);
         if (rook->hasMoved())
