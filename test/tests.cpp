@@ -314,7 +314,6 @@ TEST_CASE ("Castle"){
 
 // TEST_CASE("En passant validation"){
 //     Match m("Branco", "Preto");
-//     Board b_;
 
 //     SUBCASE("Middle board - White"){
 //         m.movePiece(6,4,4,4);
@@ -322,24 +321,35 @@ TEST_CASE ("Castle"){
 //         m.movePiece(4,4,3,4);
 //         m.movePiece(1,3,3,3);
 //         m.movePiece(3,4,2,3);
-//         CHECK(b_.getPiece(Coordinates(2,3)) != nullptr); //true
+//         CHECK(m.board_.getPiece(Coordinates(2,3)) != nullptr); //true
 //     }
 //     SUBCASE("Middle board, moved twice - White"){
-//         b_.getPiece(Coordinates(6,4))->setCoords(Coordinates(4,4));
-//         b_.getPiece(Coordinates(1,3))->setCoords(Coordinates(2,3));
-//         b_.getPiece(Coordinates(4,4))->setCoords(Coordinates(3,4));
-//         b_.getPiece(Coordinates(2,3))->setCoords(Coordinates(3,3));
-//         b_.getPiece(Coordinates(3,4))->movePiece(Coordinates(2,3));
-//         CHECK(b_.getPiece(Coordinates(2,3)) == nullptr); //false
+//         m.movePiece(6,4,4,4);
+//         m.movePiece(1,3,2,3);
+//         m.movePiece(4,4,3,4);
+//         m.movePiece(2,3,3,3);
+//         m.movePiece(3,4,2,3);
+//         CHECK(m.board_.getPiece(Coordinates(2,3)) == nullptr); //false
 //     }
-//     SUBCASE("Middle board - Black"){
-//         b_.getPiece(Coordinates(6,0))->movePiece(Coordinates(6,1));
-//         b_.getPiece(Coordinates(1,3))->movePiece(Coordinates(3,3));
-//         b_.getPiece(Coordinates(6,1))->movePiece(Coordinates(6,2));
-//         b_.getPiece(Coordinates(3,3))->movePiece(Coordinates(4,3));
-//         b_.getPiece(Coordinates(6,4))->movePiece(Coordinates(4,4));
-//         b_.getPiece(Coordinates(4,3))->movePiece(Coordinates(5,4));
-//         CHECK(b_.getPiece(Coordinates(5,4)) != nullptr); //true
+// }
+
+// TEST_CASE("Pawn Promotion"){
+//     Match m("Branco","Preto");
+
+//     SUBCASE("White Promotion"){
+//         m.board_.clearBoard(); m.board_.update();
+//         m.board_.createPiece(Coordinates(1,4), White, PAWN); m.board_.update();
+//         m.movePiece(1,4,0,4);
+//         //Digitar 'R'
+//         CHECK(m.board_.getPiece(Coordinates(0,4))->getType() == QUEEN);
+//     }
+//     SUBCASE("Black Promotion"){
+//         m.board_.clearBoard(); m.board_.update();
+//         m.board_.createPiece(Coordinates(6,4), Black, PAWN); m.board_.update();
+//         m.endTurn();
+//         m.movePiece(6,4,7,4);
+//         //Digitar 'R'
+//         CHECK(m.board_.getPiece(Coordinates(0,4))->getType() == QUEEN);
 //     }
 // }
 
