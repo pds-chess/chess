@@ -13,5 +13,5 @@ public:
     int getRow() const;
     int getCol() const;
     std::string toString();
-    static Coordinates fromString(const std::string& str);
+    void fromString(const std::string& str);
 };

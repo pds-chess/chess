@@ -25,7 +25,7 @@ Gamestate Match::getGameState(){
 }
 
 void Match::startGame(){
-    //game_id_ = 
+    //game_id_ = ;
     board_ = Board();
     current_turn_ = &player_W_;
     game_state_ = inProgress;
@@ -174,10 +174,10 @@ void Match::promotePawn(Piece* pawn) {
 
 // Método para registrar um movimento
 void Match::registerMove(Piece* target_piece, Coordinates final_coords) {
-    std::string moves = target_piece->getCoords().toString() + " para " + final_coords.toString();
-    Move move = Move(target_piece->getCoords(),final_coords,current_turn_->getplayerColor(),current_turn_->getPlayerName(), game_id_);
-    moves_.push_back(moves);
-    //history_.saveMove(move);
+    Move move(target_piece->getCoords(),final_coords,current_turn_->getplayerColor(),current_turn_->getPlayerName(),game_id_);
+    moves_.push_back(move);
+    // if (game_state_ != inProgress)
+    //     history_.saveMatch(moves_);
 }
 
 // Método para finalizar o jogo com empate

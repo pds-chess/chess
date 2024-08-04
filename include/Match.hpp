@@ -17,7 +17,7 @@ private:
     Player player_B_;
     Player* current_turn_;
     Gamestate game_state_;
-    int game_id_;
+        int game_id_ = 0;
     void endTurn();
     bool isCheck() const;
     bool isDraw() const;
@@ -28,8 +28,8 @@ private:
     void startGame(); // Inicia um novo jogo.
 
     // Lista de movimentos
-    std::list<std::string> moves_;
-    //History history_;
+    std::list<Move> moves_;
+    // History history_;
 
     // Método para registrar um movimento
     void registerMove(Piece* target_piece, Coordinates final_coords);

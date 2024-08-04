@@ -27,22 +27,19 @@ std::string Coordinates::toString() {
     return std::to_string(row_) + "," + std::to_string(column_);
 }
 
-static Coordinates fromString(const std::string& str) {
-        std::istringstream iss(str);
-        std::string token;
-        int row, column;
+void Coordinates::fromString(const std::string& str) {
+    std::istringstream iss(str);
+    std::string token;
 
-        if (std::getline(iss, token, ',')) {
-            row = std::stoi(token);
-        } else {
-            throw std::invalid_argument("String format is incorrect for Coordinates.");
-        }
-
-        if (std::getline(iss, token, ',')) {
-            column = std::stoi(token);
-        } else {
-            throw std::invalid_argument("String format is incorrect for Coordinates.");
-        }
-
-        return Coordinates(row, column);
+    if (std::getline(iss, token, ',')) {
+        row_ = std::stoi(token);
+    } else {
+        throw std::invalid_argument("String format is incorrect for Coordinates.");
     }
+
+    if (std::getline(iss, token, ',')) {
+        column_ = std::stoi(token);
+    } else {
+        throw std::invalid_argument("String format is incorrect for Coordinates.");
+    }
+}

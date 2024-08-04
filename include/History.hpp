@@ -13,7 +13,7 @@ class History{
     
     public:
         History(std::string path);
-        void saveMove(Move move);
-        //std::list<Move> getMoves(int game_id) const;
+        void saveMatch(std::list<Move> moves);
+        std::list<Move> getMoves(int game_id) const;
         std::list<int> getGames() const;
 };
