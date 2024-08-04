@@ -1,6 +1,7 @@
 #include "Match.hpp"
 #include <stdexcept>
 #include <iostream>
+#include <map>
 
 Match::Match(std::string playerW, std::string playerB) {
     player_W_ = Player(playerW, White);
@@ -196,4 +197,21 @@ void Match::resign() {
 
 std::string Match::getCurrentPlayerName() const{
     return current_turn_->getPlayerName();
+}
+
+void Match::showCapturedPieces() {
+    std::map<Piece*, int> capturedCount;
+
+    for (Piece* piece : current_turn_->getCapturedPieces()) {
+        if (capturedCount.find(piece) != capturedCount.end()) {
+            capturedCount[piece]++;
+        }
+        else capturedCount[piece]=1;
+    }
+
+    // Imprimimos o resumo das peças capturadas
+    std::cout << "Peças adversárias capturadas:" << std::endl;
+    for (const auto& entry : capturedCount) {
+        std::cout << entry.second << "x " << entry.first->pieceToString() << std::endl;
+    }
 }
