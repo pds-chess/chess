@@ -69,6 +69,26 @@ TEST_CASE("Remove Piece"){
     CHECK(board_.getPiece(Coordinates(0,0))==nullptr);
 }
 
+TEST_CASE("Create Match"){
+    Match match = Match("lebraga", "davi");
+    CHECK(match.getCurrentPlayerName()=="lebraga");
+}
+
+TEST_CASE("Piece String"){
+    Board board_;
+    auto piece = board_.getPiece(Coordinates(0,0));
+    CHECK(piece->pieceToString()=="Rb");
+    piece = board_.getPiece(Coordinates(7,7));
+    CHECK(piece->pieceToString()=="Rw");
+}
+
+TEST_CASE("Match state"){
+    Match match = Match("lebraga", "davi");
+    SUBCASE("Match Ongoing"){
+        CHECK(match.getGameState()==inProgress);
+    }
+}
+
 TEST_CASE ("Castle"){
     Board b_;
 

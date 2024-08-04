@@ -36,6 +36,8 @@ const Board& Piece::getBoard() const{
 
 std::string Piece::pieceToString() const{
     char pieceColor = color_==White?'w':'b';
-    std::string output = "" + getPieceChar() + pieceColor;
+    std::string output = "";
+    output +=  + getPieceChar();
+    output += pieceColor;
     return output;
 }
