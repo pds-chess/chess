@@ -36,12 +36,19 @@ if (RowF+ColF==Secundary_Diagonal || RowF-ColF==Primary_Diagonal) {
         multiplier_i=1;
         multiplier_j=-1;
     }
-    for (int i=2, j=2;i<=8 && j<=8; i++, j++) {
+    for (int i=1, j=1;RowP+i*multiplier_i<8 && ColP+j*multiplier_j<8; i++, j++) {
         Piece* PieceF= getBoard().getPiece(Coordinates (RowP+i*multiplier_i,ColP+j*multiplier_j));
-        if (((PieceF->getColor()!=getColor() && PieceF!=nullptr)||PieceF==nullptr) && PieceF->getCoords().getCol()==ColF && PieceF->getCoords().getRow()==RowF)
-            return true;
+        if (PieceF==nullptr) {
+             if (RowP+i*multiplier_i==RowF&&ColP+j*multiplier_j==ColF)
+                 return true;
+              else continue;
+        } 
         if (PieceF!=nullptr)
-                return false;
+        if (PieceF->getColor()!=getColor() &&RowP+i*multiplier_i==RowF&&ColP+j*multiplier_j==ColF) {
+            return true;
+            }
+        if (PieceF!=nullptr)
+            return false;
         }
     }
 return false;
