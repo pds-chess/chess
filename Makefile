@@ -38,6 +38,7 @@ tests: directories test
 
 test: $(TESTOBJECTS) obj/tests.o
 	$(CC) $(INC) -o test/test $^
+	./test/test
 
 obj/tests.o: test/tests.cpp
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
