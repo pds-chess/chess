@@ -14,7 +14,7 @@ class Pawn: public Piece{
         bool validateMove(const Coordinates& final_coordinates) const override;
         void movePiece(const Coordinates& final_coordinates) override;
         bool validatePromotion() const;
-        bool validateEnPassant(Coordinates final_coordinates);
+        bool validateEnPassant(const Coordinates& final_coordinates);
         PieceType getType() const override;
     protected:
         char getPieceChar() const override;

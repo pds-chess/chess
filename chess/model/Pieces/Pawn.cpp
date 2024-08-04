@@ -43,31 +43,31 @@ bool Pawn::validateMove(const Coordinates& final_coordinates) const{
         return true;
     if(flag==1)
         return true;
+    int finalRow = getColor()==White ? 5:2;
+    if (final_coordinates.getRow() == finalRow && getBoard().getPiece(final_coordinates) == nullptr && DeltaRow == 1 && DeltaCol == 1)
+    {
+        return validateEnPassant(final_coordinates);
+    }
     return false;
 }
 
-bool Pawn::validateEnPassant(Coordinates final_coordinates){
+bool Pawn::validateEnPassant(const Coordinates& final_coordinates){
     int mult = 0;
-    int finalRow = 0;
     int DeltaRow = (final_coordinates.getRow() - getCoords().getRow());
     int DeltaCol = (final_coordinates.getCol() - getCoords().getCol());
     if (getColor()==White) {
-        DeltaRow*=-1;
-        mult=-1;
-        }
-    else
-        mult = 1;
+        DeltaRow*=-1;mult=-1;
+    }else
+        mult=1;
     if(final_coordinates.getCol()<getCoords().getCol())
         DeltaCol*=-1;
-    if (final_coordinates.getRow() == finalRow && getBoard().getPiece(final_coordinates) == nullptr && DeltaRow == 1 && DeltaCol == 1)
-    {
-        Piece* target = getBoard().getPiece(Coordinates(final_coordinates.getRow()-mult, final_coordinates.getCol()));
-        Pawn* enemyPawn = dynamic_cast<Pawn*>(target);
-        if (enemyPawn != NULL && enemyPawn->movedTwice_ == false && enemyPawn->previousRow_ == enemyPawn->initialRow_)
-            return true;
-        else
-            return false;
-    }else
+    
+    Piece* target = getBoard().getPiece(Coordinates(final_coordinates.getRow()-mult, final_coordinates.getCol()));
+    Pawn* enemyPawn = dynamic_cast<Pawn*>(target);
+
+    if (enemyPawn != nullptr && enemyPawn->movedTwice_ == false && enemyPawn->previousRow_ == enemyPawn->initialRow_ && enemyPawn->getColor() != getColor())
+        return true;
+    else
         return false;
 }
 
