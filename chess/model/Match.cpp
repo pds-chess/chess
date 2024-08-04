@@ -3,7 +3,7 @@
 #include <iostream>
 #include <map>
 
-Match::Match(std::string playerW, std::string playerB) {
+Match::Match(std::string playerW, std::string playerB): board_(Board()) {
     player_W_ = Player(playerW, White);
     player_B_ = Player(playerB, Black);
     startGame();
@@ -27,7 +27,6 @@ Gamestate Match::getGameState(){
 
 void Match::startGame(){
     //game_id_ = ;
-    board_ = Board();
     current_turn_ = &player_W_;
     game_state_ = inProgress;
     updatePlayers();
