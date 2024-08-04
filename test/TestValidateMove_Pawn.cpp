@@ -37,26 +37,6 @@ TEST_CASE("ValidateMove") {
     pawnW=Coordinates(5,6);
     CHECK(b_.getPiece(pawnW)->validateMove(Coordinates(3,6)) == false);
     }
-    SUBCASE ("PawnWhite capture PawnBlack") {
-    Board b_;
-    b_.getPiece(pawnB)->setCoords(Coordinates(5,5));
-    b_.update();
-    pawnB=Coordinates(5,5);
-    CHECK(b_.getPiece(pawnW)->validateMove(pawnB) == true);
-    }
-    SUBCASE ("PawnWhite capture PawnBlack 2") {
-    Board b_;
-    b_.getPiece(pawnB)->setCoords(Coordinates(5,7));
-    b_.update();
-    pawnB=Coordinates(5,7);
-    CHECK(b_.getPiece(pawnW)->validateMove(pawnB) == true);
-    }
-    SUBCASE ("PawnWhite fails to capture White Piece") {
-    Board b_;
-    b_.getPiece(Coordinates (6,5))->setCoords(Coordinates(5,5));
-    b_.update();
-    CHECK(b_.getPiece(pawnW)->validateMove(Coordinates(5,5)) == false);
-    }
 
 
     //BLACK
@@ -87,6 +67,35 @@ TEST_CASE("ValidateMove") {
     pawnB=Coordinates(2,6);
     CHECK(b_.getPiece(pawnB)->validateMove(Coordinates(4,6)) == false);
     }
+}
+
+TEST_CASE("ValidateCapture") {
+    Coordinates pawnB=Coordinates(1,6);
+    Coordinates pawnW=Coordinates(6,6);
+
+    //WHITE
+    SUBCASE ("PawnWhite capture PawnBlack") {
+    Board b_;
+    b_.getPiece(pawnB)->setCoords(Coordinates(5,5));
+    b_.update();
+    pawnB=Coordinates(5,5);
+    CHECK(b_.getPiece(pawnW)->validateMove(pawnB) == true);
+    }
+    SUBCASE ("PawnWhite capture PawnBlack 2") {
+    Board b_;
+    b_.getPiece(pawnB)->setCoords(Coordinates(5,7));
+    b_.update();
+    pawnB=Coordinates(5,7);
+    CHECK(b_.getPiece(pawnW)->validateMove(pawnB) == true);
+    }
+    SUBCASE ("PawnWhite fails to capture White Piece") {
+    Board b_;
+    b_.getPiece(Coordinates (6,5))->setCoords(Coordinates(5,5));
+    b_.update();
+    CHECK(b_.getPiece(pawnW)->validateMove(Coordinates(5,5)) == false);
+    }
+
+    //BLACK
     SUBCASE ("PawnBlack capture PawnWhite") {
     Board b_;
     b_.getPiece(pawnW)->setCoords(Coordinates(2,5));
