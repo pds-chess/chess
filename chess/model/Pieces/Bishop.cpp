@@ -5,6 +5,14 @@ Bishop::Bishop(const Coordinates& initial_coords, Color color, const Board& boar
 : Piece(initial_coords, color, board) {
 }
 
+PieceType Bishop::getType() const{
+    return BISHOP;
+}
+
+Bishop::~Bishop(){
+    
+}
+
 bool Bishop::validateMove(const Coordinates& final_coordinates) const {
 int Secundary_Diagonal= getCoords().getRow() + getCoords().getCol();
 int Primary_Diagonal= getCoords().getRow() - getCoords().getCol();
@@ -41,8 +49,4 @@ return false;
 
 char Bishop::getPieceChar() const {
     return 'B';
-}
-
-PieceType Bishop::getType() const{
-    return BISHOP;
 }

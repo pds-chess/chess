@@ -8,7 +8,11 @@ Pawn::Pawn(const Coordinates& initial_coords, Color color, const Board& board)
     initialRow_ = initial_coords.getRow();
 }
 
- void Pawn::movePiece(Coordinates final_coordinates){
+Pawn::~Pawn(){
+    
+}
+
+void Pawn::movePiece(Coordinates final_coordinates){
     if(moved_ == true)
         movedTwice_ = true;
     moved_ = true;

@@ -13,6 +13,7 @@ class Piece{
         const Board& board_;
     public:
         Piece(const Coordinates& initial_coords, Color color, const Board& board);
+        virtual ~Piece();
         virtual void movePiece(const Coordinates& final_coordinates);
         Coordinates getCoords() const;
         Color getColor() const;

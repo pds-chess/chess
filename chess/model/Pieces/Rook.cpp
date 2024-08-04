@@ -3,11 +3,19 @@
 
 Rook::Rook(const Coordinates& initial_coords, Color color, const Board& board) : Piece(initial_coords, color, board){
     moved_ = false;
-};
+}
+
+Rook::~Rook(){
+    
+}
 
 void Rook::movePiece(Coordinates final_coordinates){
     Piece::movePiece(final_coordinates);
     moved_ = true;
+}
+
+PieceType Rook::getType() const{
+    return ROOK;
 }
 
 bool Rook::validateMove(const Coordinates& final_coordinates) const{
@@ -48,8 +56,4 @@ bool Rook::hasMoved() const{
 
 char Rook::getPieceChar() const{
     return 'R';
-}
-
-PieceType Rook::getType() const{
-    return ROOK;
 }

@@ -6,10 +6,14 @@ Piece::Piece(const Coordinates& initial_coords, Color color, const Board& board)
     coords_ = initial_coords;
     color_ = color;
 }
+
+Piece::~Piece(){
+    
+}
+
 void Piece::setCoords(const Coordinates& coords){
     coords_ = coords;
 }
-
 
 void Piece::movePiece(const Coordinates& final_coordinates){
     if(!validateMove(final_coordinates)){

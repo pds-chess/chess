@@ -10,6 +10,7 @@ class Pawn: public Piece{
         int initialRow_;
     public:
         Pawn(const Coordinates& initial_coords, Color color, const Board& board);
+        ~Pawn();
         bool validateMove(const Coordinates& final_coordinates) const override;
         void movePiece(Coordinates final_coordinates);
         bool validatePromotion() const;

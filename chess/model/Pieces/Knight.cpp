@@ -5,6 +5,11 @@
 Knight::Knight(const Coordinates& initial_coords, Color color, const Board& board) : Piece(initial_coords, color, board) {
 
 }
+
+Knight::~Knight(){
+    
+}
+
 bool Knight::validateMove(const Coordinates& final_coordinates) const{
     int DeltaRow = (final_coordinates.getRow() - getCoords().getRow());
     int DeltaCol = (final_coordinates.getCol() - getCoords().getCol());

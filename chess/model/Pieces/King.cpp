@@ -5,6 +5,10 @@ King::King(const Coordinates& initial_coords, Color color, const Board& board) :
     moved_ = false;
 }
 
+King::~King(){
+    
+}
+
 void King::movePiece(const Coordinates& final_coordinates){
     if (!hasMoved() && (final_coordinates.getCol() == 6 || final_coordinates.getCol() == 2))
         castle(final_coordinates);

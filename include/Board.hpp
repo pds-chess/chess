@@ -17,7 +17,6 @@ class Board{
         Board(const Board& copyBoard);
         void initialize();
         void update();
-        std::vector<std::vector<Piece*>> getBoard() const;
         std::string boardToString() const;
         Piece* getPiece(const Coordinates& coords) const;
         void removePiece(const Coordinates& coords);
