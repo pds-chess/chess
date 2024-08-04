@@ -76,10 +76,6 @@ void Board::update(){
     }
 }
 
-std::vector<std::vector<Piece*>> Board::getBoard() const{
-    return board_;
-}
-
 std::string Board::boardToString() const{
     std::string output = "Estado atual do tabuleiro: \n[ 1  2  3  4  5  6  7  8 ]\n";
     for(int i=0; i< 8; i++){
