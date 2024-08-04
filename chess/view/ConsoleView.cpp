@@ -1,6 +1,7 @@
 #include "ConsoleView.hpp"
 #include "GameState.hpp"
 #include <iostream>
+#include <stdexcept>
 
 Console::Console() {
 }
@@ -72,18 +73,23 @@ void Console::printGameActions(Match& match) {
 
 void Console::movePiece(Match& match){
     int row_origin, col_origin, row_destiny, col_destiny;
-    std::cout << "Escreva a linha da peça que deseja mover: ";
-    std::cin >> row_origin;
-    std::cout << "Escreva a coluna da peça que deseja mover: ";
-    std::cin >> col_origin;
-    std::cout << "Escreva a linha para onde deseja mover a peça: ";
-    std::cin >> row_destiny;
-    std::cout << "Escreva a coluna para onde deseja mover a peça: ";
-    std::cin >> col_destiny;
+    std::string input;
+    std::cout << "Escreva a coordenada da peça que deseja mover (Ex: a1): ";
+    std::cin >> input;
+    row_origin = abs((input[1]-48)-9);
+    col_origin = input[0]-96;
+    std::cout << "Escreva a coordenada para onde deseja mover a peça (Ex: a2): ";
+    std::cin >> input;
+    row_destiny = abs((input[1]-48)-9);
+    col_destiny = input[0]-96;
     try{
-        match.movePiece(row_origin, col_origin, row_destiny, col_destiny);
+        match.movePiece(row_origin-1, col_origin-1, row_destiny-1, col_destiny-1);
+    } catch(std::invalid_argument& e){
+        std::cout << e.what() << std::endl;
+    } catch(std::logic_error& e){
+        std::cout << e.what() << std::endl;
     } catch(...){
-        std::cout << "Movimento inválido" << std::endl;
+        std::cout << "Erro não identificado" << std::endl;
     }
 }
 

@@ -80,9 +80,9 @@ void Board::update(){
 }
 
 std::string Board::boardToString() const{
-    std::string output = "Estado atual do tabuleiro: \n[   ][ 1  2  3  4  5  6  7  8 ]\n";
+    std::string output = "Estado atual do tabuleiro: \n";
     for(int i=0; i< 8; i++){
-        output += "[ " + std::to_string(i) + " ]";
+        output += "[ " + std::to_string(abs(i-8)) + " ][";
         for(int j =0; j< 8; j++){
             Piece* item = board_[i][j];
             if(item!=nullptr){
@@ -93,6 +93,7 @@ std::string Board::boardToString() const{
         }
         output += " ]\n";
     }
+    output += "[   ][  a  b  c  d  e  f  g  h ]\n";
     return output;
 }
 
