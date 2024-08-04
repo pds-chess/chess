@@ -12,7 +12,7 @@ Pawn::~Pawn(){
     
 }
 
-void Pawn::movePiece(Coordinates final_coordinates){
+void Pawn::movePiece(const Coordinates& final_coordinates){
     if(moved_ == true)
         movedTwice_ = true;
     moved_ = true;
