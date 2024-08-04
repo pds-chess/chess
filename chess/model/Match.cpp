@@ -1,6 +1,7 @@
 #include "Match.hpp"
 #include <stdexcept>
 #include <iostream>
+#include <map>
 
 Match::Match(std::string playerW, std::string playerB) {
     player_W_ = Player(playerW, White);
