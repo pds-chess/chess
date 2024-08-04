@@ -102,6 +102,10 @@ Piece* Board::getPiece(const Coordinates& coords) const{
     return board_[row][col];
 }
 
+bool isPiece(Piece* piece_l, Piece* piece_r){
+    return piece_l == piece_r;
+}
+
 void Board::removePiece(const Coordinates& coords){
     int row = coords.getRow();
     int col = coords.getCol();
@@ -125,7 +129,13 @@ void Board::createPiece(const Coordinates& coords, Color color, PieceType type){
 }
 
 void Board::destroyPieces(){
-    for(auto item : getPieces()){
-        delete item;
+    for(auto row : board_){
+        for(auto item : row){
+            if(item==nullptr){
+                continue;
+            }
+            delete item;
+        }
     }
+    pieces_ = {};
 }
