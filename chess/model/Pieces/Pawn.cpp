@@ -13,11 +13,11 @@ Pawn::~Pawn(){
 }
 
 void Pawn::movePiece(const Coordinates& final_coordinates){
+    previousRow_ = getCoords().getRow();
+    Piece::movePiece(final_coordinates);
     if(moved_ == true)
         movedTwice_ = true;
     moved_ = true;
-    previousRow_ = getCoords().getRow();
-    Piece::movePiece(final_coordinates);
 }
 
 bool Pawn::validateMove(const Coordinates& final_coordinates) const{
