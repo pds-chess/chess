@@ -169,19 +169,34 @@ std::string Match::getCurrentPlayerName() const{
     return current_turn_->getPlayerName();
 }
 
-void Match::showCapturedPieces() {
-    // std::map<Piece*, int> capturedCount;
+std::string Match::showCapturedPieces() {
+    std::map<PieceType, int> capturedCount;
+    std::string capturedPieces="Peças adversárias capturadas: ";
 
-    // for (Piece* piece : current_turn_->getCapturedPieces()) {
-    //     if (capturedCount.find(piece) != capturedCount.end()) {
-    //         capturedCount[piece]++;
-    //     }
-    //     else capturedCount[piece]=1;
-    // }
+    for (PieceType piece : current_turn_->getCapturedPieces()) {
+        if (capturedCount.find(piece) != capturedCount.end()) {
+            capturedCount[piece]++;
+        }
+        else capturedCount[piece]=1;
+    }
 
-    // // Imprimimos o resumo das peças capturadas
-    // std::cout << "Peças adversárias capturadas:" << std::endl;
-    // for (const auto& entry : capturedCount) {
-    //     std::cout << entry.second << "x " << entry.first->pieceToString() << std::endl;
-    // }
+    // Imprimimos o resumo das peças capturadas
+    for (const auto& entry : capturedCount) {
+        capturedPieces+= entry.second + "x ";
+        if (entry.first==ROOK)
+            capturedPieces+="Rook";
+        if (entry.first==PAWN)
+            capturedPieces+="Pawn";
+        if (entry.first==KNIGHT)
+            capturedPieces+="Knight";
+        if (entry.first==BISHOP)
+            capturedPieces+="Bishop";
+        if (entry.first==QUEEN)
+            capturedPieces+="Queen";
+        if (entry.first==KING)
+            capturedPieces+="King";
+        if (entry.second>1)
+            capturedPieces+="s";
+    }
+    return capturedPieces;
 }
