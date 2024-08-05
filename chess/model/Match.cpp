@@ -63,7 +63,8 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
     if(board_.isCapture(target_piece, final_coords)){
         end_piece = board_.getPiece(final_coords)->getType();
     }
-    
+
+    simulateMove(coord_start, final_coords);
     board_.movePiece(target_piece, final_coords);
 
     if(end_piece!=NONE){
@@ -89,10 +90,14 @@ bool Match::isDraw() const{
     return true;
 }
 
-// void Match::simulateMove(const Coordinates& coord_start, const Coordinates& coord_end) const{
-//     Board virtual_board = Board(board_);
-//     virtual_board.getPieces();
-// }
+void Match::simulateMove(const Coordinates& coord_start, const Coordinates& coord_end) const{
+    Board virtual_board = Board(board_);
+    Piece* target_piece = virtual_board.getPiece(coord_start);
+    virtual_board.movePiece(target_piece, coord_end);
+    if(virtual_board.isCheck(current_turn_->getplayerColor())){
+        throw std::invalid_argument("O rei não pode ficar em cheque.");
+    }
+}
 
 void Match::updatePlayers(){
     std::list<Piece*> white_pieces, black_pieces;
@@ -197,6 +202,7 @@ std::string Match::showCapturedPieces() {
             capturedPieces+="King";
         if (entry.second>1)
             capturedPieces+="s";
+        capturedPieces+="\n";
     }
     return capturedPieces;
 }

@@ -79,6 +79,49 @@ void Board::update(){
     }
 }
 
+void Board::movePiece(Piece* target_piece, const Coordinates& final_coords){
+    try {
+        target_piece->movePiece(final_coords);
+    } catch (std::invalid_argument& e) {
+        // Checa se é um roque
+        King* king = dynamic_cast<King*>(target_piece);
+        if (king != NULL && final_coords.getCol() == (target_piece->getCoords().getCol() + 2 || target_piece->getCoords().getCol() - 2))
+            if (king->validateCastle(final_coords))
+                king->castle(final_coords);
+            else
+                throw e;
+        else
+            throw e;
+    }
+    //executar o en passant
+    Pawn* pawn = dynamic_cast<Pawn*>(target_piece);
+    if (pawn != nullptr && pawn->validateEnPassant(final_coords) == true)
+    {
+        int mult = target_piece->getColor() == White ? 1 : -1;
+        target_piece->setCoords(final_coords);
+        removePiece(Coordinates(final_coords.getRow()+mult, final_coords.getCol()));
+    }
+
+    if (isCapture(target_piece, final_coords)){
+        removePiece(final_coords);
+    }
+    
+    // Promover o peão caso chegue ao fim do tabuleiro
+    // if (pawn != nullptr && pawn->validatePromotion() == true)
+    // {
+    //     update();
+    //     //promotePawn(pawn);
+    // }
+}
+
+bool Board::isCapture(Piece* target_piece, const Coordinates& final_coords) const{
+    Piece* piece_end = getPiece(final_coords);
+    if(piece_end==nullptr){
+        return false;
+    }
+    return true;
+}
+
 std::string Board::boardToString() const{
     std::string output = "Estado atual do tabuleiro: \n";
     for(int i=0; i< 8; i++){
@@ -104,13 +147,17 @@ Piece* Board::getPiece(const Coordinates& coords) const{
 }
 
 bool Board::isCheck(Color color) const {
-    King* curr_player_king;
+    King* curr_player_king = nullptr;
     for(auto item : pieces_){
         if(item->getType()==KING && item->getColor()==color){
             curr_player_king = dynamic_cast<King*>(item);
         }
     }
-    return curr_player_king->isCheck();
+    if(curr_player_king!=nullptr){
+        return curr_player_king->isCheck();
+    }
+    std::string color_str = color==White?"branco":"preto";
+    throw std::logic_error("Nenhum rei " + color_str + " encontrado.");
 }
 
 void Board::removePiece(const Coordinates& coords){
