@@ -1070,14 +1070,20 @@ TEST_CASE("ValidateMove") {
     pawnW=Coordinates(5,6);
     CHECK(b_.getPiece(pawnW)->validateMove(Coordinates(3,6)) == false);
     }
-    SUBCASE ("PawnWhit move twice (moved=false) and then move one") {
+    SUBCASE ("PawnWhite move twice (moved=false) and then move one") {
     Board b_;
     b_.getPiece(pawnW)->movePiece(Coordinates(4,6));
     b_.update();
     pawnW=Coordinates(4,6);
     CHECK(b_.getPiece(pawnW)->validateMove(Coordinates(3,6)) == true);
     }
-
+    SUBCASE ("PawnWhite move one and get behind PawnBlack") {
+    Board b_;
+    b_.getPiece(pawnB)->setCoords(Coordinates(4,6));
+    b_.update();
+    pawnB=Coordinates(4,6);
+    CHECK(b_.getPiece(pawnW)->validateMove(Coordinates(5,6)) == true);
+    }
 
     //BLACK
     SUBCASE ("PawnBlack move 1") {
@@ -1113,6 +1119,13 @@ TEST_CASE("ValidateMove") {
     b_.update();
     pawnB=Coordinates(3,6);
     CHECK(b_.getPiece(pawnB)->validateMove(Coordinates(4,6)) == true);
+    }
+    SUBCASE ("PawnBlack move one and get behind PawnWhite") {
+    Board b_;
+    b_.getPiece(pawnW)->setCoords(Coordinates(3,6));
+    b_.update();
+    pawnW=Coordinates(3,6);
+    CHECK(b_.getPiece(pawnB)->validateMove(Coordinates(2,6)) == true);
     }
 }
 
