@@ -22,7 +22,7 @@ void Pawn::movePiece(const Coordinates& final_coordinates){
 }
 
 bool Pawn::validateMove(const Coordinates& final_coordinates) const{
-    int multiplier = 0, flag=0;
+    int multiplier = 0;
     int DeltaRow = (final_coordinates.getRow() - getCoords().getRow());
     int DeltaCol = (final_coordinates.getCol() - getCoords().getCol());
     if (getColor()==White) {
@@ -44,11 +44,9 @@ bool Pawn::validateMove(const Coordinates& final_coordinates) const{
             if (getBoard().getPiece(Coordinates(getCoords().getRow()+ i * multiplier, getCoords().getCol())) != nullptr)
                 return false;
             else if (getCoords().getRow()+ i * multiplier==final_coordinates.getRow()&&getCoords().getCol()==final_coordinates.getCol())
-                flag=1;
+                return true;
     }
     else if (getBoard().getPiece(final_coordinates) != nullptr && getBoard().getPiece(final_coordinates)->getColor() != getColor() && DeltaCol == 1 && DeltaRow == 1)
-        return true;
-    if(flag==1)
         return true;
     return false;
 }
