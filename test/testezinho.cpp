@@ -11,23 +11,3 @@ TEST_CASE("example"){
     Board b_;
     CHECK(b_.getPiece(Coordinates(7,4))->validateMove(Coordinates(7,6)) == false);
 }
-
-TEST_CASE("Pawn Promotion"){
-    Match m("Branco","Preto");
-
-    SUBCASE("White Promotion"){
-        m.board_.clearBoard(); m.board_.update();
-        m.board_.createPiece(Coordinates(1,4), White, PAWN); m.board_.update();
-        m.movePiece(1,4,0,4);
-        //Digitar 'R'
-        CHECK(m.board_.getPiece(Coordinates(0,4))->getType() == QUEEN);
-    }
-    SUBCASE("Black Promotion"){
-        m.board_.clearBoard(); m.board_.update();
-        m.board_.createPiece(Coordinates(6,4), Black, PAWN); m.board_.update();
-        m.endTurn();
-        m.movePiece(6,4,7,4);
-        //Digitar 'R'
-        CHECK(m.board_.getPiece(Coordinates(0,4))->getType() == QUEEN);
-    }
-}

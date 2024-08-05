@@ -83,7 +83,7 @@ void Match::movePiece(Piece* target_piece, const Coordinates& final_coords){
     }
     //executar o en passant
     Pawn* pawn = dynamic_cast<Pawn*>(target_piece);
-    if (pawn != NULL && pawn->validateEnPassant(final_coords) == true)
+    if (pawn != nullptr && pawn->validateEnPassant(final_coords) == true)
     {
         int mult = target_piece->getColor() == White ? 1 : -1;
         target_piece->setCoords(final_coords);
@@ -91,12 +91,15 @@ void Match::movePiece(Piece* target_piece, const Coordinates& final_coords){
         registerMove(target_piece, final_coords);
     }
 
-    // Promover o peão caso chegue ao fim do tabuleiro
-    if (pawn != NULL && pawn->validatePromotion() == true)
-        promotePawn(pawn);
-
-    if (piece_end != nullptr) {
+    if (piece_end != nullptr){
         board_.removePiece(final_coords);
+    }
+    
+    // Promover o peão caso chegue ao fim do tabuleiro
+    if (pawn != nullptr && pawn->validatePromotion() == true)
+    {
+        board_.update();
+        promotePawn(pawn);
     }
 }
 
@@ -134,10 +137,9 @@ void Match::updatePlayers(){
     player_B_.setPieces(black_pieces);
 }
 
-void Match::promotePawn(Piece* pawn) {
+void Match::promotePawn(Pawn* pawn) {
     Coordinates auxCoords = pawn->getCoords();
     Color auxColor = pawn->getColor();
-    board_.removePiece(pawn->getCoords());
     
     char choice = 'p';
     std::cout << "Seu peão será promovido! Digite a letra correspondente a qual peça deseja promovê-lo: " << std::endl;
@@ -146,26 +148,28 @@ void Match::promotePawn(Piece* pawn) {
     std::cout << "Bispo - B" << std::endl;
     std::cout << "Cavalo - C" << std::endl;
     std::cin >> choice;
-    while(choice != 'R' || choice != 'C' || choice != 'T' || choice != 'B')
-    {
-        switch (choice) {
-            case 'R':
-                board_.createPiece(auxCoords, auxColor, QUEEN);
-                break;
-            case 'T':
-                board_.createPiece(auxCoords, auxColor, ROOK);
-                break;
-            case 'B':
-                board_.createPiece(auxCoords, auxColor, BISHOP);
-                break;
-            case 'C':
-                board_.createPiece(auxCoords, auxColor, KNIGHT);
-                break;
-            default:
-                std::cout << "Escolha inválida. Favor, escolher uma das opções listadas" << std::endl;
-                std::cin >> choice;
-                break;
-        }
+    switch (choice) {
+        case 'R':
+            board_.removePiece(pawn->getCoords());
+            board_.createPiece(auxCoords, auxColor, QUEEN);
+            break;
+        case 'T':
+            board_.removePiece(pawn->getCoords());
+            board_.createPiece(auxCoords, auxColor, ROOK);
+            break;
+        case 'B':
+            board_.removePiece(pawn->getCoords());
+            board_.createPiece(auxCoords, auxColor, BISHOP);
+            break;
+        case 'C':
+            board_.removePiece(pawn->getCoords());
+            board_.createPiece(auxCoords, auxColor, KNIGHT);
+            break;
+        default:
+            std::cout << "Escolha inválida. Por padrão, o peão será promovido para Rainha" << std::endl;
+            board_.removePiece(pawn->getCoords());
+            board_.createPiece(auxCoords, auxColor, QUEEN);
+            break;
     }
 }
 

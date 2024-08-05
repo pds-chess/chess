@@ -332,36 +332,30 @@ TEST_CASE ("Castle"){
     }
 }
 
-TEST_CASE("En passant validation"){
-    Match m("Branco", "Preto");
+// Para executar os testes comentados, coloque todos os métodos e atributos de Match.hpp e Board.hpp como públicos.
 
-    SUBCASE("Middle board - White"){
-        m.movePiece(6,4,4,4);
-        m.movePiece(1,0,2,0);
-        m.movePiece(4,4,3,4);
-        m.movePiece(1,3,3,3);
-        m.movePiece(3,4,2,3);
-        //CHECK(m.board_.getPiece(Coordinates(2,3)) != nullptr); //USAR MATCH E BOARD PÚBLICOS
-    }
-}
+// TEST_CASE("En passant validation"){
+//     Match m("Branco", "Preto");
+
+//     SUBCASE("Middle board - White"){
+//         m.movePiece(6,4,4,4);
+//         m.movePiece(1,0,2,0);
+//         m.movePiece(4,4,3,4);
+//         m.movePiece(1,3,3,3);
+//         m.movePiece(3,4,2,3);
+//         CHECK(m.board_.getPiece(Coordinates(2,3)) != nullptr);
+//     }
+// }
+
 // TEST_CASE("Pawn Promotion"){
 //     Match m("Branco","Preto");
 
-//     SUBCASE("White Promotion"){
-//         m.board_.clearBoard(); m.board_.update();
-//         m.board_.createPiece(Coordinates(1,4), White, PAWN); m.board_.update();
-//         m.movePiece(1,4,0,4);
-//         //Digitar 'R'
-//         CHECK(m.board_.getPiece(Coordinates(0,4))->getType() == QUEEN);
-//     }
-//     SUBCASE("Black Promotion"){
-//         m.board_.clearBoard(); m.board_.update();
-//         m.board_.createPiece(Coordinates(6,4), Black, PAWN); m.board_.update();
-//         m.endTurn();
-//         m.movePiece(6,4,7,4);
-//         //Digitar 'R'
-//         CHECK(m.board_.getPiece(Coordinates(0,4))->getType() == QUEEN);
-//     }
+//     m.board_.clearBoard(); m.board_.update();
+//     m.board_.createPiece(Coordinates(1,4), White, PAWN); m.board_.update();
+//     std::cout << "\n******DIGITE 'R' PARA VALIDAR O TESTE******\n" << std::endl;
+//     m.movePiece(1,4,0,4);
+//     //Digitar 'R'
+//     CHECK(m.board_.getPiece(Coordinates(0,4))->getType() == QUEEN);
 // }
 
 TEST_CASE("ValidateMove") {
