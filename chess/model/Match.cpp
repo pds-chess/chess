@@ -59,48 +59,18 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
     }
 
     Coordinates final_coords(row_end, col_end);
-    movePiece(target_piece, final_coords);
-
-    endTurn();
-}
-
-void Match::movePiece(Piece* target_piece, const Coordinates& final_coords){
-    Piece* piece_end = board_.getPiece(final_coords);
-
-    try {
-        target_piece->movePiece(final_coords);
-        registerMove(target_piece, final_coords);
-    } catch (std::invalid_argument& e) {
-        // Checa se é um roque
-        King* king = dynamic_cast<King*>(target_piece);
-        if (king != NULL && final_coords.getCol() == (target_piece->getCoords().getCol() + 2 || target_piece->getCoords().getCol() - 2))
-            if (king->validateCastle(final_coords))
-                king->castle(final_coords);
-            else
-                throw e;
-        else
-            throw e;
-    }
-    //executar o en passant
-    Pawn* pawn = dynamic_cast<Pawn*>(target_piece);
-    if (pawn != nullptr && pawn->validateEnPassant(final_coords) == true)
-    {
-        int mult = target_piece->getColor() == White ? 1 : -1;
-        target_piece->setCoords(final_coords);
-        board_.removePiece(Coordinates(final_coords.getRow()+mult, final_coords.getCol()));
-        registerMove(target_piece, final_coords);
-    }
-
-    if (piece_end != nullptr){
-        board_.removePiece(final_coords);
+    PieceType end_piece = NONE;
+    if(board_.isCapture(target_piece, final_coords)){
+        end_piece = board_.getPiece(final_coords)->getType();
     }
     
-    // Promover o peão caso chegue ao fim do tabuleiro
-    if (pawn != nullptr && pawn->validatePromotion() == true)
-    {
-        board_.update();
-        promotePawn(pawn);
+    board_.movePiece(target_piece, final_coords);
+
+    if(end_piece!=NONE){
+        current_turn_->addCapturedPiece(end_piece);
     }
+
+    endTurn();
 }
 
 bool Match::isDraw() const{
@@ -200,18 +170,18 @@ std::string Match::getCurrentPlayerName() const{
 }
 
 void Match::showCapturedPieces() {
-    std::map<Piece*, int> capturedCount;
+    // std::map<Piece*, int> capturedCount;
 
-    for (Piece* piece : current_turn_->getCapturedPieces()) {
-        if (capturedCount.find(piece) != capturedCount.end()) {
-            capturedCount[piece]++;
-        }
-        else capturedCount[piece]=1;
-    }
+    // for (Piece* piece : current_turn_->getCapturedPieces()) {
+    //     if (capturedCount.find(piece) != capturedCount.end()) {
+    //         capturedCount[piece]++;
+    //     }
+    //     else capturedCount[piece]=1;
+    // }
 
-    // Imprimimos o resumo das peças capturadas
-    std::cout << "Peças adversárias capturadas:" << std::endl;
-    for (const auto& entry : capturedCount) {
-        std::cout << entry.second << "x " << entry.first->pieceToString() << std::endl;
-    }
+    // // Imprimimos o resumo das peças capturadas
+    // std::cout << "Peças adversárias capturadas:" << std::endl;
+    // for (const auto& entry : capturedCount) {
+    //     std::cout << entry.second << "x " << entry.first->pieceToString() << std::endl;
+    // }
 }

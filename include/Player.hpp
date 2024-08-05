@@ -11,7 +11,7 @@ class Player{
         Color color_;
         std::string name_;
         std::list<Piece*> pieces_;
-        std::list<Piece*> capturedPieces_;
+        std::list<PieceType> capturedPieces_;
     public:
         Player();
         Player(std::string name, Color color);
@@ -20,6 +20,6 @@ class Player{
         Color getplayerColor() const;
         std::string getPlayerName() const;
         // Método para saber as peças capturadas por um jogador
-        void addCapturedPiece(Piece* piece);
-        std::list<Piece*> getCapturedPieces() const;
+        void addCapturedPiece(PieceType piece);
+        std::list<PieceType> getCapturedPieces() const;
 };

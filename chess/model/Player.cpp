@@ -25,11 +25,11 @@ std::string Player::getPlayerName() const{
     return name_;
 }
 
-void Player::addCapturedPiece(Piece* piece) {
+void Player::addCapturedPiece(PieceType piece) {
     capturedPieces_.push_back(piece);
 }
 
-std::list<Piece*> Player::getCapturedPieces() const {
+std::list<PieceType> Player::getCapturedPieces() const {
     return capturedPieces_;
 }
 

@@ -20,6 +20,8 @@ class Board{
         std::string boardToString() const;
         bool isCheck(Color color) const;
         Piece* getPiece(const Coordinates& coords) const;
+        void movePiece(Piece* target_piece, const Coordinates& coord);
+        bool isCapture(Piece* target_piece, const Coordinates& final_coords) const;
         void removePiece(const Coordinates& coords);
         void createPiece(const Coordinates& coords, Color color, PieceType type);
         std::list<Piece*> getPieces() const;

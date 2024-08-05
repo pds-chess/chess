@@ -21,7 +21,6 @@ private:
     void endTurn();
     bool isDraw() const;
     void simulateMove(const Coordinates& coord_start, const Coordinates& coord_end) const;
-    void movePiece(Piece* target_piece, const Coordinates& final_coords);
     void promotePawn(Pawn* pawn);
     void updatePlayers();
 
