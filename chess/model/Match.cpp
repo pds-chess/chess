@@ -71,16 +71,6 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
 void Match::movePiece(Piece* target_piece, const Coordinates& final_coords){
     Piece* piece_end = board_.getPiece(final_coords);
 
-    // Testa en passant
-    Pawn* pawn = dynamic_cast<Pawn*>(target_piece);
-    if (pawn != NULL && pawn->validateEnPassant(final_coords) == true)
-    {
-        int mult = target_piece->getColor() == White ? 1 : -1;
-        target_piece->setCoords(final_coords);
-        board_.removePiece(Coordinates(final_coords.getRow()+mult, final_coords.getCol()));
-        registerMove(target_piece, final_coords);
-    }
-
     try {
         target_piece->movePiece(final_coords);
         registerMove(target_piece, final_coords);
@@ -94,6 +84,15 @@ void Match::movePiece(Piece* target_piece, const Coordinates& final_coords){
                 throw e;
         else
             throw e;
+    }
+    //executar o en passant
+    Pawn* pawn = dynamic_cast<Pawn*>(target_piece);
+    if (pawn != NULL && pawn->validateEnPassant(final_coords) == true)
+    {
+        int mult = target_piece->getColor() == White ? 1 : -1;
+        target_piece->setCoords(final_coords);
+        board_.removePiece(Coordinates(final_coords.getRow()+mult, final_coords.getCol()));
+        registerMove(target_piece, final_coords);
     }
 
     // Promover o peão caso chegue ao fim do tabuleiro
@@ -149,9 +148,9 @@ void Match::promotePawn(Piece* pawn) {
     std::cout << "Torre - T" << std::endl;
     std::cout << "Bispo - B" << std::endl;
     std::cout << "Cavalo - C" << std::endl;
+    std::cin >> choice;
     while(choice != 'R' || choice != 'C' || choice != 'T' || choice != 'B')
     {
-        std::cin >> choice;
         switch (choice) {
             case 'R':
                 board_.createPiece(auxCoords, auxColor, QUEEN);
@@ -167,6 +166,7 @@ void Match::promotePawn(Piece* pawn) {
                 break;
             default:
                 std::cout << "Escolha inválida. Favor, escolher uma das opções listadas" << std::endl;
+                std::cin >> choice;
                 break;
         }
     }
