@@ -93,7 +93,7 @@ std::string Board::boardToString() const{
         }
         output += " ]\n";
     }
-    output += "[   ][  a  b  c  d  e  f  g  h ]\n";
+    output += "[   ][  a  b  c  d  e  f  g  h ]";
     return output;
 }
 

@@ -15,14 +15,14 @@ void Console::printMenu() {
         std::cout << "\n1. Novo Jogo" << std::endl;
         std::cout << "2. Histórico de Partidas" << std::endl;
         std::cout << "0. Sair" << std::endl;
-        std::cout << "Escolha uma opção: ";
+        std::cout << "\nEscolha uma opção: ";
         std::cin >> choice;
 
         switch (choice) {
             case 1:
-                std::cout << "Escreva o nome do Jogador 1: " <<std::endl;
+                std::cout << "\nEscreva o nome do Jogador de peças BRANCAS: " <<std::endl;
                 std::cin >> playerA;
-                std::cout << "Escreva o nome do Jogador 2: " <<std::endl;
+                std::cout << "Escreva o nome do Jogador de peças PRETAS: " <<std::endl;
                 std::cin >> playerB;
                 createNewGame(playerA, playerB);
                 break;
@@ -34,6 +34,8 @@ void Console::printMenu() {
                 break;
             default:
                 std::cout << "Opção inválida!" << std::endl;
+                std::cin.clear();
+                std::cin.ignore(512, '\n');
         }
     } while (choice != 0);
 }
@@ -41,7 +43,7 @@ void Console::printMenu() {
 void Console::createNewGame(std::string playerA, std::string playerB) {
     Match match = Match(playerA, playerB);
     while (match.getGameState() == inProgress){
-        std::cout << std::endl << std::endl;
+        std::cout << "==================================================" << std::endl << std::endl;
         std::cout << match.boardToString() << std::endl;
         printGameActions(match);
     }
@@ -50,10 +52,11 @@ void Console::createNewGame(std::string playerA, std::string playerB) {
 
 void Console::printGameActions(Match& match) {
     int choice;
-    std::cout << "\n1. Fazer Movimento" << std::endl;
+    std::cout << "\nVez de " << match.getCurrentPlayerName() << ": " << std::endl;
+    std::cout << "1. Fazer Movimento" << std::endl;
     std::cout << "2. Propor Empate" << std::endl;
     std::cout << "3. Ver todas as peças adversárias que foram capturadas" << std::endl;
-    std::cout << "Escolha uma ação: ";
+    std::cout << "\nEscolha uma ação: ";
     std::cin >> choice;
 
     switch (choice) {
@@ -68,20 +71,25 @@ void Console::printGameActions(Match& match) {
             break;
         default:
             std::cout << "Ação inválida!" << std::endl;
+            std::cin.clear();
+            std::cin.ignore(512, '\n');
     }
 }
 
 void Console::movePiece(Match& match){
     int row_origin, col_origin, row_destiny, col_destiny;
     std::string input;
+
     std::cout << "Escreva a coordenada da peça que deseja mover (Ex: a1): ";
     std::cin >> input;
     row_origin = abs((input[1]-48)-9);
     col_origin = input[0]-96;
+
     std::cout << "Escreva a coordenada para onde deseja mover a peça (Ex: a2): ";
     std::cin >> input;
     row_destiny = abs((input[1]-48)-9);
     col_destiny = input[0]-96;
+
     try{
         match.movePiece(row_origin-1, col_origin-1, row_destiny-1, col_destiny-1);
     } catch(std::invalid_argument& e){
@@ -101,7 +109,7 @@ void Console::handleDraw(Match& match) {
 
     if (response == 's') {
         match.draw();
-        std::cout << "Empate aceito. O jogo terminou em empate." << std::endl;
+        std::cout << "Empate aceito." << std::endl;
     } else {
         std::cout << "Empate rejeitado. O jogo continua." << std::endl;
     }
