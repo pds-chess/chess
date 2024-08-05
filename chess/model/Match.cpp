@@ -75,9 +75,9 @@ void Match::movePiece(Piece* target_piece, const Coordinates& final_coords){
     Pawn* pawn = dynamic_cast<Pawn*>(target_piece);
     if (pawn != NULL && pawn->validateEnPassant(final_coords) == true)
     {
-        int mult = target_piece->getColor() == Black ? -1 : 1;
+        int mult = target_piece->getColor() == White ? 1 : -1;
         target_piece->setCoords(final_coords);
-        board_.removePiece(Coordinates(final_coords.getRow()-mult, final_coords.getCol()));
+        board_.removePiece(Coordinates(final_coords.getRow()+mult, final_coords.getCol()));
         registerMove(target_piece, final_coords);
     }
 
