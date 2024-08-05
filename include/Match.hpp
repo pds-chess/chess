@@ -22,7 +22,7 @@ private:
     bool isCheck() const;
     bool isDraw() const;
     void movePiece(Piece* target_piece, const Coordinates& final_coords);
-    void promotePawn(Piece* pawn);
+    void promotePawn(Pawn* pawn);
     void updatePlayers();
 
     void startGame(); // Inicia um novo jogo.

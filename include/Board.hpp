@@ -8,20 +8,20 @@
 #include <vector>
 
 class Board{
-    private:
-        std::vector<std::vector<Piece*>> board_;
-        std::list<Piece*> pieces_;
-        void clearBoard();
-    public:
-        Board();
-        Board(const Board& copyBoard);
-        void initialize();
-        void update();
-        std::string boardToString() const;
-        Piece* getPiece(const Coordinates& coords) const;
-        void removePiece(const Coordinates& coords);
-        void createPiece(const Coordinates& coords, Color color, PieceType type);
-        std::list<Piece*> getPieces() const;
-        void destroyPieces();
-        ~Board();
+private:
+    std::vector<std::vector<Piece*>> board_;
+    std::list<Piece*> pieces_;
+    void clearBoard();
+public:
+    Board();
+    Board(const Board& copyBoard);
+    void initialize();
+    void update();
+    std::string boardToString() const;
+    Piece* getPiece(const Coordinates& coords) const;
+    void removePiece(const Coordinates& coords);
+    void createPiece(const Coordinates& coords, Color color, PieceType type);
+    std::list<Piece*> getPieces() const;
+    void destroyPieces();
+    ~Board();
 };
