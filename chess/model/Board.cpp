@@ -16,12 +16,12 @@ Board::Board(){
 
 Board::Board(const Board& copy_board){
     clearBoard();
-    // for(int i = 0; i <8; i++){
-    //     for(int j =0; j< 8; j++){
-    //         board_[i][j] = copy_board.getBoard()[i][j];
-    //     }
-    // }
+    for(auto item : copy_board.getPieces()){
+        createPiece(item->getCoords(), item->getColor(), item->getType());
+    }
+    update();
 }
+
 Board::~Board(){
     destroyPieces();
 }
@@ -103,8 +103,14 @@ Piece* Board::getPiece(const Coordinates& coords) const{
     return board_[row][col];
 }
 
-bool isPiece(Piece* piece_l, Piece* piece_r){
-    return piece_l == piece_r;
+bool Board::isCheck(Color color) const {
+    King* curr_player_king;
+    for(auto item : pieces_){
+        if(item->getType()==KING && item->getColor()==color){
+            curr_player_king = dynamic_cast<King*>(item);
+        }
+    }
+    return curr_player_king->isCheck();
 }
 
 void Board::removePiece(const Coordinates& coords){

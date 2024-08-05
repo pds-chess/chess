@@ -13,7 +13,7 @@ Gamestate Match::getGameState(){
     if(!isDraw()){
         return game_state_;
     }
-    if (!isCheck()) {
+    if (!board_.isCheck(current_turn_->getplayerColor())) {
         game_state_ = Draw;
     }
     else if (current_turn_->getplayerColor() == White) {
@@ -59,10 +59,6 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
     }
 
     Coordinates final_coords(row_end, col_end);
-    if (isCheck()) {
-        throw std::logic_error("Rei estará em cheque.");
-    }
-
     movePiece(target_piece, final_coords);
 
     endTurn();
@@ -120,9 +116,10 @@ bool Match::isDraw() const{
     return true;
 }
 
-bool Match::isCheck() const {
-    return false;
-}
+// void Match::simulateMove(const Coordinates& coord_start, const Coordinates& coord_end) const{
+//     Board virtual_board = Board(board_);
+//     virtual_board.getPieces();
+// }
 
 void Match::updatePlayers(){
     std::list<Piece*> white_pieces, black_pieces;

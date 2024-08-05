@@ -18,6 +18,7 @@ class Board{
         void initialize();
         void update();
         std::string boardToString() const;
+        bool isCheck(Color color) const;
         Piece* getPiece(const Coordinates& coords) const;
         void removePiece(const Coordinates& coords);
         void createPiece(const Coordinates& coords, Color color, PieceType type);

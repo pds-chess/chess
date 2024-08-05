@@ -17,10 +17,10 @@ private:
     Player player_B_;
     Player* current_turn_;
     Gamestate game_state_;
-        int game_id_ = 0;
+    int game_id_ = 0;
     void endTurn();
-    bool isCheck() const;
     bool isDraw() const;
+    void simulateMove(const Coordinates& coord_start, const Coordinates& coord_end) const;
     void movePiece(Piece* target_piece, const Coordinates& final_coords);
     void promotePawn(Piece* pawn);
     void updatePlayers();
