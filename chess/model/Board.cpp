@@ -105,13 +105,7 @@ void Board::movePiece(Piece* target_piece, const Coordinates& final_coords){
     if (isCapture(target_piece, final_coords)){
         removePiece(final_coords);
     }
-    
-    // Promover o peão caso chegue ao fim do tabuleiro
-    // if (pawn != nullptr && pawn->validatePromotion() == true)
-    // {
-    //     update();
-    //     //promotePawn(pawn);
-    // }
+
     update();
 }
 
@@ -194,4 +188,16 @@ void Board::destroyPieces(){
         }
     }
     pieces_ = {};
+}
+
+void Board::promotePawn(Piece* pawn, PieceType choice) {
+    Coordinates auxCoords = pawn->getCoords();
+    Color auxColor = pawn->getColor();
+    if(pawn->getType()!=PAWN){
+        throw std::invalid_argument("Só é possível promover peões.");
+    }
+
+    removePiece(pawn->getCoords());
+    createPiece(auxCoords, auxColor, choice);
+    update();
 }

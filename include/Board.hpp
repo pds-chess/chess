@@ -25,6 +25,7 @@ class Board{
         bool isCapture(Piece* target_piece, const Coordinates& final_coords) const;
         void removePiece(const Coordinates& coords);
         void createPiece(const Coordinates& coords, Color color, PieceType type);
+        void promotePawn(Piece* pawn, PieceType choice);
         std::list<Piece*> getPieces() const;
         ~Board();
 };

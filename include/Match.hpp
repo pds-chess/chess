@@ -21,7 +21,6 @@ private:
     void endTurn();
     bool isDraw() const;
     bool simulateMove(const Coordinates& coord_start, const Coordinates& coord_end) const;
-    void promotePawn(Pawn* pawn);
     void updatePlayers();
 
     void startGame(); // Inicia um novo jogo.
@@ -32,6 +31,7 @@ private:
 
     // Método para registrar um movimento
     void registerMove(Piece* target_piece, Coordinates final_coords);
+    Piece* getPieceInGame(int row, int col) const;
 
 public:
     Match(std::string playerW, std::string playerB);
@@ -39,6 +39,8 @@ public:
     void movePiece(int row_start, int col_start, int row_end, int col_end); // Move a peça e retorna o estado do tabuleiro após o movimento.
     Gamestate getGameState();
     std::string getCurrentPlayerName() const;
+    bool isPromote(int row_end, int col_end) const;
+    void promotePawn(int row, int col, PieceType type);
      // Método para finalizar o jogo com empate
     void draw();
 

@@ -49,13 +49,34 @@ void Match::endTurn(){
     updatePlayers();
 }
 
-void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
-    Coordinates coord_start(row_start, col_start);
-    Piece* target_piece = board_.getPiece(coord_start);
-
-    if (target_piece == nullptr) {
-        throw std::invalid_argument("Nenhuma peça na posição inicial.");
+Piece* Match::getPieceInGame(int row, int col) const{
+    Coordinates target_coord(row, col);
+    Piece* target_piece = board_.getPiece(target_coord);
+    if(target_piece==nullptr){
+        throw std::invalid_argument("Nenhuma peça na posição requerida.");
     }
+    return target_piece;
+}
+
+bool Match::isPromote(int row_end, int col_end) const{
+    Piece* target_piece = getPieceInGame(row_end, col_end);
+
+    Pawn* target_pawn = nullptr;
+    if(target_piece->getType()!=PAWN){
+        return false;
+    }
+    target_pawn = dynamic_cast<Pawn*>(target_piece);
+
+    return target_pawn->validatePromotion();
+}
+
+void Match::promotePawn(int row, int col, PieceType type){
+    Piece* target_piece = getPieceInGame(row, col);
+    board_.promotePawn(target_piece, type);
+}
+
+void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
+    Piece* target_piece = getPieceInGame(row_start, col_start);
 
     if (target_piece->getColor() != current_turn_->getplayerColor()) {
         throw std::logic_error("Jogador incorreto.");
@@ -67,7 +88,7 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
         end_piece = board_.getPiece(final_coords)->getType();
     }
 
-    simulateMove(coord_start, final_coords);
+    simulateMove(Coordinates(row_start, col_start), final_coords);
     board_.movePiece(target_piece, final_coords);
 
     if(end_piece!=NONE){
@@ -118,42 +139,6 @@ void Match::updatePlayers(){
     }
     player_W_.setPieces(white_pieces);
     player_B_.setPieces(black_pieces);
-}
-
-void Match::promotePawn(Pawn* pawn) {
-    Coordinates auxCoords = pawn->getCoords();
-    Color auxColor = pawn->getColor();
-    
-    char choice = 'p';
-    std::cout << "Seu peão será promovido! Digite a letra correspondente a qual peça deseja promovê-lo: " << std::endl;
-    std::cout << "Rainha - R" << std::endl;
-    std::cout << "Torre - T" << std::endl;
-    std::cout << "Bispo - B" << std::endl;
-    std::cout << "Cavalo - C" << std::endl;
-    std::cin >> choice;
-    switch (choice) {
-        case 'R':
-            board_.removePiece(pawn->getCoords());
-            board_.createPiece(auxCoords, auxColor, QUEEN);
-            break;
-        case 'T':
-            board_.removePiece(pawn->getCoords());
-            board_.createPiece(auxCoords, auxColor, ROOK);
-            break;
-        case 'B':
-            board_.removePiece(pawn->getCoords());
-            board_.createPiece(auxCoords, auxColor, BISHOP);
-            break;
-        case 'C':
-            board_.removePiece(pawn->getCoords());
-            board_.createPiece(auxCoords, auxColor, KNIGHT);
-            break;
-        default:
-            std::cout << "Escolha inválida. Por padrão, o peão será promovido para Rainha" << std::endl;
-            board_.removePiece(pawn->getCoords());
-            board_.createPiece(auxCoords, auxColor, QUEEN);
-            break;
-    }
 }
 
 // Método para registrar um movimento

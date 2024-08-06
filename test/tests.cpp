@@ -99,6 +99,34 @@ TEST_CASE("King in Check"){
     CHECK(checkBoard);
 }
 
+TEST_CASE("King in Check 2"){
+    Board board_ = Board();
+    board_.removePiece(Coordinates(0,4));
+    board_.createPiece(Coordinates(5,2), Black, KING);
+    board_.update();
+    CHECK(board_.isCheck(Black));
+}
+
+TEST_CASE("Promote pawn"){
+    Match match("lebraga", "davi");
+    match.movePiece(6, 7, 4 ,7);
+    match.movePiece(1, 0, 3, 0);
+    match.movePiece(4, 7, 3, 7);
+    match.movePiece(3, 0, 4, 0);
+    match.movePiece(3, 7, 2, 7);
+    match.movePiece(4, 0, 5, 0);
+    match.movePiece(2, 7, 1, 6);
+    match.movePiece(5, 0, 6, 1);
+    match.movePiece(1, 6, 0, 7);
+    CHECK(match.isPromote(0, 7));
+    match.promotePawn(0, 7, QUEEN);
+    match.movePiece(6,1, 7, 0);
+    CHECK(match.isPromote(7, 0));
+    match.promotePawn(7, 0, KNIGHT);
+    match.movePiece(0, 7, 5, 2);
+    match.movePiece(7, 0, 5, 1);
+}
+
 TEST_CASE ("Castle"){
     Board b_;
 

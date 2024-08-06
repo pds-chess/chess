@@ -18,6 +18,7 @@ private:
     void handleDraw(Match& match);
     void showCapturedPieces(Match& match);
     void movePiece(Match& match);
+    void promote(Match& match, int row_end, int col_end);
 
 public:
     // Construtor padrão que inicia o jogo no console.

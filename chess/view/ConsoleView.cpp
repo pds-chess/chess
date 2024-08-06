@@ -92,6 +92,9 @@ void Console::movePiece(Match& match){
 
     try{
         match.movePiece(row_origin-1, col_origin-1, row_destiny-1, col_destiny-1);
+        if(match.isPromote(row_destiny-1, col_destiny-1)){
+            promote(match, row_destiny-1, col_destiny-1);
+        }
     } catch(std::invalid_argument& e){
         std::cout << e.what() << std::endl;
     } catch(std::logic_error& e){
@@ -115,7 +118,33 @@ void Console::handleDraw(Match& match) {
     }
 }
 
-
+void Console::promote(Match& match, int row_end, int col_end){
+    char choice;
+    std::cout << "Seu peão será promovido! Digite a letra correspondente a qual peça deseja promovê-lo: " << std::endl;
+    std::cout << "Rainha - R" << std::endl;
+    std::cout << "Torre - T" << std::endl;
+    std::cout << "Bispo - B" << std::endl;
+    std::cout << "Cavalo - C" << std::endl;
+    std::cin >> choice;
+    switch (choice) {
+        case 'R':
+            match.promotePawn(row_end, col_end, QUEEN);
+            break;
+        case 'T':
+            match.promotePawn(row_end, col_end, ROOK);
+            break;
+        case 'B':
+            match.promotePawn(row_end, col_end, BISHOP);
+            break;
+        case 'C':
+            match.promotePawn(row_end, col_end, KNIGHT);
+            break;
+        default:
+            std::cout << "Escolha inválida. Por padrão, o peão será promovido para Rainha" << std::endl;
+            match.promotePawn(row_end, col_end, QUEEN);
+            break;
+    }
+}
 
 void Console::printGameEnd(Match& match) {
     std::cout << "==================================================" << std::endl << std::endl;
