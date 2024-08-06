@@ -12,6 +12,7 @@ class Board{
         std::vector<std::vector<Piece*>> board_;
         std::list<Piece*> pieces_;
         void clearBoard();
+        void destroyPieces();
     public:
         Board();
         Board(const Board& copyBoard);
@@ -25,6 +26,5 @@ class Board{
         void removePiece(const Coordinates& coords);
         void createPiece(const Coordinates& coords, Color color, PieceType type);
         std::list<Piece*> getPieces() const;
-        void destroyPieces();
         ~Board();
 };
