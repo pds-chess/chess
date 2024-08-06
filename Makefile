@@ -20,6 +20,9 @@ all: directories $(TARGET)
 
 remake: cleaner all
 
+run: all
+	./$(TARGETDIR)/$(TARGET)
+
 directories:
 	@mkdir -p $(TARGETDIR)
 	@mkdir -p $(BUILDDIR)
