@@ -56,7 +56,7 @@ private:
     void movePiece(Match& match);
 
     /**
-      * @brief Promote the pawn.
+      * @brief Choose what the new piece will be and call the promote pawn function.
       * @param match.
       * @param row_end End row in the last move.
       * @param col_end End column in the last move.

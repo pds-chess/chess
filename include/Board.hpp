@@ -18,9 +18,14 @@ class Board{
         void clearBoard();
 
         /**
-          * @brief Destroy the pieces. 
+          * @brief Delete the pieces. 
           */
         void destroyPieces();
+
+        /**
+          * @brief Create a copy of the piece.
+          * @param piece. 
+          */
         void createPiece(Piece* piece);
     public:
         /**
@@ -86,7 +91,7 @@ class Board{
         void removePiece(const Coordinates& coords);
 
         /**
-          * @brief Create a piece.
+          * @brief Create a new piece in the specified position.
           * @param coords.
           * @param color.
           * @param type Type of the piece.
