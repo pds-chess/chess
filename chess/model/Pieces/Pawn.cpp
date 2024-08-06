@@ -36,7 +36,7 @@ bool Pawn::validateMove(const Coordinates& final_coordinates) const{
 
     //Validar o en passant
     int finalRow = getColor()==White ? 2:5;
-    if (final_coordinates.getRow() == finalRow && getBoard().getPiece(final_coordinates) == nullptr && DeltaRow == -1 && DeltaCol == -1)
+    if (final_coordinates.getRow() == finalRow && getBoard().getPiece(final_coordinates) == nullptr && DeltaRow == 1 && DeltaCol == 1)
         return validateEnPassant(final_coordinates);
 
     if (DeltaRow > 0 && DeltaRow <= 2 && (DeltaCol == 0)){

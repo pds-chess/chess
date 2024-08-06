@@ -80,32 +80,19 @@ void Board::update(){
 }
 
 void Board::movePiece(Piece* target_piece, const Coordinates& final_coords){
-    try {
-        target_piece->movePiece(final_coords);
-    } catch (std::invalid_argument& e) {
-        // Checa se é um roque
-        King* king = dynamic_cast<King*>(target_piece);
-        if (king != NULL && final_coords.getCol() == (target_piece->getCoords().getCol() + 2 || target_piece->getCoords().getCol() - 2))
-            if (king->validateCastle(final_coords))
-                king->castle(final_coords);
-            else
-                throw e;
-        else
-            throw e;
-    }
-    //executar o en passant
+    
+    //se for en Passant, se não for, executa outro movimento qualquer que seja.
     Pawn* pawn = dynamic_cast<Pawn*>(target_piece);
     if (pawn != nullptr && pawn->validateEnPassant(final_coords) == true)
     {
         int mult = target_piece->getColor() == White ? 1 : -1;
         target_piece->setCoords(final_coords);
         removePiece(Coordinates(final_coords.getRow()+mult, final_coords.getCol()));
+    }else{
+        target_piece->movePiece(final_coords);
+        if (isCapture(target_piece, final_coords))
+            removePiece(final_coords);
     }
-
-    if (isCapture(target_piece, final_coords)){
-        removePiece(final_coords);
-    }
-
     update();
 }
 
