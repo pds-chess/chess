@@ -8,9 +8,8 @@ class Console
 private:
     void createNewGame(std::string playerA, std::string playerB);
 
-    void printBoard();
     void printGameActions(Match& match);
-    void printGameEnd();
+    void printGameEnd(Match& match);
 
     void printMatchHistory();
     void printMatch(int matchId);

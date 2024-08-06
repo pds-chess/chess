@@ -89,6 +89,16 @@ TEST_CASE("Match state"){
     }
 }
 
+TEST_CASE("King in Check"){
+    Board board_ = Board();
+    board_.movePiece(board_.getPiece(Coordinates(6,6)), Coordinates(4,6));
+    board_.movePiece(board_.getPiece(Coordinates(6,5)), Coordinates(5,5));
+    board_.movePiece(board_.getPiece(Coordinates(1,4)), Coordinates(3,4));
+    board_.movePiece(board_.getPiece(Coordinates(0,3)), Coordinates(4,7));
+    bool checkBoard = board_.isCheck(White);
+    CHECK(checkBoard);
+}
+
 TEST_CASE ("Castle"){
     Board b_;
 

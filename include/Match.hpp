@@ -20,7 +20,7 @@ private:
     int game_id_ = 0;
     void endTurn();
     bool isDraw() const;
-    void simulateMove(const Coordinates& coord_start, const Coordinates& coord_end) const;
+    bool simulateMove(const Coordinates& coord_start, const Coordinates& coord_end) const;
     void promotePawn(Pawn* pawn);
     void updatePlayers();
 

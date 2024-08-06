@@ -112,6 +112,7 @@ void Board::movePiece(Piece* target_piece, const Coordinates& final_coords){
     //     update();
     //     //promotePawn(pawn);
     // }
+    update();
 }
 
 bool Board::isCapture(Piece* target_piece, const Coordinates& final_coords) const{
@@ -151,6 +152,7 @@ bool Board::isCheck(Color color) const {
     for(auto item : pieces_){
         if(item->getType()==KING && item->getColor()==color){
             curr_player_king = dynamic_cast<King*>(item);
+            break;
         }
     }
     if(curr_player_king!=nullptr){

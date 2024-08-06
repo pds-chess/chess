@@ -47,7 +47,7 @@ void Console::createNewGame(std::string playerA, std::string playerB) {
         std::cout << match.boardToString() << std::endl;
         printGameActions(match);
     }
-    printGameEnd();
+    printGameEnd(match);
 }
 
 void Console::printGameActions(Match& match) {
@@ -117,8 +117,21 @@ void Console::handleDraw(Match& match) {
 
 
 
-void Console::printGameEnd() {
-    // Código para imprimir o final do jogo
+void Console::printGameEnd(Match& match) {
+    std::cout << "==================================================" << std::endl << std::endl;
+    std::cout << match.boardToString() << std::endl;
+
+    std::cout << "\nFIM DE JOGO!" << std::endl;
+    Gamestate game_state = match.getGameState();
+    if(game_state==Draw){
+        std::cout << "Jogo terminou em empate." << std::endl;
+    }
+    else if(game_state==VictoryW){
+        std::cout << "Jogador de peças brancas venceu." << std::endl;
+    }
+    else {
+        std::cout << "Jogador de peças pretas venceu." << std::endl;
+    }
 }
 
 void Console::printMatchHistory() {
@@ -130,5 +143,9 @@ void Console::printMatch(int matchId) {
 }
 
 void Console::showCapturedPieces(Match& match){
-
+    std::cout << "\n" + match.showCapturedPieces() << std::endl;
+    std::cout << "\nAperte enter para continuar.";
+    std::cin.clear();
+    std::cin.ignore(512, '\n');
+    std::cin.get();
 }

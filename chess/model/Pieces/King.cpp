@@ -114,7 +114,7 @@ bool King::isCheck() {
             while (row >= 0 && row < 8 && col >= 0 && col < 8) {
                 Piece* piece = board.getPiece(Coordinates(row, col));
                 if (piece != nullptr) {
-                    if (piece->getColor() != kingColor && (getType() == BISHOP || getType() == QUEEN)) {
+                    if (piece->getColor() != kingColor && (piece->getType() == BISHOP || piece->getType() == QUEEN)) {
                         return true;
                     }
                     break;
@@ -132,7 +132,7 @@ bool King::isCheck() {
         while (row >= 0 && row < 8) {
             Piece* piece = board.getPiece(Coordinates(row, kingCoords.getCol()));
             if (piece != nullptr) {
-                if (piece->getColor() != kingColor && (getType() == ROOK || getType() == QUEEN)) {
+                if (piece->getColor() != kingColor && (piece->getType() == ROOK || piece->getType() == QUEEN)) {
                     return true;
                 }
                 break;
@@ -145,7 +145,7 @@ bool King::isCheck() {
         while (col >= 0 && col < 8) {
             Piece* piece = board.getPiece(Coordinates(kingCoords.getRow(), col));
             if (piece != nullptr) {
-                if (piece->getColor() != kingColor && (getType() == ROOK || getType() == QUEEN)) {
+                if (piece->getColor() != kingColor && (piece->getType() == ROOK || piece->getType() == QUEEN)) {
                     return true;
                 }
                 break;
@@ -164,7 +164,7 @@ bool King::isCheck() {
         int col = kingCoords.getCol() + knightMoves[i][1];
         if (row >= 0 && row < 8 && col >= 0 && col < 8) {
             Piece* piece = board.getPiece(Coordinates(row, col));
-            if (piece != nullptr && piece->getColor() != kingColor && getType() == KNIGHT) {
+            if (piece != nullptr && piece->getColor() != kingColor && piece->getType() == KNIGHT) {
                 return true;
             }
         }
@@ -185,7 +185,7 @@ bool King::isCheck() {
         int col = kingCoords.getCol() + pawnMoves[i][1];
         if (row >= 0 && row < 8 && col >= 0 && col < 8) {
             Piece* piece = board.getPiece(Coordinates(row, col));
-            if (piece != nullptr && piece->getColor() != kingColor && getType() == PAWN) {
+            if (piece != nullptr && piece->getColor() != kingColor && piece->getType() == PAWN) {
                 return true;
             }
         }

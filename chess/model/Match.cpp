@@ -10,13 +10,16 @@ Match::Match(std::string playerW, std::string playerB): board_(Board()) {
 }
 
 Gamestate Match::getGameState(){
-    if(!isDraw()){
+    if(game_state_!=inProgress){
         return game_state_;
+    }
+    if(!isDraw()){
+        return inProgress;
     }
     if (!board_.isCheck(current_turn_->getplayerColor())) {
         game_state_ = Draw;
     }
-    else if (current_turn_->getplayerColor() == White) {
+    else if (current_turn_->getplayerColor() == Black) {
         game_state_ = VictoryW;
     }
     else{
@@ -42,7 +45,7 @@ void Match::endTurn(){
     } else {
         current_turn_ = &player_W_;
     }
-    board_.update();
+
     updatePlayers();
 }
 
@@ -81,8 +84,12 @@ bool Match::isDraw() const{
                 if (item->getCoords().getRow() == i && item->getCoords().getCol() == i) {
                     continue;
                 }
-                if (item->validateMove(Coordinates(i, j))) {
-                    return false;
+                try{
+                    if (simulateMove(Coordinates(item->getCoords().getRow(), item->getCoords().getCol()), Coordinates(i, j))) {
+                        return false;
+                    }
+                } catch(std::invalid_argument& e){
+                    continue;
                 }
             }
         }
@@ -90,13 +97,14 @@ bool Match::isDraw() const{
     return true;
 }
 
-void Match::simulateMove(const Coordinates& coord_start, const Coordinates& coord_end) const{
+bool Match::simulateMove(const Coordinates& coord_start, const Coordinates& coord_end) const{
     Board virtual_board = Board(board_);
     Piece* target_piece = virtual_board.getPiece(coord_start);
     virtual_board.movePiece(target_piece, coord_end);
     if(virtual_board.isCheck(current_turn_->getplayerColor())){
         throw std::invalid_argument("O rei não pode ficar em cheque.");
     }
+    return true;
 }
 
 void Match::updatePlayers(){
@@ -187,7 +195,7 @@ std::string Match::showCapturedPieces() {
 
     // Imprimimos o resumo das peças capturadas
     for (const auto& entry : capturedCount) {
-        capturedPieces+= entry.second + "x ";
+        capturedPieces += "\n" + std::to_string(entry.second) + "x ";
         if (entry.first==ROOK)
             capturedPieces+="Rook";
         if (entry.first==PAWN)
