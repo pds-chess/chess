@@ -38,12 +38,26 @@ class King : public Piece {
    */
   void movePiece(const Coordinates& final_coordinates) override;
 
+  /**
+   * @brief Say if the move done is a castle or not.
+   * @param final_coordinates Coordinates witch King will try to move.
+   */
   bool validateCastle(const Coordinates& final_coordinates) const;
 
+  /**
+   * @brief Do the castle move, king moves 2 steps and the tower goes to the other side.
+   * @param final_coordinates Coordinates witch King will try to move.
+   */
   void castle(const Coordinates& final_coordinates);
 
+  /**
+   * @brief Return true if the king has moved at least once.
+   */
   bool hasMoved() const;
 
+/**
+   * @brief Verify if the king is in check.
+   */
   bool isCheck();
 
   /**
