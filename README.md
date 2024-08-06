@@ -25,7 +25,7 @@ make
 Por padrão, o compilador utilizado é o g++. Para alterar, mude o valor da variável 'CC' na primeira linha do arquivo Makefile.
 
 # Uso
-Para utilizar o programa basta executar o arquivo 'chessGame' gerado na basta /bin/.
+Para utilizar o programa basta executar o arquivo 'chessGame' gerado na basta /bin/, ou executar o comando ``make run`` no diretório raiz.
 
 # Informações do projeto
 [Wiki](https://github.com/pds-chess/chess/wiki)
