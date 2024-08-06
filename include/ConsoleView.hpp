@@ -58,8 +58,8 @@ private:
     /**
       * @brief Promote the pawn.
       * @param match.
-      * @param row_end Last row.
-      * @param col_end Last column.
+      * @param row_end End row in the last move.
+      * @param col_end End column in the last move.
       */
     void promote(Match& match, int row_end, int col_end);
 
