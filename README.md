@@ -15,10 +15,11 @@ Xadrez é um jogo que já está estabelecido há muito tempo, porém os jogadore
 Nossa solução é criar um sistema que simula um jogo local de xadrez. É uma maneira de simular um jogo e garantir que as regras tradicionais sejam obedecidas ao realizar cada jogada. Dessa forma, é possível realizar uma partida mesmo que todas as regras não sejam conhecidas pelos participantes, e jogos podem ser criados ao simplesmente executar o programa, sem a necessidade de montar um tabuleiro.
 
 # Instalação
-Para instalar o programa é necessário que o sistema possua um compilador de código C++, Make e Git instalados.
-O primeiro passo é clonar este repositório em uma máquina utilizando Git.
-Após isso, basta realizar o comando abaixo em um terminal aberto na pasta do repositório clonado:
-```make
+Para instalar o programa é necessário que o sistema possua um compilador de código C++, Make e Git instalados.<br>
+1. Clonar este repositório em uma máquina utilizando Git.
+2. Abrir um terminal na pasta do repositório clonado.
+3. Executar o comando baixo:
+```
 make 
 ```
 Por padrão, o compilador utilizado é o g++. Para alterar, mude o valor da variável 'CC' na primeira linha do arquivo Makefile.
