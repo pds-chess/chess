@@ -30,3 +30,11 @@ Piece* PieceFactory::createPiece(const Coordinates& coords, Color color, const B
     }
     return nullptr;
 }
+
+Piece* PieceFactory::createPiece(Piece* piece, const Board& board){
+    if(piece->getType()==PAWN){
+        Pawn* old_pawn = dynamic_cast<Pawn*>(piece);
+        return new Pawn(*old_pawn, board);
+    }
+    return createPiece(piece->getCoords(), piece->getColor(), board, piece->getType());
+}

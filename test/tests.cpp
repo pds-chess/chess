@@ -127,6 +127,15 @@ TEST_CASE("Promote pawn"){
     match.movePiece(7, 0, 5, 1);
 }
 
+TEST_CASE("En passant"){
+    Match match("lebraga", "davi");
+    match.movePiece(6,6,4,6);
+    match.movePiece(1,0,3,0);
+    match.movePiece(4,6,3,6);
+    match.movePiece(1,7,3,7);
+    match.movePiece(3,6,2,7);
+}
+
 TEST_CASE ("Castle"){
     Board b_;
 

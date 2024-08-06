@@ -13,6 +13,7 @@ class Board{
         std::list<Piece*> pieces_;
         void clearBoard();
         void destroyPieces();
+        void createPiece(Piece* piece);
     public:
         Board();
         Board(const Board& copyBoard);

@@ -8,4 +8,5 @@ class PieceFactory{
     public:
         PieceFactory();
         Piece* createPiece(const Coordinates& coords, Color color, const Board& board, PieceType type);
+        Piece* createPiece(Piece* piece, const Board& board);
 };

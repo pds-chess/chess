@@ -17,7 +17,7 @@ Board::Board(){
 Board::Board(const Board& copy_board){
     clearBoard();
     for(auto item : copy_board.getPieces()){
-        createPiece(item->getCoords(), item->getColor(), item->getType());
+        createPiece(item);
     }
     update();
 }
@@ -163,6 +163,16 @@ void Board::createPiece(const Coordinates& coords, Color color, PieceType type){
     int row = coords.getRow();
     int col = coords.getCol();
     board_[row][col] = creator.createPiece(coords, color, *this, type);
+}
+
+void Board::createPiece(Piece* piece){
+    if(piece==nullptr){
+        return;
+    }
+    PieceFactory creator;
+    int row = piece->getCoords().getRow();
+    int col = piece->getCoords().getCol();
+    board_[row][col] = creator.createPiece(piece, *this);
 }
 
 void Board::destroyPieces(){
