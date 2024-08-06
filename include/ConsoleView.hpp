@@ -6,25 +6,76 @@
 class Console
 {
 private:
+    /**
+      * @brief Create a new game.
+      *
+      * @param playerA.
+      * @param playerB.
+      */
     void createNewGame(std::string playerA, std::string playerB);
 
+    /**
+      * @brief Print the menu with the options to make a move, propose a draw and see all opposing pieces that have been captured.
+      * @param match.
+      */    
     void printGameActions(Match& match);
+
+    /**
+      * @brief Print the final result of the match.
+      * @param match.
+      */ 
     void printGameEnd(Match& match);
 
+    /**
+      * @brief Print the history of all matches.     
+      */ 
     void printMatchHistory();
-    void printMatch(int matchId);
 
-    // Novos métodos para propor, aceitar e rejeitar empate
+    /**
+      * @brief Print the history of a specific match. 
+      * @param matchId Specific match.
+      */
+    void printMatch(int matchId);
+    
+    /**
+      * @brief Propose a draw.
+      * @param match.
+      */
     void handleDraw(Match& match);
+
+    /**
+      * @brief Print all opposing pieces that have been captured.
+      * @param match.
+      */        
     void showCapturedPieces(Match& match);
+
+    /**
+      * @brief Move Piece.
+      * @param match.
+      */
     void movePiece(Match& match);
+
+    /**
+      * @brief Promote the pawn.
+      * @param match.
+      * @param row_end Last row.
+      * @param col_end Last column.
+      */
     void promote(Match& match, int row_end, int col_end);
 
 public:
-    // Construtor padrão que inicia o jogo no console.
+    /**
+      * @brief Default constructor that launches the game on the console.     
+      */    
     Console();
     
-    // Primeira função chamada, imprime o menu com as opções de criar novo jogo e ver histórico.
+    /**
+      * @brief Print the menu with the options to create a new game and view history.    
+      */
     void printMenu();
+
+    /**
+      * @brief Virtual destructor.
+      */
     ~Console();
 };
