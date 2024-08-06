@@ -543,7 +543,6 @@ TEST_CASE("ValidateCapture") {
 }
 
 TEST_CASE("ValidateMove") {
-    Coordinates BlackPiece=Coordinates(1,0);
     Coordinates KingW=Coordinates(7,4);
 
  //WHITE
@@ -747,7 +746,6 @@ TEST_CASE("ValidateCapture") {
 }
 
 TEST_CASE("ValidateMove") {
-    Coordinates KnightB=Coordinates(0,1);
     Coordinates KnightW=Coordinates(7,1);
 
  //WHITE
