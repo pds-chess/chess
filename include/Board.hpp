@@ -45,13 +45,13 @@ class Board{
         void initialize();
 
         /**
-          * @brief -----. 
+          * @brief Update the state of the board based on the coordinates of the pieces in play. 
           */
         void update();
 
         /**
-          * @brief -----.
-          * @return Returns -----.
+          * @brief Transform the current state of the board into a string.
+          * @return Returns string
           */
         std::string boardToString() const;
 
