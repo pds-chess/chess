@@ -34,9 +34,29 @@ private:
     Piece* getPieceInGame(int row, int col) const;
 
 public:
+    /**
+      * @brief Constructor.
+      * @param playerW Player of the White pieces.
+      * @param playerB Player of the Black pieces.
+      */
     Match(std::string playerW, std::string playerB);
+
+    /**
+      * @brief Transform the current state of the board into a string.
+      * @return Returns string
+      */
     std::string boardToString() const;
-    void movePiece(int row_start, int col_start, int row_end, int col_end); // Move a peça e retorna o estado do tabuleiro após o movimento.
+
+    /**
+      * @brief Move Piece.
+      * @param row_start Start row in the first move.
+      * @param col_start Start column in the first move.
+      * @param row_end End row in the last move.
+      * @param col_end End column in the last move.
+      */
+    void movePiece(int row_start, int col_start, int row_end, int col_end);
+
+// Move a peça e retorna o estado do tabuleiro após o movimento.
     Gamestate getGameState();
     std::string getCurrentPlayerName() const;
     bool isPromote(int row_end, int col_end) const;
