@@ -56,16 +56,47 @@ public:
       */
     void movePiece(int row_start, int col_start, int row_end, int col_end);
 
-// Move a peça e retorna o estado do tabuleiro após o movimento.
+    /**
+      * @brief Move the piece and return the state of the board after the move.
+      * @return Returns Gamestate      
+      */
     Gamestate getGameState();
-    std::string getCurrentPlayerName() const;
-    bool isPromote(int row_end, int col_end) const;
-    void promotePawn(int row, int col, PieceType type);
-     // Método para finalizar o jogo com empate
-    void draw();
 
-    // Método para desistência
+    /**
+      * @brief Get Current Player Name.
+      */
+    std::string getCurrentPlayerName() const;
+
+    /**
+      * @brief Promote the pawn.
+      * @param row_end End row in the last move.
+      * @param col_end End column in the last move.    
+      * @return Returns true (promoted pawn) or false (unpromoted pawn). 
+      */          
+    bool isPromote(int row_end, int col_end) const;
+
+    /**
+      * @brief Promote the pawn.          
+      * @param row.
+      * @param col.
+      * @param type Option to choose.
+      */
+    void promotePawn(int row, int col, PieceType type);
+     
+    /**
+      * @brief End the game with a draw, as there aren't moves.
+      */
+    void draw();
+    
+    /**
+      * @brief End the game with forfeit.
+      */
     void resign();
+
+    /**
+      * @brief Print all opposing pieces that have been captured.
+      * @return Returns string      
+      */
     std::string showCapturedPieces();
 
 };
