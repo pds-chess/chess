@@ -45,7 +45,8 @@ class King : public Piece {
   bool validateCastle(const Coordinates& final_coordinates) const;
 
   /**
-   * @brief Do the castle move, king moves 2 steps and the tower goes to the other side.
+   * @brief Do the castle move, king moves 2 steps and the tower goes to the
+   * other side.
    * @param final_coordinates Coordinates witch King will try to move.
    */
   void castle(const Coordinates& final_coordinates);
@@ -55,7 +56,7 @@ class King : public Piece {
    */
   bool hasMoved() const;
 
-/**
+  /**
    * @brief Verify if the king is in check.
    */
   bool isCheck();

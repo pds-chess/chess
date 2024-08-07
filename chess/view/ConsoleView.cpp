@@ -33,7 +33,7 @@ void Console::printMenu() {
         int choice;
         std::cout << "Escolha uma partida para abrir, ou digite 0 para sair: ";
         std::cin >> choice;
-        if(choice!=0){
+        if (choice != 0) {
           printMatch(choice);
         }
         break;
@@ -190,7 +190,7 @@ void Console::printGameEnd(Match& match) {
 void Console::printMatchHistory() {
   History history;
   std::cout << "Partidas que ocorreram: " << std::endl;
-  for(auto game: history.getGames()){
+  for (auto game : history.getGames()) {
     std::cout << std::to_string(game) << std::endl;
   }
 }

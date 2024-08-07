@@ -1,18 +1,19 @@
 #pragma once
 
-#include "Piece.hpp"
-#include "Color.hpp"
-
-#include <string>
 #include <list>
+#include <string>
 
-class Player{
-private:
+#include "Color.hpp"
+#include "Piece.hpp"
+
+class Player {
+ private:
   Color color_;
   std::string name_;
   std::list<Piece*> pieces_;
   std::list<PieceType> capturedPieces_;
-public:
+
+ public:
   /**
    * @brief Construct an empty Player.
    */

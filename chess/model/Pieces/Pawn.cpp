@@ -9,12 +9,12 @@ Pawn::Pawn(const Coordinates& initial_coords, Color color, const Board& board)
   initialRow_ = initial_coords.getRow();
 }
 
-Pawn::Pawn(const Pawn& pawn, const Board& board) 
-: Piece(pawn.getCoords(), pawn.getColor(), board){
-    moved_ = pawn.moved_;
-    movedTwice_ = pawn.movedTwice_;
-    initialRow_ = pawn.initialRow_;
-    previousRow_ = pawn.previousRow_;
+Pawn::Pawn(const Pawn& pawn, const Board& board)
+    : Piece(pawn.getCoords(), pawn.getColor(), board) {
+  moved_ = pawn.moved_;
+  movedTwice_ = pawn.movedTwice_;
+  initialRow_ = pawn.initialRow_;
+  previousRow_ = pawn.previousRow_;
 }
 
 Pawn::~Pawn() {}

@@ -24,7 +24,7 @@ class Knight : public Piece {
    * @return Returns true if the movement is valid and false otherwise.
    */
   bool validateMove(const Coordinates& final_coordinates) const override;
-  
+
   /**
    * @brief Get the type of Piece e.g. KNIGHT.
    * @return Returns the Piece type.

@@ -1,114 +1,116 @@
 #pragma once
 
-#include "Piece.hpp"
-#include "Coordinates.hpp"
-
 #include <list>
 #include <string>
 #include <vector>
 
-class Board{
-    private:
-        std::vector<std::vector<Piece*>> board_;
-        std::list<Piece*> pieces_;
+#include "Coordinates.hpp"
+#include "Piece.hpp"
 
-        /**
-          * @brief Clear the board. 
-          */
-        void clearBoard();
+class Board {
+ private:
+  std::vector<std::vector<Piece*>> board_;
+  std::list<Piece*> pieces_;
 
-        /**
-          * @brief Delete the pieces. 
-          */
-        void destroyPieces();
+  /**
+   * @brief Clear the board.
+   */
+  void clearBoard();
 
-        /**
-          * @brief Create a copy of the piece.
-          * @param piece. 
-          */
-        void createPiece(Piece* piece);
-    public:
-        /**
-          * @brief Default Constructor. 
-          */
-        Board();
+  /**
+   * @brief Delete the pieces.
+   */
+  void destroyPieces();
 
-        /**
-          * @brief Constructor.
-          * @param copyBoard.
-          */
-        Board(const Board& copyBoard);
+  /**
+   * @brief Create a copy of the piece.
+   * @param piece.
+   */
+  void createPiece(Piece* piece);
 
-        /**
-          * @brief Initializes the board pieces. 
-          */                    
-        void initialize();
+ public:
+  /**
+   * @brief Default Constructor.
+   */
+  Board();
 
-        /**
-          * @brief Update the state of the board based on the coordinates of the pieces in play. 
-          */
-        void update();
+  /**
+   * @brief Constructor.
+   * @param copyBoard.
+   */
+  Board(const Board& copyBoard);
 
-        /**
-          * @brief Transform the current state of the board into a string.
-          * @return String
-          */
-        std::string boardToString() const;
+  /**
+   * @brief Initializes the board pieces.
+   */
+  void initialize();
 
-        /**
-          * @brief Is Check.
-          * @param color.
-          * @return True (check) or false (no check).
-          */
-        bool isCheck(Color color) const;
+  /**
+   * @brief Update the state of the board based on the coordinates of the pieces
+   * in play.
+   */
+  void update();
 
-        /**
-          * @brief Get Piece.
-          * @param coords.
-          * @return A pointer to the Piece object
-          */
-        Piece* getPiece(const Coordinates& coords) const;
+  /**
+   * @brief Transform the current state of the board into a string.
+   * @return String
+   */
+  std::string boardToString() const;
 
-        /**
-          * @brief Move Piece.
-          * @param target_piece.
-          * @param coord.
-          */
-        void movePiece(Piece* target_piece, const Coordinates& coord);
+  /**
+   * @brief Is Check.
+   * @param color.
+   * @return True (check) or false (no check).
+   */
+  bool isCheck(Color color) const;
 
-        /**
-          * @brief Is Capture.
-          * @param target_piece.
-          * @param coords.
-          * @return True (piece can be captured) or false (piece can't be captured).
-          */
-        bool isCapture(Piece* target_piece, const Coordinates& final_coords) const;
+  /**
+   * @brief Get Piece.
+   * @param coords.
+   * @return A pointer to the Piece object
+   */
+  Piece* getPiece(const Coordinates& coords) const;
 
-        /**
-          * @brief Remove a piece.
-          * @param coords.
-          */
-        void removePiece(const Coordinates& coords);
+  /**
+   * @brief Move Piece.
+   * @param target_piece.
+   * @param coord.
+   */
+  void movePiece(Piece* target_piece, const Coordinates& coord);
 
-        /**
-          * @brief Create a new piece in the specified position.
-          * @param coords.
-          * @param color.
-          * @param type Type of the piece.
-          */
-        void createPiece(const Coordinates& coords, Color color, PieceType type);
+  /**
+   * @brief Is Capture.
+   * @param target_piece.
+   * @param coords.
+   * @return True (piece can be captured) or false (piece can't be captured).
+   */
+  bool isCapture(Piece* target_piece, const Coordinates& final_coords) const;
 
-        /**
-          * @brief Promote the pawn.          
-          * @param pawn.
-          * @param choice Option to choose.
-          */
-        void promotePawn(Piece* pawn, PieceType choice);
-        
-        std::list<Piece*> getPieces() const;
+  /**
+   * @brief Remove a piece.
+   * @param coords.
+   */
+  void removePiece(const Coordinates& coords);
 
-        /**
-          * @brief Virtual destructor.
-          */
-        ~Board();
+  /**
+   * @brief Create a new piece in the specified position.
+   * @param coords.
+   * @param color.
+   * @param type Type of the piece.
+   */
+  void createPiece(const Coordinates& coords, Color color, PieceType type);
+
+  /**
+   * @brief Promote the pawn.
+   * @param pawn.
+   * @param choice Option to choose.
+   */
+  void promotePawn(Piece* pawn, PieceType choice);
+
+  std::list<Piece*> getPieces() const;
+
+  /**
+   * @brief Virtual destructor.
+   */
+  ~Board();
 };

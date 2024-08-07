@@ -11,12 +11,13 @@ class History {
  private:
   const std::string path_to_file_ = "./matches.txt";
 
-/**
+  /**
    * @brief return all the moves of a especified match.
    *
    * @param game_id the identifier of a match.
    */
   std::list<Move> getMovesFile(int game_id) const;
+
  public:
   /**
    * @brief Construct match history, with every move done until the end.
@@ -31,7 +32,7 @@ class History {
   void saveMatch(std::list<Move> moves);
 
   std::string getMoves(int game_id) const;
-  
+
   /**
    * @brief return all the games played.
    */

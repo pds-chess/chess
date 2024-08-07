@@ -39,7 +39,7 @@ class Rook : public Piece {
    * @return Returns moved_.
    */
   bool hasMoved() const;
-  
+
   /**
    * @brief Get the type of Piece e.g. ROOK.
    * @return Returns the Piece type.

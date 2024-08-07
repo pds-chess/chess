@@ -18,7 +18,7 @@ class Coordinates {
   Coordinates(int row, int column);
 
   /**
-   * 
+   *
    * @brief Construct an empty Coordinate.
    */
   Coordinates();
@@ -37,7 +37,7 @@ class Coordinates {
    * @brief Transform a Coordinate into string.
    */
   std::string toString();
-  
+
   /**
    * @brief Transform a string into Coordinate, if it's possible.
    *
