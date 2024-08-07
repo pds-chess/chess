@@ -10,10 +10,13 @@
 #include <list>
 #include <algorithm>
 
-History::History(std::string path) : path_to_file_(path) {}
+History::History() {}
 
 void History::saveMatch(std::list<Move> moves){
     std::ofstream file(path_to_file_, std::ios::app); // Abrir o arquivo em modo de adição (append)
+    if(!file){
+        file.open(path_to_file_, std::ios::trunc | std::ios::out | std::ios::in);
+    }
     if (!file.is_open()) {
         throw std::runtime_error("Não foi possível abrir o arquivo de histórico.");
     }
@@ -27,8 +30,12 @@ void History::saveMatch(std::list<Move> moves){
     file.close();
 }
 
+
 std::list<Move> History::getMoves(int game_id) const {
     std::ifstream file(path_to_file_);
+    if(!file){
+        file.open(path_to_file_, std::ios::trunc | std::ios::out | std::ios::in);
+    }
     if (!file.is_open()) {
         throw std::runtime_error("Não foi possível abrir o arquivo de histórico.");
     }
@@ -71,6 +78,9 @@ std::list<Move> History::getMoves(int game_id) const {
 
 std::list<int> History::getGames() const {
     std::ifstream file(path_to_file_);
+    if(!file){
+        file.open(path_to_file_, std::ios::trunc | std::ios::out | std::ios::in);
+    }
     if (!file.is_open()) {
         throw std::runtime_error("Não foi possível abrir o arquivo de histórico.");
     }

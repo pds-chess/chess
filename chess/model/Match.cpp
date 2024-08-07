@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <map>
+#include <algorithm>
 
 Match::Match(std::string playerW, std::string playerB): board_(Board()) {
     player_W_ = Player(playerW, White);
@@ -10,12 +11,15 @@ Match::Match(std::string playerW, std::string playerB): board_(Board()) {
 }
 
 Gamestate Match::getGameState(){
+    
     if(game_state_!=inProgress){
+        
         return game_state_;
     }
     if(!isDraw()){
         return inProgress;
     }
+
     if (!board_.isCheck(current_turn_->getplayerColor())) {
         game_state_ = Draw;
     }
@@ -25,15 +29,20 @@ Gamestate Match::getGameState(){
     else{
         game_state_ = VictoryB;
     }
+    History history;
+    history.saveMatch(moves_);
     return game_state_;
 }
 
 void Match::startGame(){
-    //game_id_ = ;
+    History history_;
+    auto games = history_.getGames();
+    game_id_ = (*std::max_element(games.begin(), games.end()))+1;
     current_turn_ = &player_W_;
     game_state_ = inProgress;
     updatePlayers();
 }
+
 
 std::string Match::boardToString() const{
     return board_.boardToString();
@@ -90,6 +99,7 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
 
     simulateMove(Coordinates(row_start, col_start), final_coords);
     board_.movePiece(target_piece, final_coords);
+    registerMove(target_piece, final_coords);
 
     if(end_piece!=NONE){
         current_turn_->addCapturedPiece(end_piece);
@@ -145,13 +155,13 @@ void Match::updatePlayers(){
 void Match::registerMove(Piece* target_piece, Coordinates final_coords) {
     Move move(target_piece->getCoords(),final_coords,current_turn_->getplayerColor(),current_turn_->getPlayerName(),game_id_);
     moves_.push_back(move);
-    // if (game_state_ != inProgress)
-    //     history_.saveMatch(moves_);
 }
 
 // Método para finalizar o jogo com empate
 void Match::draw() {
     game_state_ = Draw;
+    History history;
+    history.saveMatch(moves_);
 }
 
 // Método para desistência
@@ -161,6 +171,8 @@ void Match::resign() {
     } else {
         game_state_ = VictoryW;
     }
+    History history;
+    history.saveMatch(moves_);
 }
 
 std::string Match::getCurrentPlayerName() const{

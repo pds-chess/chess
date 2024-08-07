@@ -9,15 +9,13 @@
 
 class History {
  private:
-  const std::string path_to_file_;
+  const std::string path_to_file_ = "./matches.txt";
 
  public:
   /**
    * @brief Construct match history, with every move done until the end.
-   *
-   * @param path represents where that history will be saved.
    */
-  History(std::string path);
+  History();
 
   /**
    * @brief Save the match identifier and all the moves done.
