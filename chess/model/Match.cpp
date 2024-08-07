@@ -94,7 +94,12 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
     Coordinates final_coords(row_end, col_end);
     PieceType end_piece = NONE;
     if(board_.isCapture(target_piece, final_coords)){
-        end_piece = board_.getPiece(final_coords)->getType();
+        Pawn* pawn = dynamic_cast<Pawn*>(target_piece);
+        if (pawn != nullptr && pawn->validateEnPassant(final_coords) == true){
+            int mult = target_piece->getColor() == White ? 1 : -1;
+            end_piece = board_.getPiece(Coordinates(final_coords.getRow()+mult, final_coords.getCol()))->getType();
+        }else
+            end_piece = board_.getPiece(final_coords)->getType();
     }
 
     simulateMove(Coordinates(row_start, col_start), final_coords);

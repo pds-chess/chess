@@ -98,8 +98,12 @@ void Board::movePiece(Piece* target_piece, const Coordinates& final_coords){
 
 bool Board::isCapture(Piece* target_piece, const Coordinates& final_coords) const{
     Piece* piece_end = getPiece(final_coords);
+    Pawn* pawn = dynamic_cast<Pawn*>(target_piece);
     if(piece_end==nullptr){
-        return false;
+        if (pawn != nullptr && pawn->validateEnPassant(final_coords) == true)
+            return true;
+        else
+            return false;
     }
     return true;
 }
