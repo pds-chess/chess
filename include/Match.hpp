@@ -18,34 +18,118 @@ private:
     Player* current_turn_;
     Gamestate game_state_;
     int game_id_ = 0;
+
+    /**
+      * @brief End turn.
+      */
     void endTurn();
+
+    /**
+      * @brief Is Draw.
+      * @return Returns true (draw) or false (no draw).
+      */
     bool isDraw() const;
+
+    /**
+      * @brief Simulate Move.
+      * @param coord_start Initial coordinate.
+      * @param coord_end End coordinate.
+      * @return True (valid move) or false (invalid move king in check).
+      */
     bool simulateMove(const Coordinates& coord_start, const Coordinates& coord_end) const;
+
+    /**
+      * @brief Pieces present on the board.
+      */
     void updatePlayers();
 
-    void startGame(); // Inicia um novo jogo.
+    /**
+      * @brief Start a new game.
+      */
+    void startGame();
 
     // Lista de movimentos
     std::list<Move> moves_;
     // History history_;
 
-    // Método para registrar um movimento
+    /**
+      * @brief Register a movement.
+      * @param target_piece.
+      * @param final_coords End coordinate.
+      */
     void registerMove(Piece* target_piece, Coordinates start_coords, Coordinates final_coords);
+
+    /**
+      * @brief Get the piece to the specified position on the board.
+      * @param row.
+      * @param col.
+      * @return A pointer to the Piece object
+      */
     Piece* getPieceInGame(int row, int col) const;
 
 public:
+    /**
+      * @brief Constructor.
+      * @param playerW Player of the White pieces.
+      * @param playerB Player of the Black pieces.
+      */
     Match(std::string playerW, std::string playerB);
+
+    /**
+      * @brief Transform the current state of the board into a string.
+      * @return string
+      */
     std::string boardToString() const;
-    void movePiece(int row_start, int col_start, int row_end, int col_end); // Move a peça e retorna o estado do tabuleiro após o movimento.
+
+    /**
+      * @brief Move Piece.
+      * @param row_start Initial row in the first move.
+      * @param col_start Initial column in the first move.
+      * @param row_end End row in the last move.
+      * @param col_end End column in the last move.
+      */
+    void movePiece(int row_start, int col_start, int row_end, int col_end);
+
+    /**
+      * @brief Move the piece and return the state of the board after the move.
+      * @return Returns Gamestate      
+      */
     Gamestate getGameState();
+
+    /**
+      * @brief Get Current Player Name.
+      */
     std::string getCurrentPlayerName() const;
+
+    /**
+      * @brief Promote the pawn.
+      * @param row_end End row in the last move.
+      * @param col_end End column in the last move.    
+      * @return True (promoted pawn) or false (unpromoted pawn). 
+      */          
     bool isPromote(int row_end, int col_end) const;
+
+    /**
+      * @brief Promote the pawn.          
+      * @param row.
+      * @param col.
+      * @param type Option to choose.
+      */
     void promotePawn(int row, int col, PieceType type);
-     // Método para finalizar o jogo com empate
+     
+    /**
+      * @brief End the game with a draw, as there aren't moves.
+      */
     void draw();
-
-    // Método para desistência
+    
+    /**
+      * @brief End the game with forfeit.
+      */
     void resign();
-    std::string showCapturedPieces();
 
+    /**
+      * @brief Print all opposing pieces that have been captured.
+      * @return String      
+      */
+    std::string showCapturedPieces();
 };

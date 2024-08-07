@@ -51,21 +51,21 @@ class Board{
 
         /**
           * @brief Transform the current state of the board into a string.
-          * @return Returns string
+          * @return String
           */
         std::string boardToString() const;
 
         /**
           * @brief Is Check.
           * @param color.
-          * @return Returns true (check) or false (no check).
+          * @return True (check) or false (no check).
           */
         bool isCheck(Color color) const;
 
         /**
           * @brief Get Piece.
           * @param coords.
-          * @return Returns a list of pieces.
+          * @return A pointer to the Piece object
           */
         Piece* getPiece(const Coordinates& coords) const;
 
@@ -80,7 +80,7 @@ class Board{
           * @brief Is Capture.
           * @param target_piece.
           * @param coords.
-          * @return Returns true (piece can be captured) or false (piece can't be captured).
+          * @return True (piece can be captured) or false (piece can't be captured).
           */
         bool isCapture(Piece* target_piece, const Coordinates& final_coords) const;
 
