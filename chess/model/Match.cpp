@@ -104,8 +104,8 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end){
 
     simulateMove(Coordinates(row_start, col_start), final_coords);
     board_.movePiece(target_piece, final_coords);
-    registerMove(target_piece, final_coords);
-
+    registerMove(target_piece, Coordinates(row_start, col_start), final_coords);
+    
     if(end_piece!=NONE){
         current_turn_->addCapturedPiece(end_piece);
     }
@@ -157,8 +157,8 @@ void Match::updatePlayers(){
 }
 
 // Método para registrar um movimento
-void Match::registerMove(Piece* target_piece, Coordinates final_coords) {
-    Move move(target_piece->getCoords(),final_coords,current_turn_->getplayerColor(),current_turn_->getPlayerName(),game_id_);
+void Match::registerMove(Piece* target_piece, Coordinates start_coords, Coordinates final_coords) {
+    Move move(start_coords,final_coords,current_turn_->getplayerColor(),current_turn_->getPlayerName(),game_id_);
     moves_.push_back(move);
 }
 

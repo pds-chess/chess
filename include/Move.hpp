@@ -28,4 +28,12 @@ struct Move {
         color_(player_color),
         player_name_(player_name),
         game_id_(game_id) {};
+
+  Move(std::string origin_coords, std::string final_coords, Color player_color,
+       std::string player_name, int game_id)
+      : origin_coordinates_(origin_coords),
+        final_coordinates_(final_coords),
+        color_(player_color),
+        player_name_(player_name),
+        game_id_(game_id) {};
 };

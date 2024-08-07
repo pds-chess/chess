@@ -30,6 +30,12 @@ void Console::printMenu() {
         break;
       case 2:
         printMatchHistory();
+        int choice;
+        std::cout << "Escolha uma partida para abrir, ou digite 0 para sair: ";
+        std::cin >> choice;
+        if(choice!=0){
+          printMatch(choice);
+        }
         break;
       case 0:
         std::cout << "Saindo..." << std::endl;
@@ -182,11 +188,16 @@ void Console::printGameEnd(Match& match) {
 }
 
 void Console::printMatchHistory() {
-  // Código para imprimir o histórico de partidas
+  History history;
+  std::cout << "Partidas que ocorreram: " << std::endl;
+  for(auto game: history.getGames()){
+    std::cout << std::to_string(game) << std::endl;
+  }
 }
 
 void Console::printMatch(int matchId) {
-  // Código para imprimir uma partida específica
+  History history;
+  std::cout << history.getMoves(matchId) << std::endl;
 }
 
 void Console::showCapturedPieces(Match& match) {

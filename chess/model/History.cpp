@@ -21,17 +21,26 @@ void History::saveMatch(std::list<Move> moves){
         throw std::runtime_error("Não foi possível abrir o arquivo de histórico.");
     }
     for (Move move : moves){
-        file << move.game_id_ << ", "
-            << move.player_name_ << ", "
-            << (move.color_ == White ? "White" : "Black") << ", "
-            << move.origin_coordinates_ << " para "
-            << move.final_coordinates_ << ".\n";
+        file << move.game_id_ << ","
+            << move.player_name_ << ","
+            << (move.color_ == White ? "White" : "Black") << ","
+            << move.origin_coordinates_ << ","
+            << move.final_coordinates_ << "\n";
     };
     file.close();
 }
 
+std::string History::getMoves(int game_id) const{
+    auto moves = getMovesFile(game_id);
+    std::string output = "Movimentos do jogo " + std::to_string(game_id) + ":\n";
+    for(auto move : moves){
+        std::string color = move.color_==White?"BRANCAS":"PRETAS";
+        output += "\t" + move.player_name_ + " (" + color + "): " + move.origin_coordinates_ + " moveu para " + move.final_coordinates_ + "\n";
+    }
+    return output;
+}
 
-std::list<Move> History::getMoves(int game_id) const {
+std::list<Move> History::getMovesFile(int game_id) const {
     std::ifstream file(path_to_file_);
     if(!file){
         file.open(path_to_file_, std::ios::trunc | std::ios::out | std::ios::in);
@@ -46,7 +55,7 @@ std::list<Move> History::getMoves(int game_id) const {
         std::istringstream iss(line);
         std::string token;
         int id;
-        Coordinates origin, destination;
+        std::string origin, destination;
         Color color;
         std::string player_name;
 
@@ -62,10 +71,10 @@ std::list<Move> History::getMoves(int game_id) const {
         color = token == "White" ? White : Black;
 
         std::getline(iss, token, ',');
-        origin.fromString(token);
+        origin = token;
 
         std::getline(iss, token, ',');
-        destination.fromString(token);
+        destination = token;
 
         // Criar um Move com as informações lidas e adicionar à lista de movimentos
         Move move(origin, destination, color, player_name, game_id);

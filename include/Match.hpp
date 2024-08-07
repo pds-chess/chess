@@ -30,7 +30,7 @@ private:
     // History history_;
 
     // Método para registrar um movimento
-    void registerMove(Piece* target_piece, Coordinates final_coords);
+    void registerMove(Piece* target_piece, Coordinates start_coords, Coordinates final_coords);
     Piece* getPieceInGame(int row, int col) const;
 
 public:
