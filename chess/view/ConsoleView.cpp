@@ -99,6 +99,7 @@ void Console::movePiece(Match& match) {
   int row_origin, col_origin, row_destiny, col_destiny;
   std::string input;
 
+  std::cout << "Para realizar um roque movimente o rei 2 casas na direção de uma torre." << std::endl;
   std::cout << "Escreva a coordenada da peça que deseja mover (Ex: a1): ";
   std::cin >> input;
   row_origin = abs((input[1] - 48) - 9);
