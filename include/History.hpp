@@ -31,6 +31,11 @@ class History {
    */
   void saveMatch(std::list<Move> moves);
 
+  /**
+   * @brief return all the moves of a especified match as a string.
+   *
+   * @param game_id the identifier of a match.
+   */
   std::string getMoves(int game_id) const;
 
   /**

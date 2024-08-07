@@ -37,11 +37,4 @@ class Coordinates {
    * @brief Transform a Coordinate into string.
    */
   std::string toString();
-
-  /**
-   * @brief Transform a string into Coordinate, if it's possible.
-   *
-   * @param str string that will be transformed.
-   */
-  void fromString(const std::string& str);
 };
