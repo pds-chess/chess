@@ -17,7 +17,7 @@ class PieceFactory{
           * @param color.
           * @param board.
           * @param type Type of the piece.
-          * @return Returns a list of pieces.
+          * @return A pointer to the Piece object.
           */
         Piece* createPiece(const Coordinates& coords, Color color, const Board& board, PieceType type);
 
@@ -25,7 +25,7 @@ class PieceFactory{
           * @brief Create a copy of the piece.
           * @param piece. 
           * @param board.
-          * @return Returns a list of pieces.
+          * @return A pointer to the Piece object.
           */
         Piece* createPiece(Piece* piece, const Board& board);
 };

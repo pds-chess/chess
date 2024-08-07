@@ -34,25 +34,25 @@ class Piece{
 
         /**
           * @brief Get Coordinates.
-          * @return Returns Coordinates (row, column).
+          * @return Coordinates (row, column).
           */
         Coordinates getCoords() const;
 
         /**
           * @brief Get Color.
-          * @return Returns color.
+          * @return Color.
           */
         Color getColor() const;
 
         /**
           * @brief Validate Move.
-          * @return Returns true (valid move) or false (invalid move).
+          * @return True (valid move) or false (invalid move).
           */
         virtual bool validateMove(const Coordinates& final_coordinates) const = 0;
 
         /**
           * @brief Transform the current state of the piece into a string.
-          * @return Returns string
+          * @return String
           */
         std::string pieceToString() const;
 
@@ -64,20 +64,20 @@ class Piece{
 
         /**
           * @brief get piece type.
-          * @return Returns PieceType
+          * @return PieceType
           */
         virtual PieceType getType() const = 0;
 
     protected:
         /**
           * @brief get piece.
-          * @return Returns char
+          * @return char
           */
         virtual char getPieceChar() const = 0;
 
         /**
-          * @brief Get Board.
-          * @return Returns board.
+          * @brief Provide read-only access to the game board.
+          * @return A constant reference to the Board object.
           */
         const Board& getBoard() const;
 };
