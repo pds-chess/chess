@@ -111,6 +111,11 @@ void Match::movePiece(int row_start, int col_start, int row_end, int col_end) {
 }
 
 bool Match::isDraw() const {
+  //Empate por falta de material
+  if (board_.getPieces().size() == 2) {
+    return true;
+  }
+  //Empate por afogamento
   for (auto item : current_turn_->getPieces()) {
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
